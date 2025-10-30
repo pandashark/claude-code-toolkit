@@ -35,7 +35,7 @@ cat commands/hello.md | sed '1,/^```bash/d;/^```$/,$d' | bash
     "examples": {
       "source": {
         "source": "directory",
-        "path": "/path/to/claude-code-plugins/examples"
+        "path": "/path/to/claude-agent-framework/examples"
       }
     }
   },

@@ -16,6 +16,6 @@
   "commands": [
     "./commands/*.md"
   ],
-  "repository": "https://github.com/applied-artificial-intelligence/claude-code-plugins",
+  "repository": "https://github.com/applied-artificial-intelligence/claude-agent-framework",
   "license": "MIT"
 }

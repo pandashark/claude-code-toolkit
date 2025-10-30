@@ -1,6 +1,6 @@
 # Quickstart Testing Guide
 
-Complete guide to running the claude-code-plugins test suite. This guide assumes zero prior knowledge and provides copy-paste commands for all platforms.
+Complete guide to running the claude-agent-framework test suite. This guide assumes zero prior knowledge and provides copy-paste commands for all platforms.
 
 ## Prerequisites
 
@@ -34,8 +34,8 @@ Complete guide to running the claude-code-plugins test suite. This guide assumes
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/applied-artificial-intelligence/claude-code-plugins.git
-cd claude-code-plugins
+git clone https://github.com/applied-artificial-intelligence/claude-agent-framework.git
+cd claude-agent-framework
 
 # 2. Run smoke tests
 ./tests/smoke.sh
@@ -100,7 +100,7 @@ docker compose down
 docker compose down -v
 
 # Remove images
-docker rmi claude-code-plugins-test:latest
+docker rmi claude-agent-framework-test:latest
 ```
 
 ### macOS Testing
@@ -130,7 +130,7 @@ claude doctor
 
 ```bash
 # Navigate to repository
-cd ~/path/to/claude-code-plugins
+cd ~/path/to/claude-agent-framework
 
 # Run smoke tests
 ./tests/smoke.sh
@@ -175,7 +175,7 @@ claude doctor
 
 ```bash
 # Navigate to repository
-cd ~/claude-code-plugins
+cd ~/claude-agent-framework
 
 # Run smoke tests
 ./tests/smoke.sh
@@ -329,7 +329,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 **Fix**: Ensure you're in the repository root:
 ```bash
-pwd  # Should show .../claude-code-plugins
+pwd  # Should show .../claude-agent-framework
 ls plugins/  # Should show: development memory system workflow agents
 ```
 
@@ -377,8 +377,8 @@ docker compose build --no-cache
 4. ✅ Verify prerequisites are installed
 
 **Where to get help**:
-- **GitHub Issues**: https://github.com/applied-artificial-intelligence/claude-code-plugins/issues
-- **Discussions**: https://github.com/applied-artificial-intelligence/claude-code-plugins/discussions
+- **GitHub Issues**: https://github.com/applied-artificial-intelligence/claude-agent-framework/issues
+- **Discussions**: https://github.com/applied-artificial-intelligence/claude-agent-framework/discussions
 
 **What to include in bug reports**:
 - Platform (Docker/macOS/Ubuntu)

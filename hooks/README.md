@@ -208,8 +208,8 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ```bash
 # Copy both hooks
-cp ~/applied-ai/claude-code-plugins/hooks/ai-cost-guard.sh ~/.claude/hooks/
-cp ~/applied-ai/claude-code-plugins/hooks/gpu-memory-guard.sh ~/.claude/hooks/
+cp ~/applied-ai/claude-agent-framework/hooks/ai-cost-guard.sh ~/.claude/hooks/
+cp ~/applied-ai/claude-agent-framework/hooks/gpu-memory-guard.sh ~/.claude/hooks/
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh

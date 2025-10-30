@@ -263,8 +263,8 @@ Currently, testing is manual. We're working on automated testing.
 
 1. **Create a test project**:
    ```bash
-   mkdir ~/test-claude-code-plugins
-   cd ~/test-claude-code-plugins
+   mkdir ~/test-claude-agent-framework
+   cd ~/test-claude-agent-framework
    git init
    ```
 

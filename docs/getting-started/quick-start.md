@@ -633,8 +633,8 @@ Now that you know the workflow:
 
 - **Full Documentation**: [Documentation Index](../README.md)
 - **Plugin READMEs**: Detailed command references in each plugin
-- **GitHub Issues**: [Report bugs](https://github.com/applied-artificial-intelligence/claude-code-plugins/issues)
-- **Discussions**: [Ask questions](https://github.com/applied-artificial-intelligence/claude-code-plugins/discussions)
+- **GitHub Issues**: [Report bugs](https://github.com/applied-artificial-intelligence/claude-agent-framework/issues)
+- **Discussions**: [Ask questions](https://github.com/applied-artificial-intelligence/claude-agent-framework/discussions)
 
 ---
 

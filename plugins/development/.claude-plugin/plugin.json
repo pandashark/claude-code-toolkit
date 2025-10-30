@@ -8,6 +8,6 @@
   "keywords": ["development", "testing", "quality", "analysis", "debugging", "documentation", "git"],
   "commands": ["./commands/*.md"],
   "agents": ["./agents/architect.md", "./agents/code-reviewer.md", "./agents/test-engineer.md"],
-  "repository": "https://github.com/applied-artificial-intelligence/claude-code-plugins",
+  "repository": "https://github.com/applied-artificial-intelligence/claude-agent-framework",
   "license": "MIT"
 }

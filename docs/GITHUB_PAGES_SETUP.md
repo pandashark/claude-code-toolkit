@@ -4,7 +4,7 @@ This guide explains how to enable and maintain the GitHub Pages documentation si
 
 ## Current Setup
 
-**Documentation Site**: https://applied-artificial-intelligence.github.io/claude-code-plugins/
+**Documentation Site**: https://applied-artificial-intelligence.github.io/claude-agent-framework/
 
 **Source**: `/docs` directory on `main` branch
 
@@ -14,7 +14,7 @@ This guide explains how to enable and maintain the GitHub Pages documentation si
 
 ### Via GitHub Web Interface
 
-1. Go to repository: https://github.com/applied-artificial-intelligence/claude-code-plugins
+1. Go to repository: https://github.com/applied-artificial-intelligence/claude-agent-framework
 2. Click **Settings** tab
 3. Navigate to **Pages** (left sidebar)
 4. Under **Source**:
@@ -22,7 +22,7 @@ This guide explains how to enable and maintain the GitHub Pages documentation si
    - Folder: `/docs`
    - Click **Save**
 5. Wait 1-2 minutes for initial build
-6. Site will be live at: `https://applied-artificial-intelligence.github.io/claude-code-plugins/`
+6. Site will be live at: `https://applied-artificial-intelligence.github.io/claude-agent-framework/`
 
 ### Via GitHub CLI (Alternative)
 
@@ -49,7 +49,7 @@ bundle install
 bundle exec jekyll serve
 
 # Open in browser
-open http://localhost:4000/claude-code-plugins/
+open http://localhost:4000/claude-agent-framework/
 ```
 
 ### Live Reload
@@ -116,7 +116,7 @@ parent: Guides
 2. Test locally: `bundle exec jekyll serve`
 3. Commit and push to `main`
 4. GitHub Actions builds and deploys automatically (2-3 minutes)
-5. Check live site: https://applied-artificial-intelligence.github.io/claude-code-plugins/
+5. Check live site: https://applied-artificial-intelligence.github.io/claude-agent-framework/
 
 ### Quick Edits
 

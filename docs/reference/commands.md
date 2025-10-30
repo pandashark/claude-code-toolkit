@@ -29,7 +29,7 @@ documentation for all available commands organized by plugin.
 
 **Category**: core
 
-**Source**: [https://github.com/applied-artificial-intelligence/claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins/core)
+**Source**: [https://github.com/applied-artificial-intelligence/claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins/core)
 
 ### Commands
 
@@ -181,7 +181,7 @@ Manage work units and parallel streams
 
 **Category**: development
 
-**Source**: [https://github.com/applied-artificial-intelligence/claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins/development)
+**Source**: [https://github.com/applied-artificial-intelligence/claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins/development)
 
 ### Commands
 
@@ -273,7 +273,7 @@ Test-driven development workflow using test-engineer agent
 
 **Category**: tools
 
-**Source**: [https://github.com/applied-artificial-intelligence/claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins/git)
+**Source**: [https://github.com/applied-artificial-intelligence/claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins/git)
 
 ### Commands
 
@@ -295,7 +295,7 @@ Unified git operations including commits, pull requests, and issue management
 
 **Category**: core
 
-**Source**: [https://github.com/applied-artificial-intelligence/claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins/memory)
+**Source**: [https://github.com/applied-artificial-intelligence/claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins/memory)
 
 ### Commands
 
@@ -337,7 +337,7 @@ Interactive memory maintenance with add/update/remove/relocate operations
 
 **Category**: workflow
 
-**Source**: [https://github.com/applied-artificial-intelligence/claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins/workflow)
+**Source**: [https://github.com/applied-artificial-intelligence/claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins/workflow)
 
 ### Commands
 

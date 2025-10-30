@@ -34,7 +34,7 @@ Claude Code Plugins extends Anthropic's Claude Code with structured development 
 ### Component Structure
 
 ```
-claude-code-plugins/
+claude-agent-framework/
 ├── plugins/                # Core plugin system
 │   ├── system/            # System configuration (4 commands)
 │   ├── workflow/          # Development workflow (6 commands)
@@ -108,8 +108,8 @@ All commands are **stateless markdown files** that execute in the project direct
 
 ```bash
 # Clone repository
-git clone https://github.com/[your-org]/claude-code-plugins.git
-cd claude-code-plugins
+git clone https://github.com/[your-org]/claude-agent-framework.git
+cd claude-agent-framework
 
 # Install plugins to Claude Code
 ./scripts/install.sh
@@ -129,7 +129,7 @@ Add to project's `.claude/settings.json`:
     "local": {
       "source": {
         "source": "directory",
-        "path": "/path/to/claude-code-plugins/plugins"
+        "path": "/path/to/claude-agent-framework/plugins"
       }
     }
   },
@@ -606,7 +606,7 @@ cd /path/to/project
 - **Documentation**: Check plugin README files for detailed command usage
 - **System Health**: Run `/system:status` to verify framework setup
 - **Compliance**: Run `/system:audit` to check for issues
-- **GitHub Issues**: https://github.com/[your-org]/claude-code-plugins/issues
+- **GitHub Issues**: https://github.com/[your-org]/claude-agent-framework/issues
 
 ---
 
@@ -650,4 +650,4 @@ Framework developed through 6+ months of production use across book authoring, q
 - **Claude Code Documentation**: https://docs.claude.com/claude-code
 - **MCP Specification**: https://modelcontextprotocol.io
 - **Plugin Development**: See plugin README files for examples
-- **GitHub Repository**: https://github.com/[your-org]/claude-code-plugins
+- **GitHub Repository**: https://github.com/[your-org]/claude-agent-framework

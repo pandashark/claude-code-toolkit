@@ -33,7 +33,7 @@ Add to `.claude/settings.json`:
     "examples": {
       "source": {
         "source": "directory",
-        "path": "/path/to/claude-code-plugins/examples"
+        "path": "/path/to/claude-agent-framework/examples"
       }
     }
   },

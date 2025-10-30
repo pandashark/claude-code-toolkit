@@ -60,7 +60,7 @@ src/commands/*.md                       │
 ### Proposed Structure
 
 ```
-claude-code-plugins/
+claude-agent-framework/
 ├── src/                              # Development source
 │   ├── utils/
 │   │   ├── common.sh                 # Canonical utilities (single source of truth)
@@ -187,14 +187,14 @@ require_tool() {
 #!/bin/bash
 set -euo pipefail
 
-# Build script for claude-code-plugins
+# Build script for claude-agent-framework
 # Injects canonical utilities into command markdown files
 
 readonly SRC_UTILS="src/utils/common.sh"
 readonly PLUGINS_DIR="plugins"
 readonly MARKER="<!-- INJECT_UTILITIES -->"
 
-echo "🔨 Building claude-code-plugins"
+echo "🔨 Building claude-agent-framework"
 echo "════════════════════════════════"
 
 # Validate canonical utilities exist

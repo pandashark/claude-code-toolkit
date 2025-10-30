@@ -336,8 +336,8 @@ How this integrates with system, workflow, etc.
 
 **Setup test project**:
 ```bash
-mkdir ~/test-claude-code-plugins
-cd ~/test-claude-code-plugins
+mkdir ~/test-claude-agent-framework
+cd ~/test-claude-agent-framework
 git init
 ```
 

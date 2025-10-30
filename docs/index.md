@@ -13,7 +13,7 @@ Production-ready workflow framework that adds structured development patterns, w
 {: .fs-6 .fw-300 }
 
 [Get Started](getting-started/installation){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[View on GitHub](https://github.com/applied-artificial-intelligence/claude-code-plugins){: .btn .fs-5 .mb-4 .mb-md-0 }
+[View on GitHub](https://github.com/applied-artificial-intelligence/claude-agent-framework){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -118,8 +118,8 @@ Proven patterns for Serena (70-90% token reduction), Chrome DevTools, Context7, 
 ```bash
 # Clone repository
 cd ~/repos
-git clone git@github.com:applied-artificial-intelligence/claude-code-plugins.git
-cd claude-code-plugins
+git clone git@github.com:applied-artificial-intelligence/claude-agent-framework.git
+cd claude-agent-framework
 
 # Install plugins
 ./scripts/install.sh
@@ -189,7 +189,7 @@ Custom plugin development, team training, enterprise support for specialized nee
 
 ## Community
 
-- **GitHub**: [Report issues](https://github.com/applied-artificial-intelligence/claude-code-plugins/issues)
+- **GitHub**: [Report issues](https://github.com/applied-artificial-intelligence/claude-agent-framework/issues)
 - **Website**: [Applied AI](https://applied-ai.com)
 - **Email**: [stefan@applied-ai.com](mailto:stefan@applied-ai.com)
 

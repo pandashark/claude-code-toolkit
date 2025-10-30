@@ -83,10 +83,10 @@ Create or update your Claude Code settings file:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   }
@@ -100,19 +100,19 @@ Add the plugins you want to enable:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true,
-    "development@claude-code-plugins": true,
-    "git@claude-code-plugins": true,
-    "memory@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true,
+    "development@claude-agent-framework": true,
+    "git@claude-agent-framework": true,
+    "memory@claude-agent-framework": true
   }
 }
 ```
@@ -132,10 +132,10 @@ Install from a local directory (useful for development or testing).
 cd ~/projects  # or wherever you prefer
 
 # Clone the repository
-git clone https://github.com/applied-artificial-intelligence/claude-code-plugins.git
+git clone https://github.com/applied-artificial-intelligence/claude-agent-framework.git
 
 # Verify structure
-ls claude-code-plugins/plugins
+ls claude-agent-framework/plugins
 # Should show: core development git memory workflow
 ```
 
@@ -146,19 +146,19 @@ Update your settings to point to the local directory:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins-local": {
+    "claude-agent-framework-local": {
       "source": {
         "source": "directory",
-        "path": "/full/path/to/claude-code-plugins"
+        "path": "/full/path/to/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins-local": true,
-    "workflow@claude-code-plugins-local": true,
-    "development@claude-code-plugins-local": true,
-    "git@claude-code-plugins-local": true,
-    "memory@claude-code-plugins-local": true
+    "system@claude-agent-framework-local": true,
+    "workflow@claude-agent-framework-local": true,
+    "development@claude-agent-framework-local": true,
+    "git@claude-agent-framework-local": true,
+    "memory@claude-agent-framework-local": true
   }
 }
 ```
@@ -189,16 +189,16 @@ Create `.claude/settings.json`:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true
   }
 }
 ```
@@ -214,20 +214,20 @@ Bare minimum to get started (enables all 6 core plugins):
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "agents@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true,
-    "development@claude-code-plugins": true,
-    "git@claude-code-plugins": true,
-    "memory@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "agents@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true,
+    "development@claude-agent-framework": true,
+    "git@claude-agent-framework": true,
+    "memory@claude-agent-framework": true
   }
 }
 ```
@@ -240,16 +240,16 @@ Enable only the plugins you need:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true
   }
 }
 ```
@@ -258,16 +258,16 @@ Enable only the plugins you need:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "development@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "development@claude-agent-framework": true
   }
 }
 ```
@@ -283,33 +283,33 @@ Some plugins accept configuration options:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true,
-    "development@claude-code-plugins": true,
-    "git@claude-code-plugins": true,
-    "memory@claude-code-plugins": true
+    "system@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true,
+    "development@claude-agent-framework": true,
+    "git@claude-agent-framework": true,
+    "memory@claude-agent-framework": true
   },
   "pluginSettings": {
-    "system@claude-code-plugins": {
+    "system@claude-agent-framework": {
       "performance": {
         "tokenWarningThreshold": 0.8,
         "tokenCriticalThreshold": 0.9
       }
     },
-    "workflow@claude-code-plugins": {
+    "workflow@claude-agent-framework": {
       "explore": {
         "defaultThoroughness": "medium"
       }
     },
-    "memory@claude-code-plugins": {
+    "memory@claude-agent-framework": {
       "autoReflection": true,
       "staleThresholdDays": 30
     }
@@ -324,10 +324,10 @@ Use plugins from multiple sources:
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-code-plugins": {
+    "claude-agent-framework": {
       "source": {
         "source": "github",
-        "repo": "applied-artificial-intelligence/claude-code-plugins"
+        "repo": "applied-artificial-intelligence/claude-agent-framework"
       }
     },
     "my-custom-plugins": {
@@ -338,8 +338,8 @@ Use plugins from multiple sources:
     }
   },
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
-    "workflow@claude-code-plugins": true,
+    "system@claude-agent-framework": true,
+    "workflow@claude-agent-framework": true,
     "my-plugin@my-custom-plugins": true
   }
 }
@@ -469,13 +469,13 @@ If the command runs and creates exploration output, your installation is complet
 1. **Check file permissions**
    ```bash
    # Plugin commands should be readable
-   ls -la ~/claude-code-plugins/plugins/core/commands/
+   ls -la ~/claude-agent-framework/plugins/core/commands/
    # All .md files should be readable (r--)
    ```
 
 2. **Fix permissions if needed**
    ```bash
-   chmod -R u+r ~/claude-code-plugins/plugins/
+   chmod -R u+r ~/claude-agent-framework/plugins/
    ```
 
 ### GitHub Authentication Errors
@@ -509,8 +509,8 @@ If the command runs and creates exploration output, your installation is complet
 1. **Check individual plugin enablement**
    ```json
    "enabledPlugins": {
-     "system@claude-code-plugins": true,
-     "workflow@claude-code-plugins": true,
+     "system@claude-agent-framework": true,
+     "workflow@claude-agent-framework": true,
      // Make sure all plugins you want are enabled
    }
    ```
@@ -557,8 +557,8 @@ Now that you have Claude Code Plugins installed:
 If you're still having trouble:
 
 - **Documentation**: Browse the [full documentation](../README.md)
-- **Issues**: Report bugs at [GitHub Issues](https://github.com/applied-artificial-intelligence/claude-code-plugins/issues)
-- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/applied-artificial-intelligence/claude-code-plugins/discussions)
+- **Issues**: Report bugs at [GitHub Issues](https://github.com/applied-artificial-intelligence/claude-agent-framework/issues)
+- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/applied-artificial-intelligence/claude-agent-framework/discussions)
 
 ## Updating Plugins
 
@@ -573,7 +573,7 @@ Plugins from GitHub marketplace auto-update:
 For local installations:
 
 ```bash
-cd ~/claude-code-plugins  # or your installation path
+cd ~/claude-agent-framework  # or your installation path
 git pull origin main
 # Restart Claude Code to load updated plugins
 ```
@@ -587,7 +587,7 @@ Edit your settings.json and remove plugins from `enabledPlugins`:
 ```json
 {
   "enabledPlugins": {
-    "system@claude-code-plugins": true,
+    "system@claude-agent-framework": true,
     // Remove line for plugin you want to disable
   }
 }
@@ -608,7 +608,7 @@ To completely remove the marketplace:
 If installed locally:
 
 ```bash
-rm -rf ~/claude-code-plugins  # or your installation path
+rm -rf ~/claude-agent-framework  # or your installation path
 ```
 
 Then update settings.json to remove marketplace reference.

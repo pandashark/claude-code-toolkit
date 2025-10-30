@@ -456,7 +456,7 @@ Use the translator agent to translate this to Spanish: "Welcome to Claude Code"
 
 ## Development
 
-This plugin was created following the [First Plugin Tutorial](https://github.com/applied-artificial-intelligence/claude-code-plugins/blob/main/docs/getting-started/first-plugin.md).
+This plugin was created following the [First Plugin Tutorial](https://github.com/applied-artificial-intelligence/claude-agent-framework/blob/main/docs/getting-started/first-plugin.md).
 
 ## License
 
@@ -772,7 +772,7 @@ fi
 
 Now that you've created your first plugin:
 
-1. **Explore Existing Plugins**: Study the [claude-code-plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins) repository
+1. **Explore Existing Plugins**: Study the [claude-agent-framework](https://github.com/applied-artificial-intelligence/claude-agent-framework) repository
    - Look at `plugins/core/` for command examples
    - Study `plugins/workflow/` for complex workflows
    - Review `plugins/development/` for agent patterns
@@ -789,7 +789,7 @@ Now that you've created your first plugin:
 
 4. **Share Your Work**: Contribute to the ecosystem
    - Publish your plugin to GitHub
-   - Share in [Discussions](https://github.com/applied-artificial-intelligence/claude-code-plugins/discussions)
+   - Share in [Discussions](https://github.com/applied-artificial-intelligence/claude-agent-framework/discussions)
    - Consider submitting to the official marketplace
 
 ## Quick Reference
@@ -855,9 +855,9 @@ You are a specialized agent that [does something specific].
 ## Getting Help
 
 - **Documentation**: [Full plugin documentation](../README.md)
-- **Examples**: Browse [official plugins](https://github.com/applied-artificial-intelligence/claude-code-plugins/tree/main/plugins)
-- **Issues**: Report bugs at [GitHub Issues](https://github.com/applied-artificial-intelligence/claude-code-plugins/issues)
-- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/applied-artificial-intelligence/claude-code-plugins/discussions)
+- **Examples**: Browse [official plugins](https://github.com/applied-artificial-intelligence/claude-agent-framework/tree/main/plugins)
+- **Issues**: Report bugs at [GitHub Issues](https://github.com/applied-artificial-intelligence/claude-agent-framework/issues)
+- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/applied-artificial-intelligence/claude-agent-framework/discussions)
 
 ---
 

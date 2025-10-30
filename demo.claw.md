@@ -297,7 +297,7 @@ In 5 minutes, you've seen how to:
 ### Plugin System
 
 ```
-claude-code-plugins/
+claude-agent-framework/
 ├── plugins/                  # Core plugins
 │   ├── system/              # System utilities (4 commands)
 │   ├── workflow/            # Task workflows (6 commands)
@@ -442,7 +442,7 @@ Skills reveal complexity gradually:
 - **Documentation**: Check plugin README files
 - **Status**: Run `/system:status` for health check
 - **Audit**: Run `/system:audit` to verify framework setup
-- **Issues**: https://github.com/[your-org]/claude-code-plugins/issues
+- **Issues**: https://github.com/[your-org]/claude-agent-framework/issues
 
 ---
 
@@ -547,8 +547,8 @@ We value your input! Please share:
 - **What's missing** - Features you wish existed
 - **How you use it** - Real-world workflows and patterns
 
-**GitHub Issues**: https://github.com/[your-org]/claude-code-plugins/issues
-**Discussions**: https://github.com/[your-org]/claude-code-plugins/discussions
+**GitHub Issues**: https://github.com/[your-org]/claude-agent-framework/issues
+**Discussions**: https://github.com/[your-org]/claude-agent-framework/discussions
 
 ---
 

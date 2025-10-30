@@ -37,7 +37,7 @@ for i in range(10000):
 
 ### Test Results
 
-**Command**: `bash ~/applied-ai/claude-code-plugins/hooks/ai-cost-guard.sh /tmp/test_cost_patterns.py`
+**Command**: `bash ~/applied-ai/claude-agent-framework/hooks/ai-cost-guard.sh /tmp/test_cost_patterns.py`
 
 **Output**:
 ```
@@ -130,7 +130,7 @@ for batch in dataloader:
 
 ### Test Results
 
-**Command**: `bash ~/applied-ai/claude-code-plugins/hooks/gpu-memory-guard.sh /tmp/test_gpu_memory.py`
+**Command**: `bash ~/applied-ai/claude-agent-framework/hooks/gpu-memory-guard.sh /tmp/test_gpu_memory.py`
 
 **Output**: ❌ **Syntax error** (associative arrays with complex values)
 
@@ -163,7 +163,7 @@ fi
 
 ### Test Results (After Simplification)
 
-**Command**: `bash ~/applied-ai/claude-code-plugins/hooks/gpu-memory-guard.sh /tmp/test_gpu_memory.py`
+**Command**: `bash ~/applied-ai/claude-agent-framework/hooks/gpu-memory-guard.sh /tmp/test_gpu_memory.py`
 
 **Output**:
 ```
@@ -245,7 +245,7 @@ File: /tmp/test_gpu_memory.py
 **Test Scenario 1: RAG Implementation Skill**
 ```bash
 # 1. Install skill
-cp -r ~/applied-ai/claude-code-plugins/skills/rag-implementation ~/.claude/skills/
+cp -r ~/applied-ai/claude-agent-framework/skills/rag-implementation ~/.claude/skills/
 
 # 2. Start Claude Code and run:
 /workflow:plan "Build RAG system for documentation search"
@@ -261,7 +261,7 @@ cp -r ~/applied-ai/claude-code-plugins/skills/rag-implementation ~/.claude/skill
 **Test Scenario 2: Transformers Skill**
 ```bash
 # 1. Install skill
-cp -r ~/applied-ai/claude-code-plugins/skills/huggingface-transformers ~/.claude/skills/
+cp -r ~/applied-ai/claude-agent-framework/skills/huggingface-transformers ~/.claude/skills/
 
 # 2. Start Claude Code and run:
 /workflow:plan "Fine-tune LLaMA-2-7b for sentiment classification"
@@ -276,7 +276,7 @@ cp -r ~/applied-ai/claude-code-plugins/skills/huggingface-transformers ~/.claude
 **Test Scenario 3: LLM Evaluation Skill**
 ```bash
 # 1. Install skill
-cp -r ~/applied-ai/claude-code-plugins/skills/llm-evaluation ~/.claude/skills/
+cp -r ~/applied-ai/claude-agent-framework/skills/llm-evaluation ~/.claude/skills/
 
 # 2. Start Claude Code and run:
 /development:test "Create test suite for RAG chatbot"
@@ -293,7 +293,7 @@ cp -r ~/applied-ai/claude-code-plugins/skills/llm-evaluation ~/.claude/skills/
 **Command**: Validate YAML frontmatter and markdown
 ```bash
 # Check RAG skill
-head -20 ~/applied-ai/claude-code-plugins/skills/rag-implementation/SKILL.md
+head -20 ~/applied-ai/claude-agent-framework/skills/rag-implementation/SKILL.md
 
 # Expected: Valid YAML frontmatter with:
 # - name
@@ -355,16 +355,16 @@ head -20 ~/applied-ai/claude-code-plugins/skills/rag-implementation/SKILL.md
 
 ```bash
 # Test AI Cost Guard
-bash ~/applied-ai/claude-code-plugins/hooks/ai-cost-guard.sh /path/to/python/file.py
+bash ~/applied-ai/claude-agent-framework/hooks/ai-cost-guard.sh /path/to/python/file.py
 
 # Validate skills frontmatter
-head -30 ~/applied-ai/claude-code-plugins/skills/*/SKILL.md
+head -30 ~/applied-ai/claude-agent-framework/skills/*/SKILL.md
 
 # Check hook executability
-ls -la ~/applied-ai/claude-code-plugins/hooks/*.sh
+ls -la ~/applied-ai/claude-agent-framework/hooks/*.sh
 
 # Syntax check hooks
-bash -n ~/applied-ai/claude-code-plugins/hooks/*.sh
+bash -n ~/applied-ai/claude-agent-framework/hooks/*.sh
 ```
 
 ---
