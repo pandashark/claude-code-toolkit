@@ -1,6 +1,11 @@
+---
+name: rag-implementation
+description: Comprehensive guide to implementing RAG systems including vector database selection, chunking strategies, embedding models, and retrieval optimization. Use when building RAG systems, implementing semantic search, optimizing retrieval quality, or debugging RAG performance issues.
+---
+
 # RAG Implementation Patterns
 
-Comprehensive guide to implementing Retrieval-Augmented Generation (RAG) systems including vector database selection, chunking strategies, embedding models, retrieval optimization, and production deployment patterns. Use when building RAG systems, implementing semantic search, optimizing retrieval quality, or debugging RAG performance issues.
+Comprehensive guide to implementing Retrieval-Augmented Generation (RAG) systems including vector database selection, chunking strategies, embedding models, retrieval optimization, and production deployment patterns.
 
 ---
 

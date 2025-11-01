@@ -1,6 +1,11 @@
+---
+name: llm-evaluation
+description: LLM evaluation and testing patterns including prompt testing, hallucination detection, benchmark creation, and quality metrics. Use when testing LLM applications, validating prompt quality, implementing systematic evaluation, or measuring LLM performance.
+---
+
 # LLM Evaluation & Testing
 
-Comprehensive guide to evaluating and testing LLM applications including prompt testing, output validation, hallucination detection, benchmark creation, A/B testing, and quality metrics. Use when testing LLM applications, validating prompt quality, implementing systematic LLM evaluation, or measuring model performance.
+Comprehensive guide to evaluating and testing LLM applications including prompt testing, output validation, hallucination detection, benchmark creation, A/B testing, and quality metrics.
 
 ---
 

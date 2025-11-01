@@ -1,6 +1,11 @@
+---
+name: huggingface-transformers
+description: Hugging Face Transformers best practices including model loading, tokenization, fine-tuning workflows, and inference optimization. Use when working with transformer models, fine-tuning LLMs, implementing NLP tasks, or optimizing transformer inference.
+---
+
 # Hugging Face Transformers Best Practices
 
-Comprehensive guide to using the Hugging Face Transformers library including model loading, tokenization, fine-tuning workflows, pipeline usage, custom datasets, and deployment optimization. Use when working with pre-trained models, fine-tuning LLMs, implementing NLP tasks, or optimizing transformer inference.
+Comprehensive guide to using the Hugging Face Transformers library including model loading, tokenization, fine-tuning workflows, pipeline usage, custom datasets, and deployment optimization.
 
 ---
 
