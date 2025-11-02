@@ -14,5 +14,9 @@
     "./commands/review.md",
     "./commands/test.md"
   ],
-  "agents": ["./agents/architect.md", "./agents/code-reviewer.md", "./agents/test-engineer.md"]
+  "agents": ["./agents/architect.md", "./agents/code-reviewer.md", "./agents/test-engineer.md"],
+  "skills": [
+    "./skills/data-modeling-patterns",
+    "./skills/error-recovery-patterns"
+  ]
 }

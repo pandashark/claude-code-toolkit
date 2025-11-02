@@ -15,5 +15,9 @@
   "commands": [
     "./commands/agent.md",
     "./commands/serena.md"
+  ],
+  "agents": [
+    "./agents/auditor.md",
+    "./agents/reasoning-specialist.md"
   ]
 }
