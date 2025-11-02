@@ -2,14 +2,11 @@
 allowed-tools: [Read, Write, MultiEdit, Bash, Glob, mcp__context7__resolve-library-id, mcp__context7__get-library-docs]
 argument-hint: "[explore|existing|python|javascript] [project-name] [--minimal|--standard|--full] | --init-user [--force] | --statusline"
 description: Initialize new projects with Claude framework integration or setup user configuration
-skills: [project-setup-patterns]
 ---
 
 # Project Setup
 
 I'll set up a new project with the Claude Code Framework, optimized for your chosen language and project type.
-
-**Note**: This command uses the `project-setup-patterns` skill to load templates on-demand, reducing token usage from ~10,400 to ~2,500 tokens.
 
 ## Usage
 
@@ -84,11 +81,6 @@ readonly TYPE_PYTHON="python"
 readonly TYPE_JAVASCRIPT="javascript"
 readonly TYPE_EXPLORE="explore"
 readonly TYPE_EXISTING="existing"
-
-# Skill path for templates (loaded automatically by Claude Code)
-readonly SKILL_PATH="$HOME/.claude/skills/project-setup-patterns"
-# Note: Templates are loaded from the skill when needed, not all upfront
-# This reduces token usage from ~10,400 to ~2,500
 
 # Parse command line arguments
 INIT_USER=false
@@ -461,13 +453,41 @@ case "$SETUP_TYPE" in
         case "$SETUP_LEVEL" in
             minimal)
                 echo "Creating minimal Python project..."
-                echo ""
-                echo "I'll create pyproject.toml and .gitignore using the minimal Python template from the project-setup-patterns skill."
-                echo ""
 
-                # Note: Claude will generate these files based on templates/python/minimal.md from the skill
-                # The skill contains the minimal pyproject.toml and .gitignore templates
-                # Generate with $PROJECT_NAME substituted
+                # Basic pyproject.toml only
+                cat > pyproject.toml << 'MINIMAL_EOF'
+[project]
+name = "$PROJECT_NAME"
+version = "0.1.0"
+description = "A Python package"
+requires-python = ">=3.9"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+MINIMAL_EOF
+                # Variable substitution
+                sed -i "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
+
+                # Minimal gitignore
+                cat > .gitignore << 'GITIGNORE_EOF'
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+*.log
+.DS_Store
+GITIGNORE_EOF
 
                 echo "✅ Minimal Python setup complete"
                 ;;
@@ -507,18 +527,170 @@ case "$SETUP_TYPE" in
 
             standard|*)
                 echo "Creating standard Python project with quality tools..."
-                echo ""
-                echo "I'll create pyproject.toml, .pre-commit-config.yaml, Makefile, and .gitignore"
-                echo "using the standard Python template from the project-setup-patterns skill."
-                echo ""
 
-                # Note: Claude will generate these files based on templates/python/standard.md from the skill
-                # The skill contains:
-                # - pyproject.toml with pytest, ruff, mypy, pre-commit
-                # - .pre-commit-config.yaml with ruff, mypy hooks
-                # - Makefile with dev commands
-                # - Comprehensive .gitignore
-                # Generate with $PROJECT_NAME substituted
+                # Generate standard pyproject.toml with current best practices
+                cat > pyproject.toml << 'STANDARD_EOF'
+[project]
+name = "$PROJECT_NAME"
+version = "0.1.0"
+description = "A Python package"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5.0",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]  # Line length handled by formatter
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src"]
+STANDARD_EOF
+                # Variable substitution
+                sed -i "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
+
+                # Generate pre-commit config
+                cat > .pre-commit-config.yaml << 'PRECOMMIT_EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+        files: ^src/
+PRECOMMIT_EOF
+
+                # Generate Makefile
+                cat > Makefile << 'MAKEFILE_EOF'
+.PHONY: help install dev test lint format type-check clean
+
+help:
+	@echo "Available commands:"
+	@echo "  make install    Install package"
+	@echo "  make dev        Install with dev dependencies"
+	@echo "  make test       Run tests"
+	@echo "  make lint       Run linting"
+	@echo "  make format     Format code"
+	@echo "  make type-check Run type checking"
+	@echo "  make clean      Clean build artifacts"
+
+install:
+	pip install -e .
+
+dev:
+	pip install -e ".[dev]"
+	pre-commit install
+
+test:
+	pytest
+
+lint:
+	ruff check src/ tests/
+
+format:
+	ruff format src/ tests/
+
+type-check:
+	mypy src/
+
+clean:
+	rm -rf build/ dist/ *.egg-info
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+	find . -type f -name "*.pyc" -delete
+MAKEFILE_EOF
+
+                # Standard gitignore
+                cat > .gitignore << 'GITIGNORE_EOF'
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+*.log
+.env
+GITIGNORE_EOF
 
                 echo "✅ Standard Python setup complete"
                 ;;
@@ -593,21 +765,58 @@ EOF
 
     javascript|js)
         echo "🌐 Setting up JavaScript/Node.js project..."
-        echo ""
-        echo "I'll create package.json, src/index.js, and tests/index.test.js"
-        echo "using the JavaScript template from the project-setup-patterns skill."
-        echo ""
 
-        # Create directories
+        # Create package.json
+        cat > package.json << EOF
+{
+  "name": "$PROJECT_NAME",
+  "version": "0.1.0",
+  "description": "A JavaScript project",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
+EOF
+
+        # Create basic structure
         mkdir -p src
         mkdir -p tests
 
-        # Note: Claude will generate these files based on templates/javascript/standard.md from the skill
-        # The skill contains:
-        # - package.json with Jest, ESLint, Prettier
-        # - src/index.js with basic structure
-        # - tests/index.test.js with Jest test
-        # Generate with $PROJECT_NAME substituted
+        cat > src/index.js << EOF
+/**
+ * Main entry point for $PROJECT_NAME
+ */
+
+function main() {
+    console.log("Hello from $PROJECT_NAME!");
+}
+
+if (require.main === module) {
+    main();
+}
+
+module.exports = { main };
+EOF
+
+        cat > tests/index.test.js << EOF
+const { main } = require('../src/index');
+
+describe('main function', () => {
+    test('should run without errors', () => {
+        expect(() => main()).not.toThrow();
+    });
+});
+EOF
 
         echo "✅ JavaScript project structure created"
         ;;
@@ -640,15 +849,34 @@ mkdir -p .claude/hooks || { echo "ERROR: Failed to create .claude/hooks" >&2; ex
 
 # Create security hooks configuration
 echo "🔒 Setting up security hooks..."
-echo ""
-echo "I'll create .claude/settings.json with security hooks"
-echo "using the security_hooks.json template from the project-setup-patterns skill."
-echo ""
-
-# Note: Claude will generate .claude/settings.json based on templates/patterns/security_hooks.json from the skill
-# The skill contains comprehensive security hooks:
-# - PreToolUse: Blocks rm -rf, sudo, chmod 777
-# - PostToolUse: Auto-formats with ruff, prettier, eslint; validates JSON and markdown
+cat > .claude/settings.json << 'SECURITY_EOF'
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=\"$CLAUDE_TOOL_INPUT\"; if echo \"$input\" | grep -q 'rm -rf'; then echo '🚨 BLOCKED: Dangerous rm -rf command detected!' >&2 && echo 'Use git clean or specific file deletion instead.' >&2 && exit 2; fi; if echo \"$input\" | grep -q 'sudo'; then echo '🚨 BLOCKED: sudo command not allowed in development!' >&2 && echo 'Review your command and run manually if needed.' >&2 && exit 2; fi; if echo \"$input\" | grep -q 'chmod 777'; then echo '⚠️  BLOCKED: chmod 777 is a security risk!' >&2 && echo 'Use specific permissions like 755 or 644.' >&2 && exit 2; fi"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_TOOL_INPUT_FILE\"; if [ -n \"$file\" ]; then ext=\"${file##*.}\"; case \"$ext\" in py) echo '🔧 Python file edited: '$file && if command -v ruff >/dev/null 2>&1; then if ruff format \"$file\" 2>/dev/null; then echo '✅ ruff format applied'; else echo '⚠️  ruff format failed - check Python syntax'; fi && if ruff check \"$file\" --fix 2>/dev/null; then echo '✅ ruff linting passed'; else echo '⚠️  ruff found issues - review the warnings'; fi; else echo '💡 Install ruff for automatic formatting & linting: pip install ruff'; fi ;; js|jsx|ts|tsx) echo '🔧 JavaScript/TypeScript file edited: '$file && if command -v prettier >/dev/null 2>&1; then if prettier --write \"$file\" 2>/dev/null; then echo '✅ prettier formatting applied'; else echo '⚠️  prettier failed - check syntax'; fi; else echo '💡 Install prettier: npm install prettier'; fi && if command -v eslint >/dev/null 2>&1; then if eslint \"$file\" --fix 2>/dev/null; then echo '✅ eslint passed'; else echo '⚠️  eslint found issues - review the warnings'; fi; else echo '💡 Install eslint: npm install eslint'; fi ;; json) echo '🔧 JSON file edited: '$file && if python3 -m json.tool \"$file\" >/dev/null 2>&1; then echo '✅ JSON syntax valid'; else echo '❌ Invalid JSON syntax in '$file' - fix required!' >&2 && exit 1; fi ;; md) echo '📝 Markdown file edited: '$file && if command -v markdownlint >/dev/null 2>&1; then if markdownlint \"$file\" 2>/dev/null; then echo '✅ Markdown linting passed'; else echo '⚠️  Markdown formatting issues found'; fi; else echo '💡 Install markdownlint for markdown quality: npm install -g markdownlint-cli'; fi ;; esac; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
+SECURITY_EOF
 
 echo "✅ Security & Quality hooks configured:"
 echo "   🔒 Security: rm -rf, sudo, chmod 777 protection"

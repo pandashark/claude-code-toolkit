@@ -1,22 +1,21 @@
 {
   "name": "system",
   "version": "1.0.0",
-  "description": "System configuration and health monitoring - setup, status, audit, cleanup",
+  "description": "System configuration and health management",
   "author": {
     "name": "Claude Code Framework"
   },
-  "keywords": [
-    "system",
-    "configuration",
-    "setup",
-    "status",
-    "audit",
-    "cleanup"
-  ],
+  "license": "MIT",
   "commands": [
     "./commands/audit.md",
     "./commands/cleanup.md",
     "./commands/setup.md",
+    "./commands/setup-python.md",
+    "./commands/setup-javascript.md",
+    "./commands/setup-existing.md",
+    "./commands/setup-user.md",
+    "./commands/setup-statusline.md",
     "./commands/status.md"
-  ]
+  ],
+  "keywords": ["system", "configuration", "health", "audit", "setup"]
 }
