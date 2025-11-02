@@ -9,7 +9,7 @@
 
 ## Overview
 
-Claude Code Plugins extends Anthropic's Claude Code with structured development workflows, work management, and quality automation. The framework provides 25 commands, 3 agents, 3 AI/ML skills, and 2 proactive hooks across 5 core plugins.
+Claude Code Plugins extends Anthropic's Claude Code with structured development workflows, work management, and quality automation. The framework provides 25 commands, 3 agents, 6 domain skills, and 2 proactive hooks across 5 core plugins.
 
 ### Design Goals
 
@@ -25,7 +25,7 @@ Claude Code Plugins extends Anthropic's Claude Code with structured development 
 - **Memory persistence**: Cross-session context with automatic reflection
 - **Quality automation**: Git safety, pre/post hooks, compliance auditing
 - **Code intelligence**: Semantic code understanding (Serena MCP), 70-90% token reduction
-- **Domain expertise**: AI/ML skills (RAG, Transformers, LLM Evaluation)
+- **Domain expertise**: 6 skills across ML/AI and general development with measurable improvements
 
 ---
 
@@ -41,10 +41,15 @@ claude-agent-framework/
 │   ├── development/       # Code operations (6 commands)
 │   ├── agents/            # Agent invocation (2 commands)
 │   └── memory/            # Context management (7 commands)
-├── skills/                # AI/ML domain skills (3 skills)
-│   ├── rag-implementation/
-│   ├── huggingface-transformers/
-│   └── llm-evaluation/
+├── skills/                # Domain skills (6 skills)
+│   ├── ml-ai/             # ML/AI skills
+│   │   ├── rag-implementation/
+│   │   ├── huggingface-transformers/
+│   │   └── llm-evaluation/
+│   └── general-dev/       # General development skills
+│       ├── docker-optimization/
+│       ├── sql-optimization/
+│       └── api-authentication/
 ├── hooks/                 # Proactive monitoring (2 hooks)
 │   ├── ai-cost-guard.sh
 │   └── gpu-memory-guard.sh
@@ -255,25 +260,76 @@ The framework follows an `explore` → `plan` → `next` → `ship` pattern:
 /development:review src/ --systematic
 ```
 
-### AI/ML Skills
+### Domain Skills (6 Skills)
 
-**Domain Expertise Skills**:
-- `rag-implementation` - RAG architecture and implementation guidance
-- `huggingface-transformers` - Transformer models and fine-tuning
-- `llm-evaluation` - LLM evaluation metrics and frameworks
+Skills use **progressive disclosure** - they auto-load only when relevant to your task, providing deep domain expertise without polluting context.
 
-**Skills activate automatically** when questions match domain:
+#### ML/AI Skills (3 skills)
+
+**RAG Implementation** (`rag-implementation`)
+- Vector database selection (Qdrant, Pinecone, Chroma, Weaviate)
+- Chunking strategies and embedding models
+- Retrieval optimization and hybrid search
+- **Triggers**: "RAG", "vector database", "semantic search", "document retrieval"
+
+**Hugging Face Transformers** (`huggingface-transformers`)
+- Model loading and tokenization patterns
+- Fine-tuning workflows (BERT, GPT, T5, LLaMA)
+- Inference optimization (quantization, ONNX)
+- **Triggers**: "transformers", "BERT", "fine-tune", "tokenizer", "Hugging Face"
+
+**LLM Evaluation** (`llm-evaluation`)
+- Prompt testing and validation
+- Hallucination detection
+- Benchmark creation and A/B testing
+- **Triggers**: "LLM testing", "prompt evaluation", "hallucination", "LLM metrics"
+
+#### General Development Skills (3 skills)
+
+**Docker Optimization** (`docker-optimization`)
+- Multi-stage builds for 85% size reduction (800MB → 120MB)
+- Layer caching strategies for 50-80% faster builds
+- Security hardening (non-root users, secrets management)
+- **Triggers**: "Docker", "Dockerfile", "container size", "image optimization"
+- **Demo value**: 800MB → 120MB Python image (real example included)
+
+**SQL Optimization** (`sql-optimization`)
+- EXPLAIN plan analysis across Postgres/MySQL/SQLite
+- Index strategies (single, composite, partial, covering)
+- N+1 query elimination and pagination optimization
+- **Triggers**: "slow query", "EXPLAIN", "database performance", "SQL optimization"
+- **Demo value**: 3s → 50ms query (60x speedup, real example included)
+
+**API Authentication** (`api-authentication`)
+- JWT, OAuth 2.0, API keys, session-based auth
+- Decision matrix for choosing auth strategy
+- Security best practices and vulnerability prevention
+- **Triggers**: "authentication", "JWT", "OAuth", "API security", "login"
+- **Demo value**: Secure auth on first try, prevents common vulnerabilities
+
+#### How Skills Work
+
+Skills activate automatically when your query matches their domain:
 
 ```bash
-# RAG Implementation Skill activates
-"What's the best vector database for RAG with <1M documents?"
+# Example 1: Docker skill auto-loads
+"My Docker image is 800MB, how do I optimize it?"
+> The "docker-optimization" skill is loading
 
-# HuggingFace Transformers Skill activates
-"How do I fine-tune BERT for text classification?"
+# Example 2: SQL skill auto-loads
+"This query takes 3 seconds, help me optimize it"
+> The "sql-optimization" skill is loading
 
-# LLM Evaluation Skill activates
-"What metrics should I use to evaluate my language model?"
+# Example 3: RAG skill auto-loads
+"What's the best vector database for production RAG?"
+> The "rag-implementation" skill is loading
 ```
+
+**Benefits**:
+- Load knowledge only when needed (no context pollution)
+- 10-20KB of focused expertise per skill
+- Before/after examples showing measurable improvements
+- Works with progressive disclosure for optimal token efficiency
 
 ### Proactive Hooks
 
