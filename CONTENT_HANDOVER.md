@@ -108,7 +108,7 @@ The toolkit is organized into **six namespaces**, each implementing a distinct A
 
 ## 3. Interesting Angles (Ranked)
 
-### Angle 0: "Reality Check: What Customization Cannot Fix" (MUST-LEAD)
+### Angle 0: "Reality Check: The Limits of Customization" (MUST-LEAD)
 
 **Finding**: Claude's behavior = instruction training (immutable) + customization (limited). Toolkit works *within* constraints.
 
@@ -119,7 +119,7 @@ The toolkit is organized into **six namespaces**, each implementing a distinct A
 
 **Bottom Line**: Inspection non-negotiable. Claude IS powerful—but limitations exist that you'll encounter repeatedly.
 
-**Content Angle**: "What Claude Code Customization Can (and Can't) Fix"
+**Content Angle**: "Reality Check: The Limits of Claude Code Customization"
 
 **Why Lead With This**: Sets honest expectations. Establishes credibility. Everything else is "given these constraints, here's what works."
 
@@ -340,7 +340,7 @@ Stateless, terminal-only, context limits (~85% actual when Claude reports 70%), 
 **Immediate**: Pillar post ("6 Months with Claude Code"), update service page, link from README
 
 **Blog Series** (priority order):
-1. "What Claude Code Customization Can (and Can't) Fix" ← **LEAD WITH THIS**
+1. "Reality Check: The Limits of Customization" ← **LEAD WITH THIS**
 2. "Claude Code Isn't Just for Software" (domain adaptation) ← KEY DIFFERENTIATOR
 3. "Why Your Session Quality Drops"
 4. "Six Namespaces: Complete Coverage"

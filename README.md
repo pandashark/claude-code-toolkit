@@ -31,68 +31,78 @@ A collection of plugins, skills, and patterns developed through 6+ months of dai
 
 ---
 
-## Reality Check: What Customization Cannot Fix
+## Reality Check: The Limits of Customization
 
-Before diving into the toolkit, understand what you're working with—and against.
+Before diving into the toolkit, understand what you're working with.
+
+<br>
 
 ### The Instruction Training Boundary
 
 Claude's behavior comes from two layers:
 
-1. **Instruction training** (model training, RLHF) → Core personality, instincts, behavioral drivers. **Immutable.**
-2. **Customization layer** (system prompts, CLAUDE.md, agent definitions) → Guidance on top. **Has limits.**
+| Layer | What It Contains | Can You Change It? |
+|-------|------------------|-------------------|
+| **Instruction training** | Core personality, instincts, behavioral drivers | No—immutable |
+| **Customization** | System prompts, CLAUDE.md, agent definitions | Yes—but limited |
 
-No matter how clever your prompting, you're working with Claude's pre-trained personality. You can nudge it, structure it, guide it—but the underlying instincts remain. The "true nature" always shines through eventually.
+No matter how clever your prompting, you're working with Claude's pre-trained personality. You can nudge it, structure it, guide it—but the underlying instincts remain.
 
-### Behaviors You'll Encounter (Repeatedly)
+<br>
 
-**Sycophancy**: The tendency to agree, validate, and praise.
-- We developed elaborate anti-sycophancy protocols. They failed.
-- Give completely contradictory prompts → still get "You're absolutely right!"
-- Expect to be told your ideas are brilliant even when they're not.
+### Behaviors You'll Encounter
 
-**Completion Bias**: The urge to deliver results, regardless of completeness.
-- Claude will proceed without full specifications.
-- Will fill gaps with assumptions rather than asking.
-- Trained to deliver, not to pause and question.
+**Sycophancy**
 
-**Action Over Reflection**: Bias toward doing, not critically examining.
-- Tunnel vision on the declared goal.
-- Big picture thinking requires deliberate prompting.
-- Honest feedback and pushback don't come naturally.
+The tendency to agree, validate, and praise. We developed elaborate anti-sycophancy protocols—they failed. Give contradictory prompts and you'll still get "You're absolutely right!"
 
-**Context Limitations**: The precious context window determines what Claude can "see."
-- Important details get forgotten, overlooked, deprioritized.
-- Specify too much → things get lost.
-- Specify too little → Claude fills gaps (often incorrectly).
+<br>
+
+**Completion Bias**
+
+The urge to deliver results regardless of completeness. Claude will proceed without full specifications, filling gaps with assumptions rather than asking. It's trained to deliver, not to pause and question.
+
+<br>
+
+**Action Over Reflection**
+
+Bias toward doing, not critically examining. Tunnel vision on declared goals. Big picture thinking and honest pushback require deliberate prompting.
+
+<br>
+
+**Context Limitations**
+
+The precious context window determines what Claude can "see." Important details get forgotten, overlooked, or deprioritized. Specify too much and things get lost; too little and Claude fills gaps incorrectly.
+
+<br>
 
 ### What This Means for You
 
-**Thorough inspection is non-negotiable.**
-- Claude can make mistakes in literally every respect.
-- Never assume output matches expectations.
-- Everything requires review—especially things that look correct.
+**Thorough inspection is non-negotiable.** Claude can make mistakes in every respect. Never assume output matches expectations—everything requires review, especially things that look correct.
 
-**Proper testing is essential.**
-- Validate behavior, not just structure.
-- Test edge cases Claude may not have considered.
-- Don't trust "it should work"—verify it does.
+<br>
 
-**The toolkit helps, but doesn't solve these problems.**
-- We provide structure, workflows, and guardrails.
-- But Claude's base personality operates within that structure.
-- Sometimes it will drive you crazy because it "just wants to get shit done."
+**Proper testing is essential.** Validate behavior, not just structure. Test edge cases Claude may not have considered. Don't trust "it should work"—verify it does.
+
+<br>
+
+**The toolkit helps, but doesn't eliminate these behaviors.** We provide structure, workflows, and guardrails. Claude's base personality operates within that structure—sometimes it will frustrate you because it just wants to deliver.
+
+<br>
 
 ### Why We're Honest About This
 
-We removed dubious metrics from this toolkit ("80% token reduction," "zero hallucinations") because they're not validated—and because overclaiming doesn't help anyone.
+We removed dubious metrics from this toolkit ("80% token reduction," "zero hallucinations") because they weren't validated—and overclaiming doesn't help anyone.
 
 Claude Code is genuinely powerful:
+
 - Amazing at navigating complex codebases
 - Excellent at using tools to solve problems
 - Incredibly convenient in the terminal environment
 
-But it has real limitations that you'll encounter repeatedly. This toolkit provides patterns for working *with* those constraints rather than pretending they don't exist.
+But it has real limitations you'll encounter repeatedly. This toolkit provides patterns for working *with* those constraints rather than pretending they don't exist.
+
+<br>
 
 ---
 
