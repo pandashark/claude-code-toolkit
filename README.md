@@ -149,6 +149,24 @@ Add to project's `.claude/settings.json`:
 }
 ```
 
+### Git Safe Commit (Recommended)
+
+Install the git safe-commit wrapper to enforce quality checks:
+
+```bash
+./scripts/install-git-safe-commit.sh
+```
+
+This installs `git-safe-commit` to `~/.local/bin/`, which:
+- Blocks `--no-verify` flag to prevent bypassing quality checks
+- Runs pre-commit hooks automatically
+- Ensures all commits pass linting, formatting, and tests
+
+**Usage**:
+```bash
+git safe-commit -m "feat: your commit message"
+```
+
 ### MCP Setup (Optional)
 
 For enhanced functionality, install MCP servers:
