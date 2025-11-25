@@ -55,7 +55,6 @@ This toolkit implements patterns and recommendations from Anthropic's official C
 - **JSON**: `state.json` (task tracking), `metadata.json` (work unit metadata)
 - **Unstructured**: `exploration.md` (analysis notes), `implementation-plan.md` (task breakdown)
 - **Git checkpoints**: Automatic commits after each `/workflow:next` task completion
-- **Lesson: This three-layer pattern works** - we discovered it independently before reading Anthropic's documentation
 
 ### Progressive Disclosure Pattern
 
@@ -126,27 +125,19 @@ This toolkit implements patterns and recommendations from Anthropic's official C
 
 ### Why This Alignment Matters
 
-This toolkit wasn't built by reading Anthropic's documentation and implementing it—it was built through **6+ months of daily Claude Code use**, discovering what works through iteration. When we later compared our patterns to Anthropic's official recommendations, we found **remarkable convergence**:
+This toolkit evolved through **6+ months of daily Claude Code use**, facing the same pain points that Anthropic has been addressing in their platform improvements. Context limits, session boundaries, state persistence, quality degradation—these challenges are inherent to working with LLMs in development workflows.
 
-| Pattern | Discovered Independently | Matches Anthropic Docs |
-|---------|--------------------------|------------------------|
-| JSON + unstructured + Git state | ✅ | ✅ |
-| Progressive disclosure | ✅ | ✅ |
-| Context window handoffs | ✅ | ✅ |
-| Specialized subagents | ✅ | ✅ |
-| Model-invoked skills | ✅ | ✅ |
-| Quality hooks | ✅ | ✅ |
-| Memory persistence | ✅ | ✅ |
+It's no surprise that our solutions align with Anthropic's recommendations: **we're solving the same problems**. The toolkit represents practical responses to real stumbling blocks, which naturally mirror the priorities Anthropic has set for Claude Code itself.
 
-**This convergence validates the toolkit**: We arrived at the same patterns Anthropic recommends because they work in practice.
+This alignment validates that the patterns work—not because we followed a checklist, but because intensive daily use surfaces the same needs that drive platform evolution.
 
 ---
 
-## Architecture: Six Namespaces for Complete Workflows
+## Architecture: Six Plugins for Complete Workflows
 
-The toolkit is organized into **six namespaces**, each implementing a distinct aspect of Anthropic's agent architecture recommendations:
+The toolkit is organized into **six plugins**, each addressing a distinct aspect of Claude Code development:
 
-| Namespace | Purpose | Anthropic Pattern |
+| Plugin | Purpose | Anthropic Pattern |
 |-----------|---------|-------------------|
 | **workflow** | Task execution lifecycle | Multi-context window workflows |
 | **memory** | Persistent knowledge | Memory tool patterns |
@@ -155,7 +146,7 @@ The toolkit is organized into **six namespaces**, each implementing a distinct a
 | **system** | Infrastructure | Quality gates & hooks |
 | **setup** | Project initialization | Progressive configuration |
 
-### Why These Six Namespaces?
+### Why These Six Plugins?
 
 **Workflow** (`/workflow:*`) - The task execution lifecycle
 - Implements Anthropic's recommendation for "structured representation of the project"
@@ -191,7 +182,9 @@ The toolkit is organized into **six namespaces**, each implementing a distinct a
 
 ```
 claude-code-toolkit/
-├── plugins/                # 6 namespaced plugins (28 commands)
+├── commands/              # Global commands (install to ~/.claude/commands/)
+│   └── setup-toolkit.md   # Bootstrap command for new projects
+├── plugins/               # 6 plugins (28 commands)
 │   ├── workflow/          # Task lifecycle (6 commands)
 │   ├── memory/            # Knowledge persistence (5 commands)
 │   ├── transition/        # Session boundaries (2 commands)
@@ -199,13 +192,10 @@ claude-code-toolkit/
 │   ├── system/            # Infrastructure (4 commands, 2 agents)
 │   └── setup/             # Project initialization (5 commands)
 ├── skills/                # Domain expertise (6 skills)
-│   ├── llm-evaluation/
+│   ├── general-dev/       # Docker, SQL, API auth
 │   ├── rag-implementation/
 │   ├── huggingface-transformers/
-│   └── general-dev/
-│       ├── docker-optimization/
-│       ├── sql-optimization/
-│       └── api-authentication/
+│   └── llm-evaluation/
 ├── hooks/                 # Quality gates (1 example)
 │   └── ruff-check-hook.sh
 └── docs/                  # Integration guides
@@ -271,12 +261,19 @@ All commands are **stateless markdown files** that execute in the project direct
 git clone https://github.com/appliedaiconsulting/claude-code-toolkit.git
 cd claude-code-toolkit
 
-# Start Claude Code
-claude
+# Install the setup command globally (one-time)
+cp commands/setup-toolkit.md ~/.claude/commands/
 
-# In Claude Code, run:
-/setup-project
+# Now in ANY project, start Claude Code and run:
+claude
+/setup-toolkit
 ```
+
+The `/setup-toolkit` command works in any project directory—before any plugins are installed. It:
+- Detects your project type (Python, JavaScript, web, etc.)
+- Asks which plugins and MCP servers you want
+- Creates `.claude/settings.json` with proper configuration
+- Sets up the plugin marketplace connection
 
 ### Manual Configuration
 
@@ -464,6 +461,26 @@ Claude Code's Task tool will invoke the appropriate agent. No wrapper commands n
 
 Skills use **progressive disclosure** - they auto-load only when relevant to your task, providing deep domain expertise without polluting context.
 
+#### General Development Skills (3 skills)
+
+**Docker Optimization** (`docker-optimization`)
+- Multi-stage builds for 85% size reduction (800MB → 120MB)
+- Layer caching strategies for 50-80% faster builds
+- Security hardening (non-root users, secrets management)
+- **Triggers**: "Docker", "Dockerfile", "container size", "image optimization"
+
+**SQL Optimization** (`sql-optimization`)
+- EXPLAIN plan analysis across Postgres/MySQL/SQLite
+- Index strategies (single, composite, partial, covering)
+- N+1 query elimination and pagination optimization
+- **Triggers**: "slow query", "EXPLAIN", "database performance", "SQL optimization"
+
+**API Authentication** (`api-authentication`)
+- JWT, OAuth 2.0, API keys, session-based auth
+- Decision matrix for choosing auth strategy
+- Security best practices and vulnerability prevention
+- **Triggers**: "authentication", "JWT", "OAuth", "API security", "login"
+
 #### ML/AI Skills (3 skills)
 
 **RAG Implementation** (`rag-implementation`)
@@ -483,29 +500,6 @@ Skills use **progressive disclosure** - they auto-load only when relevant to you
 - Hallucination detection
 - Benchmark creation and A/B testing
 - **Triggers**: "LLM testing", "prompt evaluation", "hallucination", "LLM metrics"
-
-#### General Development Skills (3 skills)
-
-**Docker Optimization** (`docker-optimization`)
-- Multi-stage builds for 85% size reduction (800MB → 120MB)
-- Layer caching strategies for 50-80% faster builds
-- Security hardening (non-root users, secrets management)
-- **Triggers**: "Docker", "Dockerfile", "container size", "image optimization"
-- **Demo value**: 800MB → 120MB Python image (real example included)
-
-**SQL Optimization** (`sql-optimization`)
-- EXPLAIN plan analysis across Postgres/MySQL/SQLite
-- Index strategies (single, composite, partial, covering)
-- N+1 query elimination and pagination optimization
-- **Triggers**: "slow query", "EXPLAIN", "database performance", "SQL optimization"
-- **Demo value**: 3s → 50ms query (60x speedup, real example included)
-
-**API Authentication** (`api-authentication`)
-- JWT, OAuth 2.0, API keys, session-based auth
-- Decision matrix for choosing auth strategy
-- Security best practices and vulnerability prevention
-- **Triggers**: "authentication", "JWT", "OAuth", "API security", "login"
-- **Demo value**: Secure auth on first try, prevents common vulnerabilities
 
 #### How Skills Work
 
