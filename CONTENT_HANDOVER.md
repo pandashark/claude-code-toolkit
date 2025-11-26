@@ -18,6 +18,7 @@
 - **Skills**: 6 domain skills (3 ML/AI, 3 general development)
 - **Domain adaptation examples**: 2 domains (quant finance, professional writing) with 6 artifacts
 - **Hooks**: 1 example (ruff-check)
+- **Companion tool**: [mdtoken](https://github.com/applied-artificial-intelligence/mdtoken) - token limit enforcement for markdown
 
 ### Design Philosophy
 
@@ -271,6 +272,14 @@ Each pattern includes:
 - Demonstrates that these patterns work together, not just individually
 
 **Content Angle**: "Organizing Your Claude Code Toolkit: Six Namespaces for Complete Coverage"
+
+### Angle 8: "mdtoken: Preventing Context Bloat"
+
+**Finding**: Markdown files grow unbounded. When they exceed context limits, Claude silently loses information.
+
+**Solution**: [mdtoken](https://github.com/applied-artificial-intelligence/mdtoken) - pre-commit hook that enforces token limits on markdown files. Commits fail fast if limits exceeded.
+
+**Content Angle**: Brief mention as companion tool. "We also built mdtoken to keep our commands concise."
 
 ---
 

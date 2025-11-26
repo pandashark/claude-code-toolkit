@@ -941,13 +941,42 @@ my-plugin/
 ### Development Setup
 
 ```bash
-# Install pre-commit hooks (requires mdtoken)
+# Install pre-commit hooks
 pip install mdtoken pre-commit
 pre-commit install
-
-# mdtoken enforces token limits on markdown files
-# This keeps plugin commands concise and context-efficient
 ```
+
+### Token Limit Enforcement with mdtoken
+
+This toolkit uses [**mdtoken**](https://github.com/applied-artificial-intelligence/mdtoken)—a companion tool we built to prevent markdown files from growing unbounded.
+
+**The Problem**: Plugin commands, memory files, and documentation grow over time. When they exceed context limits, Claude silently loses information or truncates content.
+
+**The Solution**: mdtoken enforces token limits as a pre-commit hook. Commits fail fast if any markdown file exceeds its configured limit.
+
+```yaml
+# .mdtokenrc.yaml (included in this repo)
+default_limit: 3500
+limits:
+  "README.md": 25000
+  "plugins/**/commands/*.md": 3500
+  "plugins/**/agents/*.md": 4000
+```
+
+**Installation**:
+```bash
+pip install mdtoken
+```
+
+**Usage**:
+```bash
+mdtoken check              # Check all markdown files
+mdtoken check README.md    # Check specific file
+```
+
+See [mdtoken repo](https://github.com/applied-artificial-intelligence/mdtoken) for full documentation.
+
+<br>
 
 ### Contributing
 
