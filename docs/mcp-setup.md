@@ -392,28 +392,60 @@ Provides **comprehensive browser automation and debugging**:
 
 #### Installation
 
-```bash
-# Install Chrome DevTools MCP server
-npm install -g @modelcontextprotocol/server-puppeteer
+**Official package**: `chrome-devtools-mcp` from the Chrome DevTools team
 
-# Or with npx
-npx @modelcontextprotocol/server-puppeteer --version
+```bash
+# Install via Claude Code CLI (recommended)
+claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
+
+# Or manually with npx
+npx chrome-devtools-mcp@latest --version
 ```
 
 **Prerequisites**:
 - Google Chrome or Chromium browser installed
-- Chromium automatically downloaded if not present
+- Node.js v20.19 or newer
+- Chrome must be running with remote debugging enabled
 
 #### Configuration
 
-Add to `~/.claude/settings.json`:
+**Standard configuration** (add to `~/.claude/settings.json`):
 
 ```json
 {
   "mcpServers": {
-    "puppeteer": {
+    "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    }
+  }
+}
+```
+
+**Linux with display server** (required for headless Linux):
+
+On Linux, Chrome needs DISPLAY and XAUTHORITY environment variables. Create a wrapper script:
+
+```bash
+# Create ~/.claude/chrome-devtools-wrapper.sh
+#!/bin/bash
+export DISPLAY=:0
+export XAUTHORITY=/run/user/1000/gdm/Xauthority
+exec npx -y chrome-devtools-mcp@latest --browserUrl http://127.0.0.1:9222 "$@"
+```
+
+```bash
+chmod +x ~/.claude/chrome-devtools-wrapper.sh
+```
+
+Then configure:
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "/home/your-username/.claude/chrome-devtools-wrapper.sh",
+      "args": [],
+      "description": "Chrome DevTools - Browser automation and debugging"
     }
   }
 }
@@ -458,19 +490,30 @@ Available for web development and testing:
 
 #### Known Limitations
 
-**Screenshot Bug**: The Chrome DevTools MCP has a known issue with full-page screenshots exceeding 8000px height. Use these alternatives:
+**High-Resolution Displays**: On screens with 2400px+ resolution, screenshots may fail with "pixel size too large" errors.
 
-- **Viewport screenshots only** (safe, no height limit)
-- **JPEG format** with quality parameter (reduces size)
-- **Element screenshots** with `uid` parameter (targets specific elements)
-- **Text snapshots** via `take_snapshot()` (preferred for debugging)
+**Before taking screenshots on high-res displays**:
+1. **Resize viewport first**: Use `mcp__chrome-devtools__resize_page(width=1280, height=800)`
+2. **Avoid fullPage**: Don't use `fullPage: true` on large pages
+3. **Use JPEG**: Set `format: "jpeg"` with `quality: 80` to reduce size
+4. **Target elements**: Use `uid` parameter for specific element screenshots
+
+**Alternative debugging methods** (often better than screenshots):
+- `take_snapshot()` - Text-based page content (PREFERRED for debugging)
+- `list_console_messages()` - Console errors/warnings
+- `list_network_requests()` - Network activity
+- `evaluate_script()` - Run JavaScript to inspect state
 
 ```bash
-# Safe alternatives to full-page screenshots:
-"Take a text snapshot of the page"  # Preferred for debugging
-"Take a viewport screenshot"         # Safe, no height limit
-"Take a screenshot in JPEG format"   # Smaller file size
+# Before screenshots on high-res displays:
+"Resize the viewport to 1280x800"
+"Take a viewport screenshot in JPEG format"
+
+# Preferred debugging approach:
+"Take a text snapshot of the page"
 ```
+
+**If screenshot fails**: Resize viewport smaller and retry once, then fall back to snapshot.
 
 #### Troubleshooting
 

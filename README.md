@@ -426,6 +426,18 @@ See [docs/mcp-setup.md](docs/mcp-setup.md) for complete MCP integration guide.
 
 The framework follows an `explore` → `plan` → `next` → `ship` pattern:
 
+> **Relationship to Claude's Built-in Plan Mode**: Claude Code includes a built-in `EnterPlanMode` that creates plans in `~/.claude/plans/` with auto-generated names (like `zany-cooking-wombat`). Our workflow **complements** this:
+>
+> | Feature | Built-in Plan Mode | Our Workflow |
+> |---------|-------------------|--------------|
+> | **Storage** | Global `~/.claude/plans/` | Project-local `.claude/work/` |
+> | **Naming** | Auto-generated | Date-based (`2025-11-27_01_feature`) |
+> | **Execution** | Implements entire plan at once | Incremental via `/next` |
+> | **State tracking** | None | `state.json` with task progress |
+> | **Session resume** | Cannot resume mid-plan | Work units persist across handoffs |
+>
+> **Best practice**: Use Claude's built-in plan mode *during* `/explore` or `/plan` for enhanced reasoning, while our workflow handles organization and incremental execution. They work together.
+
 ```bash
 # 1. Explore requirements and codebase
 /workflow:explore "add user authentication with JWT"
@@ -683,6 +695,8 @@ chmod +x ~/.claude/hooks/ruff-check-hook.sh
 
 **Scenario**: Managing context across sessions to prevent quality degradation.
 
+> **The Hidden Value of Transitions**: Beyond session continuity, transitions create an **automatic project history**. Every `/handoff` captures decisions, reasoning, and context—creating an audit trail far more valuable than commit messages. Over time, `.claude/transitions/` becomes a chronological record of *why* things were done, not just *what* changed.
+
 ```bash
 # At 70% perceived context usage (~85% actual)
 /handoff
@@ -703,6 +717,7 @@ chmod +x ~/.claude/hooks/ruff-check-hook.sh
 - Active work state preservation
 - Recent decisions and outstanding items
 - Clean continuation after `/clear`
+- **Audit trail**: Captures thinking, not just changes
 
 ---
 
