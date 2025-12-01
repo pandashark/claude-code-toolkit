@@ -492,7 +492,16 @@ Available for web development and testing:
 
 **High-Resolution Displays**: On screens with 2400px+ resolution, screenshots may fail with "pixel size too large" errors.
 
-**Before taking screenshots on high-res displays**:
+**Recommended approach - Save to file**:
+Use the `filePath` parameter to save the screenshot to a file, then read it with the Read tool:
+```
+mcp__chrome-devtools__take_screenshot(filePath="/tmp/screenshot.png")
+# Then use Read tool to view the image
+Read("/tmp/screenshot.png")
+```
+This bypasses the size limit that applies when returning image data directly.
+
+**Alternative approaches**:
 1. **Resize viewport first**: Use `mcp__chrome-devtools__resize_page(width=1280, height=800)`
 2. **Avoid fullPage**: Don't use `fullPage: true` on large pages
 3. **Use JPEG**: Set `format: "jpeg"` with `quality: 80` to reduce size
@@ -505,15 +514,17 @@ Available for web development and testing:
 - `evaluate_script()` - Run JavaScript to inspect state
 
 ```bash
-# Before screenshots on high-res displays:
-"Resize the viewport to 1280x800"
-"Take a viewport screenshot in JPEG format"
+# Recommended: Save to file and read
+"Take a screenshot and save it to /tmp/screenshot.png, then read it"
 
-# Preferred debugging approach:
+# Alternative: Resize viewport first
+"Resize the viewport to 1280x800, take screenshot in JPEG format"
+
+# Preferred for debugging:
 "Take a text snapshot of the page"
 ```
 
-**If screenshot fails**: Resize viewport smaller and retry once, then fall back to snapshot.
+**If screenshot still fails**: Try file save first, then resize viewport smaller, then fall back to snapshot.
 
 #### Troubleshooting
 
@@ -528,9 +539,14 @@ sudo apt install chromium-browser
 brew install --cask google-chrome
 ```
 
-**Issue**: "Screenshot height exceeds limit"
+**Issue**: "Screenshot height exceeds limit" or "pixel size too large"
 
-**Solution**: Use text snapshots or viewport-only screenshots (see limitations above)
+**Solution**: Save screenshot to file instead of returning directly:
+```
+mcp__chrome-devtools__take_screenshot(filePath="/tmp/screenshot.png")
+Read("/tmp/screenshot.png")
+```
+Or use text snapshots for debugging (see limitations above)
 
 **Issue**: "Puppeteer timeout"
 
