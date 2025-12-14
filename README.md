@@ -404,6 +404,40 @@ This installs `git-safe-commit` to `~/.local/bin/`, which:
 git safe-commit -m "feat: your commit message"
 ```
 
+### Session History Search (NEW in v1.1.0)
+
+Claude Code already captures complete session history in `~/.claude/projects/`. The toolkit includes tools to query this data for questions like:
+- "How did we implement X last time?"
+- "What happened about Y in the last 2 days?"
+- "Didn't we already do this?"
+
+**Quick start**:
+```bash
+# Build the search index (one-time, then incremental)
+python3 scripts/session-db.py index
+
+# Search across all projects
+python3 scripts/session-db.py search "authentication"
+
+# Filter by project and time
+python3 scripts/session-db.py search "backtest" --project ml4t --days 7
+
+# See recent activity timeline
+python3 scripts/session-db.py timeline --days 2
+
+# Find file changes
+python3 scripts/session-db.py files "cli_interface" --days 7
+```
+
+**What it indexes**:
+- All tool calls (Bash commands, file edits, reads, searches)
+- Timestamps for temporal queries
+- Cross-project search capability
+
+**Performance**: Indexes 2000+ sessions (90K+ actions) in ~3 seconds. Queries return in <30ms.
+
+See [scripts/README.md](scripts/README.md) for full documentation.
+
 ### MCP Setup (Optional)
 
 For enhanced functionality, install MCP servers:
