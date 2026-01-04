@@ -46,14 +46,42 @@ Use AskUserQuestion to determine:
 ## Step 3: Create Directory Structure
 
 ```bash
-mkdir -p .claude
+mkdir -p .claude/hooks
+mkdir -p .claude/transitions
 ```
 
-## Step 4: Generate settings.json
+## Step 4: Create Transition Hook
 
-Create `.claude/settings.json` with:
+Create `.claude/hooks/init-transition.sh`:
 
-**Base structure** (all projects):
+```bash
+cat > .claude/hooks/init-transition.sh << 'HOOK_EOF'
+#!/bin/bash
+# Initialize hourly transition file for session progress tracking
+set -e
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+TRANSITIONS_DIR="$PROJECT_ROOT/.claude/transitions"
+TODAY=$(date +%Y-%m-%d)
+HOUR=$(date +%H)
+TODAY_DIR="$TRANSITIONS_DIR/$TODAY"
+HOURLY_FILE="$TODAY_DIR/${HOUR}.md"
+mkdir -p "$TODAY_DIR"
+if [ ! -f "$HOURLY_FILE" ]; then
+    echo "# Session Progress: $TODAY ${HOUR}:00" > "$HOURLY_FILE"
+    echo "" >> "$HOURLY_FILE"
+    echo "---" >> "$HOURLY_FILE"
+    echo "" >> "$HOURLY_FILE"
+fi
+exit 0
+HOOK_EOF
+chmod +x .claude/hooks/init-transition.sh
+```
+
+## Step 5: Generate settings.json
+
+Create `.claude/settings.json` with the hook configured:
+
+**Base structure** (all projects) - use absolute path for hook:
 ```json
 {
   "extraKnownMarketplaces": {
@@ -70,9 +98,24 @@ Create `.claude/settings.json` with:
     "memory@local": true,
     "development@local": true,
     "transition@local": true
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ABSOLUTE_PATH_TO_PROJECT/.claude/hooks/init-transition.sh"
+          }
+        ]
+      }
+    ]
   }
 }
 ```
+
+**Important**: Replace `ABSOLUTE_PATH_TO_PROJECT` with the actual project path (use `pwd` to get it).
 
 **Add plugins based on project type**:
 - Web: `"web-development@local": true`
@@ -82,7 +125,7 @@ Create `.claude/settings.json` with:
 - Standard Python permissions for Python projects
 - Web testing permissions for web projects
 
-## Step 5: Generate .mcp.json
+## Step 6: Generate .mcp.json
 
 Create `.mcp.json` at project root with requested MCP servers:
 
@@ -109,7 +152,7 @@ Create `.mcp.json` at project root with requested MCP servers:
 **For projects with nvm** (check if ~/.nvm exists):
 Use absolute npx path: `/home/stefan/.nvm/versions/node/v22.21.0/bin/npx`
 
-## Step 6: Create Optional Files
+## Step 7: Create Optional Files
 
 Based on project type, optionally create:
 
@@ -129,7 +172,7 @@ Run `/help` to see available commands.
 [list configured MCP servers]
 ```
 
-## Step 7: Summary
+## Step 8: Summary
 
 Show user what was created:
 ```bash
