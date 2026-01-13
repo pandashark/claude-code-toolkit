@@ -1130,7 +1130,7 @@ mcp__serena__find_symbol()
 
 ## Versioning
 
-### Current Version: 1.0.0
+### Current Version: 1.1.0
 
 **Semantic Versioning**:
 - **Major** (1.x.x): Breaking changes to plugin API or command structure
@@ -1138,6 +1138,18 @@ mcp__serena__find_symbol()
 - **Patch** (x.x.1): Bug fixes, documentation updates
 
 **Compatibility**: Generated work units and state files are forward-compatible within major versions.
+
+### Changelog
+
+**v1.1.0** (2025-01-13)
+- **Token efficiency**: Development commands compressed 79% (29KB → 6KB)
+- **New skill**: `project-setup` in system plugin for on-demand setup (~97% token savings vs always-loaded)
+- **Documentation**: Added "Relationship to Claude's Built-in Plan Mode" explaining how workflow complements native features
+- **Documentation**: Added "The Value of Transitions" explaining long-term benefits of session handoffs
+- **Cleanup**: Simplified transition/continue.md (removed bloat)
+
+**v1.0.0** (2024-12)
+- Initial public release with 6 core plugins, 28 commands, 5 agents
 
 ---
 
