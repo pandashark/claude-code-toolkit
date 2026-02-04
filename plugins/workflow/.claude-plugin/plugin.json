@@ -20,6 +20,13 @@
     "./commands/spike.md",
     "./commands/work.md"
   ],
+  "agents": [
+    {
+      "name": "context-gathering",
+      "path": "./agents/context-gathering.md",
+      "description": "Gathers context for workflow tasks"
+    }
+  ],
   "repository": "https://github.com/yourusername/claude-code-plugins",
   "license": "MIT"
 }

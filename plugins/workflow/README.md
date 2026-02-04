@@ -122,12 +122,13 @@ Create detailed implementation plan with ordered tasks and dependencies using st
 - ❌ Immediate fixes that are obvious
 - ❌ Exploratory work without clear endpoint
 
-### `/next [--task TASK-ID | --preview | --status]`
+### `/next [--task TASK-ID | --preview | --status | --skip-context]`
 Execute the next available task from the implementation plan.
 
 **What it does**:
 - Loads implementation plan and current state
 - Identifies next task based on dependencies
+- **Gathers task-specific context** (via context-gathering agent)
 - Executes the task completely
 - Updates state.json automatically
 - Moves to next task when ready
@@ -138,15 +139,34 @@ Execute the next available task from the implementation plan.
 /next --preview                             # Show what's next without executing
 /next --status                              # Show plan progress
 /next --task TASK-005                       # Execute specific task
+/next --skip-context                        # Skip context-gathering for simple tasks
+/next --parallel auto                       # Execute independent tasks in parallel
 ```
 
 **Task Execution Flow**:
 1. Load plan and check dependencies
 2. Display current task details
-3. Execute implementation
-4. Verify completion against acceptance criteria
-5. Update state.json (pending → in_progress → completed)
-6. Show progress and next task
+3. **Gather context** (unless `--skip-context` or context already exists)
+4. Execute implementation with context manifest available
+5. Verify completion against acceptance criteria
+6. Update state.json (pending → in_progress → completed)
+7. Show progress and next task
+
+#### Context Gathering
+
+Before executing each task, `/next` automatically invokes the **context-gathering agent** to create a comprehensive context manifest. This ensures:
+- Complete understanding of affected code paths
+- Knowledge of integration points and dependencies
+- Awareness of error handling and edge cases
+- Technical reference details (signatures, schemas, configs)
+
+**Context manifest location**: `.claude/work/{unit}/context/TASK-{id}-context.md`
+
+**When to skip context** (`--skip-context`):
+- Simple documentation updates
+- Configuration changes
+- Trivial bug fixes
+- When you already have sufficient context
 
 **States**:
 - `pending`: Not yet started
@@ -343,6 +363,46 @@ Time-boxed exploration in isolated branch for investigating uncertain approaches
 - `/ship --pr` uses `/git pr`
 - Automatic commit message generation
 
+## Agents
+
+### Context-Gathering Agent
+
+The workflow plugin includes a **context-gathering agent** that runs automatically during `/next` execution. This agent creates comprehensive "Context Manifests" for each task, following the cc-sessions methodology.
+
+**What it does**:
+- Researches codebase to understand affected systems
+- Documents "How it currently works" with narrative explanations
+- Identifies "What needs to change" for the specific task
+- Provides technical reference (signatures, schemas, configs)
+- Lists gotchas, warnings, and edge cases
+
+**Context Manifest Structure**:
+```markdown
+## Context Manifest
+
+### How This Currently Works
+[Narrative explanation of current system behavior]
+
+### What Needs to Change for This Task
+[Specific modifications needed]
+
+### Technical Reference
+- Key files and their purposes
+- Function signatures
+- Data structures
+- Configuration requirements
+
+### Gotchas and Warnings
+- Edge cases to handle
+- Performance considerations
+```
+
+**Benefits**:
+- Prevents implementation errors from missing context
+- Each task has targeted, specific context
+- Context is fresh (gathered just-in-time)
+- Reduces back-and-forth during implementation
+
 ## Work Unit Structure
 
 The workflow creates and maintains this structure:
@@ -352,8 +412,12 @@ The workflow creates and maintains this structure:
 ├── metadata.json              # Work unit metadata
 ├── exploration.md             # /explore findings
 ├── implementation-plan.md     # /plan task breakdown
-├── state.json                # /next task tracking
-└── COMPLETION_SUMMARY.md     # /ship delivery summary
+├── state.json                 # /next task tracking
+├── context/                   # Per-task context manifests
+│   ├── TASK-001-context.md
+│   ├── TASK-002-context.md
+│   └── ...
+└── COMPLETION_SUMMARY.md      # /ship delivery summary
 ```
 
 ## Configuration

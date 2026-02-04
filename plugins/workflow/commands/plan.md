@@ -69,13 +69,17 @@ Create comprehensive task breakdown from requirements.
       "dependencies": [],
       "acceptance_criteria": ["..."],
       "estimated_hours": 3,
-      "priority": "high"
+      "priority": "high",
+      "context_manifest": null,
+      "context_gathered_at": null
     }
   ],
   "completed_tasks": [],
   "next_available": ["TASK-001"]
 }
 ```
+
+**Note**: Context fields (`context_manifest`, `context_gathered_at`) are initialized as null during planning. Context is gathered per-task when `/next` begins execution, ensuring fresh, task-specific context for each implementation phase.
 
 **implementation-plan.md**: Human-readable plan with:
 - Project overview and scope
