@@ -8,6 +8,23 @@ Copy this to `~/.claude/CLAUDE.md` and customize for your workflow.
 
 ## Quick Reference
 
+## Workflow Requirement
+
+**For non-trivial tasks, ALWAYS use the planning workflow before implementing.**
+
+Run `/plan` BEFORE writing code when:
+- The task affects multiple files or systems
+- You're working in unfamiliar codebase areas
+- The requirements are unclear or complex
+- The work may span multiple sessions
+
+Skip planning ONLY for trivial changes:
+- Single-line typo fixes
+- Documentation-only updates
+- Simple configuration tweaks
+
+When in doubt, plan first.
+
 **Workflow**: `/workflow:explore` -> `/workflow:plan` -> `/workflow:next` -> `/workflow:ship`
 
 **Common Commands**:

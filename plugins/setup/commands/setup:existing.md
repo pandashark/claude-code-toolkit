@@ -132,6 +132,22 @@ EOF
 
 ---
 
+## Workflow Requirement
+
+**For non-trivial tasks, ALWAYS plan before implementing.**
+
+Use `/plan` BEFORE coding when:
+- Task affects multiple files
+- Working in unfamiliar areas
+- Requirements are unclear
+- Work may span sessions
+
+Skip planning ONLY for trivial changes (typos, single-line fixes).
+
+**Workflow**: `/explore` -> `/plan` -> `/next` -> `/ship`
+
+---
+
 ## Project Knowledge
 @.claude/memory/project_state.md
 @.claude/memory/dependencies.md
