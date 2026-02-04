@@ -28,8 +28,9 @@ Create comprehensive task breakdown from requirements.
    - Check git status for uncommitted changes
    - If dirty: warn user and ask to stash or commit first
    - Record current branch as `base_branch` in metadata.json
-   - Create and checkout branch: `git checkout -b work/{unit-id}`
-   - Example: `work/2025-01-15_01_user-auth`
+   - Extract description from work unit ID (e.g., `2025-01-15_01_user-auth` → `user-auth`)
+   - Create and checkout branch: `git checkout -b feature/{description}`
+   - Example: `feature/user-auth`
 
 3. **Analyze Requirements**
    - Identify core functionality
@@ -86,7 +87,7 @@ Create comprehensive task breakdown from requirements.
 {
   "status": "planning_complete",
   "base_branch": "main",
-  "work_branch": "work/2025-01-15_01_feature",
+  "work_branch": "feature/user-auth",
   "current_task": null,
   "tasks": [
     {

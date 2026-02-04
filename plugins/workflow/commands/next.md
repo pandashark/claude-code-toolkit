@@ -40,18 +40,23 @@ Execute pending tasks from `.claude/work/ACTIVE_WORK` work unit.
 
 7. **Commit Task**:
    - Stage all changes related to the task: `git add -A`
-   - Create atomic commit with task ID:
+   - Create atomic commit using conventional commit format:
      ```
-     git commit -m "TASK-{id}: {task_title}
+     git commit -m "feat|fix|refactor: {task_title}
 
      {task_description}
 
-     Acceptance criteria met:
+     Work: {work_unit_id} | Task: {task_id}
+     Acceptance criteria:
      - {criterion_1}
-     - {criterion_2}
-
-     Co-Authored-By: Claude <noreply@anthropic.com>"
+     - {criterion_2}"
      ```
+   - Choose commit type based on task type:
+     - `feat:` for new features
+     - `fix:` for bug fixes
+     - `refactor:` for code restructuring
+     - `docs:` for documentation
+     - `test:` for test additions
    - If commit fails (e.g., pre-commit hooks), report error and keep task as `in_progress`
    - On success, record commit SHA in state.json for the task
 
@@ -77,7 +82,7 @@ For `--parallel`, find independent tasks (no unmet dependencies), launch as conc
 {
   "status": "implementing",
   "base_branch": "main",
-  "work_branch": "work/2025-01-15_01_feature",
+  "work_branch": "feature/user-auth",
   "current_task": "TASK-003",
   "tasks": [
     {"id": "TASK-001", "title": "...", "status": "completed", "dependencies": [], "commit_sha": "abc123"},

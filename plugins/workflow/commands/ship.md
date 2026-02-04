@@ -88,15 +88,14 @@ All must pass:
 
 **Task commits** (created by `/next`):
 ```
-TASK-001: Brief task title
+feat: Add password hashing to User model
 
-Task description and what was implemented.
+Implemented bcrypt hashing for user passwords with configurable rounds.
 
-Acceptance criteria met:
-- Criterion 1
-- Criterion 2
-
-Co-Authored-By: Claude <noreply@anthropic.com>
+Work: 2025-01-15_01_user-auth | Task: TASK-001
+Acceptance criteria:
+- Passwords hashed before storage
+- Existing passwords can be verified
 ```
 
 **Squash commit** (created by `/ship --merge --squash`):
@@ -109,9 +108,6 @@ Implemented:
 - TASK-003: {title}
 
 {Summary of changes}
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-Co-Authored-By: Claude <noreply@anthropic.com>
 ```
 
 ## Branch Cleanup

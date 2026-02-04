@@ -113,7 +113,7 @@ Create detailed implementation plan with ordered tasks and dependencies using st
 - `implementation-plan.md`: Complete task breakdown
 - `state.json`: Task tracking state (pending, in_progress, completed)
 - `context/TASK-{id}-context.md`: Context manifests for each task
-- Git branch: `work/{unit-id}` (e.g., `work/2025-01-15_01_user-auth`)
+- Git branch: `feature/{description}` (e.g., `feature/user-auth`)
 
 **When to use**:
 - ✅ After /explore for complex work
@@ -153,7 +153,7 @@ Execute the next available task from the implementation plan.
 3. Load context manifest (created during `/plan`)
 4. Execute implementation with context manifest available
 5. Verify completion against acceptance criteria
-6. **Commit task**: `git commit -m "TASK-{id}: {title}"`
+6. **Commit task**: conventional commit with work unit + task reference in body
 7. Update state.json (pending → in_progress → completed)
 8. Show progress and next task
 
@@ -306,19 +306,18 @@ work/{unit-id}        TASK-001: ...                      │
                                             Keep commits    Squash all
 ```
 
-**Branch naming**: `work/{unit-id}` (e.g., `work/2025-01-15_01_user-auth`)
+**Branch naming**: `feature/{description}` (e.g., `feature/user-auth`)
 
-**Task commits**: Each `/next` creates an atomic commit:
+**Task commits**: Each `/next` creates an atomic commit using conventional commits:
 ```
-TASK-001: Add password hashing to User model
+feat: Add password hashing to User model
 
 Implemented bcrypt hashing for user passwords with configurable rounds.
 
-Acceptance criteria met:
+Work: 2025-01-15_01_user-auth | Task: TASK-001
+Acceptance criteria:
 - Passwords hashed before storage
 - Existing passwords can be verified
-
-Co-Authored-By: Claude <noreply@anthropic.com>
 ```
 
 **Delivery options**:
@@ -337,7 +336,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 # Phase 2: Plan
 /plan
-# Creates branch: work/2025-01-15_01_jwt-auth
+# Creates branch: feature/jwt-auth
 # Output: implementation-plan.md with 6 tasks
 # Output: context manifests for each task
 
@@ -347,11 +346,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 /next
 # Implements TASK-001
-# Commits: "TASK-001: Add password hashing to User model"
+# Commits: "feat: Add password hashing to User model"
 
 /next
 # Implements TASK-002
-# Commits: "TASK-002: Create JWT token generation utilities"
+# Commits: "feat: Create JWT token generation utilities"
 
 /next
 # ... continues through all tasks
@@ -359,7 +358,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 # Phase 4: Deliver
 /ship --pr
-# Pushes work/2025-01-15_01_jwt-auth to origin
+# Pushes feature/jwt-auth to origin
 # Creates PR to main with:
 # - Summary of 6 completed tasks
 # - Test results (all passing)
@@ -404,7 +403,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ### Context-Gathering Agent
 
-The workflow plugin includes a **context-gathering agent** that runs automatically during `/plan`. This agent creates comprehensive "Context Manifests" for all tasks upfront, following the cc-sessions methodology.
+The workflow plugin includes a **context-gathering agent** that runs automatically during `/plan`. This agent creates comprehensive "Context Manifests" for all tasks upfront.
 
 **What it does**:
 - Researches codebase to understand affected systems
@@ -462,7 +461,7 @@ The workflow creates and maintains this structure:
 {
   "status": "implementing",
   "base_branch": "main",
-  "work_branch": "work/2025-01-15_01_feature",
+  "work_branch": "feature/user-auth",
   "tasks": [
     {"id": "TASK-001", "status": "completed", "commit_sha": "abc123..."},
     {"id": "TASK-002", "status": "in_progress", "commit_sha": null}
