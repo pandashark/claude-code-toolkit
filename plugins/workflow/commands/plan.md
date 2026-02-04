@@ -24,24 +24,50 @@ Create comprehensive task breakdown from requirements.
    - Verify `requirements.md` exists
    - Warn if overwriting existing plan
 
-2. **Analyze Requirements**
+2. **Create Feature Branch**
+   - Check git status for uncommitted changes
+   - If dirty: warn user and ask to stash or commit first
+   - Record current branch as `base_branch` in metadata.json
+   - Create and checkout branch: `git checkout -b work/{unit-id}`
+   - Example: `work/2025-01-15_01_user-auth`
+
+3. **Analyze Requirements**
    - Identify core functionality
    - Map integration points
    - Define quality requirements
    - Use Sequential Thinking for complex analysis
 
-3. **Create Task Breakdown**
+4. **Create Task Breakdown**
    - 2-4 hours per task
    - Single responsibility per task
    - Clear acceptance criteria
    - Testable outcomes
 
-4. **Sequence Tasks**
+5. **Sequence Tasks**
    - Map dependencies (no circular refs)
    - Identify parallel opportunities
    - Define critical path
 
-5. **Generate Outputs**
+6. **Generate Outputs**
+   - Write `implementation-plan.md` and `state.json`
+
+7. **Gather Context for All Tasks**
+   - Create `context/` directory in work unit
+   - For each task, invoke context-gathering agent via Task tool:
+     ```
+     Task(subagent_type="context-gathering", prompt="""
+     Task ID: {task_id}
+     Title: {task_title}
+     Description: {task_description}
+     Acceptance Criteria:
+     - {criterion_1}
+     - {criterion_2}
+     Work Unit: .claude/work/{unit}
+     """)
+     ```
+   - Run context gathering for multiple tasks in parallel when possible
+   - Each manifest written to: `.claude/work/{unit}/context/TASK-{id}-context.md`
+   - Update `state.json` task entries with `context_manifest` path and `context_gathered_at` timestamp
 
 ## Task Sizing
 
@@ -59,6 +85,8 @@ Create comprehensive task breakdown from requirements.
 ```json
 {
   "status": "planning_complete",
+  "base_branch": "main",
+  "work_branch": "work/2025-01-15_01_feature",
   "current_task": null,
   "tasks": [
     {
@@ -79,7 +107,7 @@ Create comprehensive task breakdown from requirements.
 }
 ```
 
-**Note**: Context fields (`context_manifest`, `context_gathered_at`) are initialized as null during planning. Context is gathered per-task when `/next` begins execution, ensuring fresh, task-specific context for each implementation phase.
+**Note**: Context fields are populated during planning when the context-gathering agent runs. This ensures all context is gathered upfront before execution begins.
 
 **implementation-plan.md**: Human-readable plan with:
 - Project overview and scope
@@ -89,4 +117,4 @@ Create comprehensive task breakdown from requirements.
 
 ## Next Steps
 
-After planning: Run `/next` to start first task
+After planning completes (including context gathering): Run `/next` to start first task

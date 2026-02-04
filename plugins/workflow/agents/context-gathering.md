@@ -1,6 +1,6 @@
 ---
 name: context-gathering
-description: Gathers comprehensive context for a specific task before implementation. Creates a Context Manifest documenting how systems work, what needs to connect, and technical reference details. Invoked by /next before task execution.
+description: Gathers comprehensive context for a specific task before implementation. Creates a Context Manifest documenting how systems work, what needs to connect, and technical reference details. Invoked by /plan during the planning phase.
 tools: Read, Glob, Grep, LS, Bash, Edit, MultiEdit
 ---
 
@@ -14,7 +14,7 @@ You are gathering context for a **specific task** that is about to be implemente
 
 ## CONTEXT ABOUT YOUR INVOCATION
 
-You've been called at task startup (during `/next`) because this task doesn't have a context manifest yet. You receive:
+You've been called during `/plan` to gather context for a task before execution begins. You receive:
 - **Task ID**: The task identifier (e.g., TASK-001)
 - **Task Title**: What needs to be done
 - **Task Description**: Details about the task

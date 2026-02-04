@@ -87,10 +87,12 @@ Create detailed implementation plan with ordered tasks and dependencies using st
 
 **What it does**:
 - Reviews exploration findings (or analyzes requirements directly)
+- **Creates feature branch** (`work/{unit-id}`) from current branch
 - Breaks work into ordered, manageable tasks
 - Identifies dependencies and sequencing
 - Defines acceptance criteria for each task
 - Creates task tracking state file
+- **Gathers context for all tasks** (via context-gathering agent)
 
 **Usage**:
 ```bash
@@ -110,6 +112,8 @@ Create detailed implementation plan with ordered tasks and dependencies using st
 **Output**:
 - `implementation-plan.md`: Complete task breakdown
 - `state.json`: Task tracking state (pending, in_progress, completed)
+- `context/TASK-{id}-context.md`: Context manifests for each task
+- Git branch: `work/{unit-id}` (e.g., `work/2025-01-15_01_user-auth`)
 
 **When to use**:
 - ✅ After /explore for complex work
@@ -122,14 +126,15 @@ Create detailed implementation plan with ordered tasks and dependencies using st
 - ❌ Immediate fixes that are obvious
 - ❌ Exploratory work without clear endpoint
 
-### `/next [--task TASK-ID | --preview | --status | --skip-context]`
+### `/next [--task TASK-ID | --preview | --status]`
 Execute the next available task from the implementation plan.
 
 **What it does**:
 - Loads implementation plan and current state
 - Identifies next task based on dependencies
-- **Gathers task-specific context** (via context-gathering agent)
+- Loads the task's pre-generated context manifest
 - Executes the task completely
+- **Commits completed task** with task ID in message
 - Updates state.json automatically
 - Moves to next task when ready
 
@@ -139,34 +144,28 @@ Execute the next available task from the implementation plan.
 /next --preview                             # Show what's next without executing
 /next --status                              # Show plan progress
 /next --task TASK-005                       # Execute specific task
-/next --skip-context                        # Skip context-gathering for simple tasks
 /next --parallel auto                       # Execute independent tasks in parallel
 ```
 
 **Task Execution Flow**:
 1. Load plan and check dependencies
 2. Display current task details
-3. **Gather context** (unless `--skip-context` or context already exists)
+3. Load context manifest (created during `/plan`)
 4. Execute implementation with context manifest available
 5. Verify completion against acceptance criteria
-6. Update state.json (pending → in_progress → completed)
-7. Show progress and next task
+6. **Commit task**: `git commit -m "TASK-{id}: {title}"`
+7. Update state.json (pending → in_progress → completed)
+8. Show progress and next task
 
-#### Context Gathering
+#### Context Manifests
 
-Before executing each task, `/next` automatically invokes the **context-gathering agent** to create a comprehensive context manifest. This ensures:
+Context manifests are created during `/plan` by the context-gathering agent. Each task has a pre-generated manifest containing:
 - Complete understanding of affected code paths
 - Knowledge of integration points and dependencies
 - Awareness of error handling and edge cases
 - Technical reference details (signatures, schemas, configs)
 
 **Context manifest location**: `.claude/work/{unit}/context/TASK-{id}-context.md`
-
-**When to skip context** (`--skip-context`):
-- Simple documentation updates
-- Configuration changes
-- Trivial bug fixes
-- When you already have sufficient context
 
 **States**:
 - `pending`: Not yet started
@@ -185,7 +184,7 @@ Before executing each task, `/next` automatically invokes the **context-gatherin
 - Use `/next --preview` before starting if unsure
 - Tasks complete in dependency order automatically
 
-### `/ship [--preview | --pr | --commit | --deploy]`
+### `/ship [--preview | --pr | --merge] [--squash]`
 Deliver completed work with validation and comprehensive documentation.
 
 **What it does**:
@@ -193,15 +192,16 @@ Deliver completed work with validation and comprehensive documentation.
 - Validates all acceptance criteria met
 - Runs tests and quality checks
 - Creates comprehensive documentation
-- Generates git commits or pull requests
+- **Merges or creates PR** to base branch
 - Produces delivery summary
 
 **Usage**:
 ```bash
-/ship                                       # Full delivery workflow
 /ship --preview                             # Preview what will be delivered
-/ship --commit                              # Create git commit only
-/ship --pr                                  # Create pull request
+/ship --pr                                  # Create pull request (keeps task commits)
+/ship --pr --squash                         # Create PR with squash recommendation
+/ship --merge                               # Merge to base branch (keeps task commits)
+/ship --merge --squash                      # Squash all tasks into single commit, merge
 /ship --deploy                              # Prepare for deployment
 ```
 
@@ -227,8 +227,9 @@ Deliver completed work with validation and comprehensive documentation.
 
 **Options**:
 - `--preview`: See what will be shipped without doing it
-- `--commit`: Create git commit with generated message
-- `--pr`: Create GitHub pull request with summary
+- `--pr`: Create GitHub pull request to base branch
+- `--merge`: Merge work branch directly to base branch
+- `--squash`: Combine all task commits into single commit (use with --pr or --merge)
 - `--deploy`: Include deployment checklist and instructions
 
 ### `/work [subcommand] [args]`
@@ -290,51 +291,87 @@ Time-boxed exploration in isolated branch for investigating uncertain approaches
 - Documented findings for future reference
 - Easy to discard if approach doesn't work
 
+## Git Workflow
+
+The workflow plugin integrates git operations throughout the development lifecycle:
+
+```
+/plan                    /next (×N)                    /ship
+   │                         │                            │
+   ▼                         ▼                            ▼
+Create branch ──────► Commit per task ──────► PR or merge to base
+work/{unit-id}        TASK-001: ...                      │
+                      TASK-002: ...              ┌───────┴───────┐
+                      TASK-003: ...              ▼               ▼
+                                            Keep commits    Squash all
+```
+
+**Branch naming**: `work/{unit-id}` (e.g., `work/2025-01-15_01_user-auth`)
+
+**Task commits**: Each `/next` creates an atomic commit:
+```
+TASK-001: Add password hashing to User model
+
+Implemented bcrypt hashing for user passwords with configurable rounds.
+
+Acceptance criteria met:
+- Passwords hashed before storage
+- Existing passwords can be verified
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**Delivery options**:
+- `--pr`: Push branch, create PR (reviewers merge with their preferred strategy)
+- `--merge`: Merge locally (keeps task commit history)
+- `--merge --squash`: Combine all tasks into single commit, then merge
+
 ## Complete Workflow Example
 
 ### Example: Adding User Authentication
 
 ```bash
-# Phase 1: Explore
+# Phase 1: Explore (on main branch)
 /explore "Add JWT-based authentication to API"
-
-# Output: exploration.md with findings:
-# - Existing auth middleware
-# - JWT library already in dependencies
-# - 3 endpoints need protection
-# - User model needs password hashing
+# Output: exploration.md with findings
 
 # Phase 2: Plan
 /plan
-
-# Output: implementation-plan.md with 6 tasks:
-# TASK-001: Add password hashing to User model
-# TASK-002: Create JWT token generation utilities
-# TASK-003: Implement login endpoint
-# TASK-004: Create auth middleware
-# TASK-005: Protect existing endpoints
-# TASK-006: Add integration tests
+# Creates branch: work/2025-01-15_01_jwt-auth
+# Output: implementation-plan.md with 6 tasks
+# Output: context manifests for each task
 
 # Phase 3: Execute
 /next --status
 # Shows: TASK-001 ready, others pending
 
 /next
-# Implements TASK-001, updates state.json
+# Implements TASK-001
+# Commits: "TASK-001: Add password hashing to User model"
 
 /next
-# Implements TASK-002 (dependency of TASK-001 complete)
+# Implements TASK-002
+# Commits: "TASK-002: Create JWT token generation utilities"
 
 /next
 # ... continues through all tasks
+# Each task = one commit on work branch
 
 # Phase 4: Deliver
 /ship --pr
-# Creates pull request with:
+# Pushes work/2025-01-15_01_jwt-auth to origin
+# Creates PR to main with:
 # - Summary of 6 completed tasks
 # - Test results (all passing)
-# - Breaking changes documentation
-# - Migration guide for existing users
+# - Link to implementation plan
+```
+
+**Alternative delivery** (local merge with squash):
+```bash
+/ship --merge --squash
+# Squashes all 6 task commits into one
+# Merges to main
+# Deletes work branch
 ```
 
 ## Integration with Other Plugins
@@ -367,7 +404,7 @@ Time-boxed exploration in isolated branch for investigating uncertain approaches
 
 ### Context-Gathering Agent
 
-The workflow plugin includes a **context-gathering agent** that runs automatically during `/next` execution. This agent creates comprehensive "Context Manifests" for each task, following the cc-sessions methodology.
+The workflow plugin includes a **context-gathering agent** that runs automatically during `/plan`. This agent creates comprehensive "Context Manifests" for all tasks upfront, following the cc-sessions methodology.
 
 **What it does**:
 - Researches codebase to understand affected systems
@@ -399,8 +436,8 @@ The workflow plugin includes a **context-gathering agent** that runs automatical
 
 **Benefits**:
 - Prevents implementation errors from missing context
+- All context gathered upfront during planning
 - Each task has targeted, specific context
-- Context is fresh (gathered just-in-time)
 - Reduces back-and-forth during implementation
 
 ## Work Unit Structure
@@ -412,12 +449,25 @@ The workflow creates and maintains this structure:
 ├── metadata.json              # Work unit metadata
 ├── exploration.md             # /explore findings
 ├── implementation-plan.md     # /plan task breakdown
-├── state.json                 # /next task tracking
+├── state.json                 # /next task tracking (includes git info)
 ├── context/                   # Per-task context manifests
 │   ├── TASK-001-context.md
 │   ├── TASK-002-context.md
 │   └── ...
 └── COMPLETION_SUMMARY.md      # /ship delivery summary
+```
+
+**state.json** includes git tracking:
+```json
+{
+  "status": "implementing",
+  "base_branch": "main",
+  "work_branch": "work/2025-01-15_01_feature",
+  "tasks": [
+    {"id": "TASK-001", "status": "completed", "commit_sha": "abc123..."},
+    {"id": "TASK-002", "status": "in_progress", "commit_sha": null}
+  ]
+}
 ```
 
 ## Configuration
