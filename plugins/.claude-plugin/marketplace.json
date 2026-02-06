@@ -35,11 +35,25 @@
       "keywords": ["memory", "maintenance", "context", "management", "handoff"]
     },
     {
-      "name": "agents",
-      "source": "./agents",
-      "description": "Specialized agent invocation and management",
+      "name": "transition",
+      "source": "./transition",
+      "description": "Session transition and handoff management for Claude Code",
       "version": "1.0.0",
-      "keywords": ["agents", "specialists", "delegation"]
+      "keywords": ["transition", "handoff", "session", "context", "continuation"]
+    },
+    {
+      "name": "setup",
+      "source": "./setup",
+      "description": "Project initialization and configuration - Python, JavaScript, web, and more",
+      "version": "1.0.0",
+      "keywords": ["setup", "init", "configuration", "python", "javascript"]
+    },
+    {
+      "name": "presentations",
+      "source": "./presentations",
+      "description": "McKinsey/Bain style consulting presentation generator with quality validation",
+      "version": "1.0.0",
+      "keywords": ["presentations", "consulting", "deck-builder", "pyramid-principle"]
     }
   ]
 }
