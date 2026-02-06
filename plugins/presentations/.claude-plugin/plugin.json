@@ -1,0 +1,22 @@
+{
+  "name": "presentations",
+  "version": "1.0.0",
+  "description": "McKinsey/Bain style consulting presentation generator with quality validation",
+  "author": {
+    "name": "Claude Code Framework"
+  },
+  "keywords": [
+    "presentations",
+    "consulting",
+    "deck-builder",
+    "pyramid-principle"
+  ],
+  "commands": [
+    "./commands/deck.md"
+  ],
+  "agents": [
+    "./agents/deck-builder.md"
+  ],
+  "repository": "https://github.com/yourusername/claude-code-plugins",
+  "license": "MIT"
+}

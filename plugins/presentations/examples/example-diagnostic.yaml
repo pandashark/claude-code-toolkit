@@ -1,0 +1,106 @@
+# Example: Pipeline Conversion Diagnostic Deck
+# This YAML config drives the deck-builder agent to generate a consulting presentation
+
+title: "Pipeline Conversion Diagnostic"
+subtitle: "Root-Cause Analysis & Recommended Interventions"
+date: "2026-02-06"
+author: "Revenue Operations Analytics"
+audience: "CRO, VP Sales, VP Marketing"
+deck_type: decision-meeting
+classification: confidential
+
+# Executive framing using SCR (Situation-Complication-Resolution)
+executive_summary:
+  situation: >
+    Pipeline generation grew 12% YoY but win rates declined from 31% to 25%,
+    with quarterly slip rates exceeding 50% (benchmark: 15-20%).
+  complication: >
+    The decline is not uniform - it concentrates in Commercial segments and
+    specific channels, while 11 commonly-held beliefs about root causes
+    are contradicted by data.
+  resolution: >
+    A hybrid model redirecting GSD to proven pockets of value while
+    reinforcing Core Rep coverage, combined with measurement standardization,
+    can recover 4-8pp of conversion within 90 days.
+
+# Methodology section
+methodology:
+  scope: "42 hypotheses across 5 decision areas, FY24-FY25 pipeline data"
+  approach: "Statistical testing with propensity matching, causal inference"
+  data_sources:
+    - "Snowflake pipeline extracts (10 tables)"
+    - "Stage history and close date tracking"
+    - "Multi-method attribution comparison"
+
+# Main findings organized MECE by decision area
+sections:
+  - title: "Source Performance"
+    key_finding: "29.8pp channel spread masks improving trends"
+    slides:
+      - action_title: "Core Rep converts at 34.7% vs SSR at 4.9%, but the gap narrowed 8.3pp YoY"
+        evidence_source: "@outputs/workstreams/01-source-performance/"
+        data_points:
+          - metric: "Channel spread"
+            value: "29.8pp"
+          - metric: "YoY gap change"
+            value: "-8.3pp (narrowing)"
+
+  - title: "Sales Execution"
+    key_finding: "48.9% early stall rate with $1.18B stale pipeline"
+    slides:
+      - action_title: "Stage discipline adds 21.5pp to conversion; $1.18B sits stale past push thresholds"
+        evidence_source: "@outputs/workstreams/02-sales-execution/"
+
+  - title: "Market Fit"
+    key_finding: "Now Assist delivers +19pp lift (4x initial estimate)"
+    slides:
+      - action_title: "Now Assist attach rate drives +19pp conversion gap, persisting after segment controls"
+        evidence_source: "@outputs/workstreams/03-market-fit/"
+
+  - title: "Demand Gen Model"
+    key_finding: "GSD underperforms overall but shows pockets of value"
+    slides:
+      - action_title: "GSD accounts convert 2.1pp below control overall, but outperform in Commercial/APAC/ITSM"
+        evidence_source: "@outputs/workstreams/04-demand-gen-model/"
+
+  - title: "Measurement"
+    key_finding: "18.2pp method variance obscures true performance"
+    slides:
+      - action_title: "Attribution method choice swings conversion 18.2pp, with methods showing opposite trends"
+        evidence_source: "@outputs/workstreams/05-measurement/"
+
+# Recommendations
+recommendations:
+  preferred: "Hybrid Model"
+  options:
+    - name: "Status Quo"
+      score: 2.15
+      description: "Maintain current structure"
+    - name: "GSD Expansion"
+      score: 2.85
+      description: "Double down on GSD model"
+    - name: "Full Direct"
+      score: 3.45
+      description: "Eliminate GSD, all Core Rep"
+    - name: "Hybrid Model"
+      score: 4.20
+      description: "GSD to proven pockets; Core Rep for enterprise"
+
+# Implementation roadmap
+roadmap:
+  phases:
+    - name: "Foundation (Days 1-30)"
+      actions:
+        - "Standardize attribution methodology"
+        - "Deploy loss prediction model (AUC=0.924)"
+        - "Establish pipeline hygiene baseline"
+    - name: "Execution (Days 31-60)"
+      actions:
+        - "Redirect GSD to Commercial/APAC/ITSM"
+        - "Enforce stage discipline protocols"
+        - "Accelerate Now Assist attach"
+    - name: "Optimization (Days 61-90)"
+      actions:
+        - "Measure intervention impact"
+        - "Adjust geo-specific playbooks"
+        - "Scale proven levers"
