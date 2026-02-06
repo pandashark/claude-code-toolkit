@@ -1,106 +1,146 @@
-# Example: Pipeline Conversion Diagnostic Deck
-# This YAML config drives the deck-builder agent to generate a consulting presentation
+# Pipeline Conversion Diagnostic - Decision Meeting Deck
+# Demonstrates all schema features. Agent reads @evidence paths to generate full deck.
 
 title: "Pipeline Conversion Diagnostic"
-subtitle: "Root-Cause Analysis & Recommended Interventions"
-date: "2026-02-06"
+subtitle: "Final Readout: Findings & Recommendations"
+date: "February 2026"
 author: "Revenue Operations Analytics"
-audience: "CRO, VP Sales, VP Marketing"
+audience: "PLT Decision Meeting"
 deck_type: decision-meeting
 classification: confidential
+duration_minutes: 50
 
-# Executive framing using SCR (Situation-Complication-Resolution)
 executive_summary:
-  situation: >
-    Pipeline generation grew 12% YoY but win rates declined from 31% to 25%,
-    with quarterly slip rates exceeding 50% (benchmark: 15-20%).
-  complication: >
-    The decline is not uniform - it concentrates in Commercial segments and
-    specific channels, while 11 commonly-held beliefs about root causes
-    are contradicted by data.
-  resolution: >
-    A hybrid model redirecting GSD to proven pockets of value while
-    reinforcing Core Rep coverage, combined with measurement standardization,
-    can recover 4-8pp of conversion within 90 days.
+  situation: "Pipeline grew 12% YoY but win rates fell 31% to 25%; slip rates 50%+ (benchmark 15-20%)"
+  complication: "11 stakeholder claims contradicted; decline concentrated in Commercial; 18.2pp method variance"
+  resolution: "Hybrid Model: GSD to Commercial/APAC/ITSM-Impact; Core Rep for Enterprise; standardize measurement; activate 7 levers"
+  governing_thought: "Decline concentrated in Commercial (-9.8pp) while Enterprise/Strategic improve. Biggest risks: upstream quality, measurement inconsistency, GSD deployed to wrong segments."
+  key_numbers:
+    - "35 hypotheses tested | 11 claims contradicted | 7 levers"
+    - "Option 4 (Hybrid Model) scored 4.20/5.00"
 
-# Methodology section
 methodology:
-  scope: "42 hypotheses across 5 decision areas, FY24-FY25 pipeline data"
+  scope: "42 hypotheses across 5 decision areas"
   approach: "Statistical testing with propensity matching, causal inference"
-  data_sources:
-    - "Snowflake pipeline extracts (10 tables)"
-    - "Stage history and close date tracking"
-    - "Multi-method attribution comparison"
+  population: "227,104 opps (NET_NEW_ACV > 0), FY23-FY25"
+  data_sources: ["Snowflake (10 tables)", "Stage history", "Multi-method attribution"]
+  caveats: ["FY25 ~27% still open", "7 hypotheses skipped (missing data)"]
 
-# Main findings organized MECE by decision area
+claims_validation:
+  summary: "5 validated | 11 contradicted | 4 partial across 20 claims"
+  source_documents: ["Marketing memo", "D&A Study", "Vijay email", "Field Diagnostic"]
+  claims:
+    - {claim: "GSD-Core Rep gap widening", source: "Marketing", verdict: CONTRADICTED, reality: "Gap narrowed 8.3pp; Core Rep declined MORE", hypothesis_id: "A2"}
+    - {claim: "Platform & AI worst maturation", source: "Marketing", verdict: CONTRADICTED, reality: "Actually BEST at 63.9% vs 44.4%", hypothesis_id: "D3"}
+    - {claim: "Now Assist adds 4-5pp", source: "Vijay", verdict: CONTRADICTED, reality: "+19pp actual (4x); 87% after controls", hypothesis_id: "D4"}
+    - {claim: "<2 slips = better outcomes", source: "D&A", verdict: CONTRADICTED, reality: "2+ slips convert BETTER", hypothesis_id: "E10"}
+    - {claim: "Day 5 closure declined 12pts", source: "Vijay", verdict: CONTRADICTED, reality: "Day 5 improved +5.1pp; Cohort -15.4pp", hypothesis_id: "E11"}
+    - {claim: "Coverage 3.5-4.7x", source: "Field", verdict: CONTRADICTED, reality: "Actual 2.1-2.5x", hypothesis_id: "E12"}
+
 sections:
-  - title: "Source Performance"
-    key_finding: "29.8pp channel spread masks improving trends"
+  - title: "Source & Execution"
+    decision: "A+B"
+    key_finding: "29.8pp spread real but problem is upstream"
+    evidence_source: "@outputs/workstreams/01-source-performance/"
     slides:
-      - action_title: "Core Rep converts at 34.7% vs SSR at 4.9%, but the gap narrowed 8.3pp YoY"
-        evidence_source: "@outputs/workstreams/01-source-performance/"
-        data_points:
-          - metric: "Channel spread"
-            value: "29.8pp"
-          - metric: "YoY gap change"
-            value: "-8.3pp (narrowing)"
-
-  - title: "Sales Execution"
-    key_finding: "48.9% early stall rate with $1.18B stale pipeline"
-    slides:
-      - action_title: "Stage discipline adds 21.5pp to conversion; $1.18B sits stale past push thresholds"
+      - action_title: "29.8pp source spread is real, but 48.9% of deals stall in early stages, not late"
+        hypothesis_ids: ["A1", "A2", "A6", "B1", "B3", "B8"]
         evidence_source: "@outputs/workstreams/02-sales-execution/"
+        proven_levers:
+          - {lever: "Stage discipline", effect: "+21.5pp", hypothesis_id: "B3"}
+          - {lever: "Partners", effect: "+4.3pp", hypothesis_id: "A6"}
+          - {lever: "Push discipline", effect: "+10.5pp", hypothesis_id: "B8"}
+      - action_title: "$1.18B stale pipeline (>2 pushes) converts 10.5pp lower--$124M expected value gap"
+        hypothesis_ids: ["B8"]
 
   - title: "Market Fit"
-    key_finding: "Now Assist delivers +19pp lift (4x initial estimate)"
+    decision: "D"
+    key_finding: "Commercial declining; Now Assist is largest lever"
+    evidence_source: "@outputs/workstreams/03-market-fit/"
     slides:
-      - action_title: "Now Assist attach rate drives +19pp conversion gap, persisting after segment controls"
-        evidence_source: "@outputs/workstreams/03-market-fit/"
+      - action_title: "Decline concentrated in Commercial (-9.8pp) while Enterprise/Strategic improve"
+        hypothesis_ids: ["D1"]
+      - action_title: "Now Assist +19pp (4x claimed)--87% persists after segment, deal size, geo controls"
+        hypothesis_ids: ["D4"]
+        control_analysis:
+          - {control: "Segment", before: "+19.0pp", after: "+18.0pp", persistence: "95%"}
+          - {control: "Deal size", before: "+19.0pp", after: "+13.6pp", persistence: "72%"}
+          - {control: "Full mix", before: "+19.0pp", after: "+16.5pp", persistence: "87%"}
 
   - title: "Demand Gen Model"
-    key_finding: "GSD underperforms overall but shows pockets of value"
+    decision: "C"
+    key_finding: "GSD -2.1pp overall but pockets of value exist"
+    evidence_source: "@outputs/workstreams/04-demand-gen-model/"
     slides:
-      - action_title: "GSD accounts convert 2.1pp below control overall, but outperform in Commercial/APAC/ITSM"
-        evidence_source: "@outputs/workstreams/04-demand-gen-model/"
+      - action_title: "GSD -2.1pp overall, -36.4pp in Enterprise--but +4.4pp in Lower Commercial, +4.3pp APAC"
+        hypothesis_ids: ["C1", "C5"]
+      - action_title: "Same source converts 63pp different across geos--one playbook cannot work"
+        hypothesis_ids: ["D8"]
 
   - title: "Measurement"
-    key_finding: "18.2pp method variance obscures true performance"
+    decision: "E"
+    key_finding: "18.2pp method variance; $6.5B hidden; AUC=0.924"
+    evidence_source: "@outputs/workstreams/05-measurement/"
     slides:
-      - action_title: "Attribution method choice swings conversion 18.2pp, with methods showing opposite trends"
-        evidence_source: "@outputs/workstreams/05-measurement/"
+      - action_title: "18.2pp method variance produces opposite trends--standardize before any other action"
+        hypothesis_ids: ["E11"]
+      - action_title: "$6.5B hidden contraction + $9.1B hidden early pipeline; loss model AUC=0.924"
+        hypothesis_ids: ["E7", "E9", "E13"]
 
-# Recommendations
 recommendations:
   preferred: "Hybrid Model"
+  scoring:
+    formula: "(Impact x 0.35) + ((6-Effort) x 0.25) + ((6-Risk) x 0.25) + ((6-Time) x 0.15)"
+    criteria: [{name: "Impact", weight: "35%"}, {name: "Effort", weight: "25%"}, {name: "Risk", weight: "25%"}, {name: "Time", weight: "15%"}]
   options:
-    - name: "Status Quo"
-      score: 2.15
-      description: "Maintain current structure"
-    - name: "GSD Expansion"
-      score: 2.85
-      description: "Double down on GSD model"
-    - name: "Full Direct"
-      score: 3.45
-      description: "Eliminate GSD, all Core Rep"
-    - name: "Hybrid Model"
-      score: 4.20
-      description: "GSD to proven pockets; Core Rep for enterprise"
+    - {name: "Status Quo", score: 2.60, description: "Maintain current structure"}
+    - {name: "Optimized Internal", score: 3.70, description: "Better targeting within GSD"}
+    - {name: "Outsourced", score: 2.45, description: "Outsource pipeline dev (missing cost data)"}
+    - {name: "Hybrid Model", score: 4.20, description: "GSD to pockets; Core Rep for Enterprise", highlight: true}
+    - {name: "Eliminate GSD", score: 3.10, description: "All Core Rep"}
+  fallback: "Option 2 (3.70) if segmentation complexity rejected"
 
-# Implementation roadmap
+recommendation:
+  parts:
+    - name: "Measurement Foundation (Prerequisite)"
+      prerequisite: true
+      actions: ["Standardize Cohort method (E11)", "Deploy loss model (E13: AUC=0.924)", "Track gross/net pipeline (E7)"]
+    - name: "GSD Segmentation"
+      segmentation:
+        keep: [{segment: "Lower Commercial", effect: "+4.4pp"}, {segment: "APAC", effect: "+4.3pp"}, {segment: "Impact BU", effect: "+10.0pp"}, {segment: "ITSM BU", effect: "+7.9pp"}]
+        redirect: [{segment: "Enterprise", gap: "-36.4pp"}, {segment: "Strategic"}, {segment: "AMS/JPN"}]
+    - name: "Lever Activation"
+      actions: ["Now Assist +19pp [D4]", "Partners +4.3pp [A6]", "Stage discipline +21.5pp [B3]", "Push monitoring +10.5pp [B8]"]
+
 roadmap:
+  total_days: 90
   phases:
-    - name: "Foundation (Days 1-30)"
-      actions:
-        - "Standardize attribution methodology"
-        - "Deploy loss prediction model (AUC=0.924)"
-        - "Establish pipeline hygiene baseline"
-    - name: "Execution (Days 31-60)"
-      actions:
-        - "Redirect GSD to Commercial/APAC/ITSM"
-        - "Enforce stage discipline protocols"
-        - "Accelerate Now Assist attach"
-    - name: "Optimization (Days 61-90)"
-      actions:
-        - "Measure intervention impact"
-        - "Adjust geo-specific playbooks"
-        - "Scale proven levers"
+    - name: "Foundation"
+      days: "0-30"
+      actions: ["Standardize methodology (E11)", "Deploy loss model (E13)", "Now Assist mandate (D4)", "CRM hygiene (E2)"]
+    - name: "Structure"
+      days: "31-60"
+      actions: ["Stage harmonization (E6)", "Stage 2 enforcement (E9)", "GSD segmentation (C1/C5)", "Gross/net tracking (E7)"]
+    - name: "Strategy"
+      days: "61-90"
+      actions: ["Geo playbooks (D5/D8)", "Loss intervention (E13)", "Pipeline rebalance (D1)", "Partner expansion (A6)"]
+  decision_gates:
+    - {name: "Launch", day: 0, decision: "Approve recommendation"}
+    - {name: "GSD Commit", day: 30, decision: "Commit segmentation + Core Rep capacity"}
+    - {name: "Retrospective", day: 90, decision: "Continue, adjust, or escalate"}
+
+decision_ask:
+  decisions:
+    - {decision: "Approve Hybrid Model or select alternative", owner: "PLT", by_when: "Today"}
+    - {decision: "Ratify Cohort as single conversion standard", owner: "PLT + D&A", by_when: "Today"}
+    - {decision: "Commit resources for 90-day roadmap", owner: "PLT", by_when: "1 week"}
+  if_decided: "Day 1: methodology published. Day 30: GSD segmentation underway. Day 90: measurable improvement."
+  if_not_decided: "FY26 proceeds on 11 contradicted claims; $1.18B stale pipeline inflates forecasts."
+
+appendix:
+  - {title: "Claims Validation Matrix", content_ref: "@outputs/deliverables/final/cross_decision_synthesis.md"}
+  - {title: "Hypothesis Matrix v3.0", content_ref: "@docs/hypotheses_matrix.md"}
+  - {title: "Options Matrix Detail", content_ref: "@outputs/deliverables/final/options_matrix.md"}
+  - {title: "Roadmap Detail", content_ref: "@outputs/deliverables/final/implementation_roadmap.md"}
+  - {title: "Data Gaps", summary: "C2 (GSD cost), D7 (competitive), B4 (seller tenure), D6 (cycle time)"}
+  - {title: "Methodology Notes", summary: "Cohort conversion, p<0.05, App Store excluded, 227K opps"}

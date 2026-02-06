@@ -1,0 +1,67 @@
+# Board Readout - Quarterly Pipeline Health
+# Demonstrates the board-readout deck type: shorter, strategic framing, less detail
+
+title: "Q1 FY26 Pipeline Health"
+subtitle: "Board Update: Conversion Recovery Progress"
+date: "April 2026"
+author: "CRO Office"
+audience: "Board of Directors"
+deck_type: board-readout
+classification: confidential
+duration_minutes: 20
+
+executive_summary:
+  situation: >
+    Pipeline conversion diagnostic completed in February identified 7 proven
+    levers and recommended a Hybrid Model (scored 4.20/5.00). Implementation
+    began March 1 with measurement standardization as prerequisite.
+  complication: >
+    Early results are mixed: measurement standardization is complete but GSD
+    segmentation is behind schedule due to capacity planning delays. Now Assist
+    attach rate is accelerating faster than projected.
+  resolution: >
+    Maintain current trajectory on measurement and Now Assist. Accelerate GSD
+    segmentation with temporary capacity bridge. Request board approval for
+    Phase 2 investment.
+
+methodology:
+  scope: "90-day implementation tracking against 13 action items"
+  approach: "Monthly measurement using standardized Cohort method"
+  data_sources:
+    - "Standardized pipeline reporting (Cohort method)"
+    - "Loss prediction model scoring"
+
+sections:
+  - title: "Implementation Progress"
+    key_finding: "Phase 1 substantially complete; Phase 2 delayed"
+    slides:
+      - action_title: "8 of 13 actions on track, 3 delayed, 2 ahead of schedule"
+        data_points:
+          - metric: "On track"
+            value: "8/13 (62%)"
+          - metric: "Ahead"
+            value: "2/13 (15%)"
+          - metric: "Delayed"
+            value: "3/13 (23%)"
+
+  - title: "Early Impact Signals"
+    key_finding: "Now Assist attach accelerating; measurement variance eliminated"
+    slides:
+      - action_title: "Methodology variance reduced from 18.2pp to 0pp--all teams now report same conversion number"
+        hypothesis_ids: ["E11"]
+      - action_title: "Now Assist attach rate increased 12% since mandate; conversion gap holds at +17pp"
+        hypothesis_ids: ["D4"]
+
+  - title: "Risk Items"
+    key_finding: "GSD segmentation delayed 2 weeks"
+    slides:
+      - action_title: "Core Rep capacity in APAC insufficient to absorb redirected Enterprise accounts--2-week delay"
+
+decision_ask:
+  decisions:
+    - decision: "Approve Phase 2 investment ($X for Core Rep expansion)"
+      owner: "Board"
+      by_when: "This meeting"
+    - decision: "Extend GSD transition timeline by 2 weeks"
+      owner: "CRO"
+      by_when: "This meeting"
