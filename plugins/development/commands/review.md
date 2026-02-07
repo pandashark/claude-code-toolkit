@@ -1,6 +1,6 @@
 ---
 allowed-tools: [Read, Write, Task, Bash, Grep, Glob, mcp__sequential-thinking__sequentialthinking]
-argument-hint: "[file/directory] [--spec requirements.md] [--systematic] [--semantic]"
+argument-hint: "[file/directory] [--spec requirements.md] [--systematic] [--semantic] [--fresh]"
 description: "Code review: bugs, design flaws, dead code, with prioritized action plan"
 ---
 
@@ -18,6 +18,7 @@ Practical code review focused on bugs, design issues, and maintainability.
 /review --spec design.md       # Validate against requirements
 /review --systematic           # Structured reasoning for complex code
 /review --semantic             # Use Serena (70-90% token reduction)
+/review --fresh                # Fresh-eyes review (writer/reviewer pattern)
 ```
 
 ## Focus Areas
@@ -67,6 +68,23 @@ Brief overview of findings.
 - Important: Y hours
 - Minor: Z hours
 ```
+
+## Fresh-Eyes Review (--fresh)
+
+The `--fresh` flag activates the **writer/reviewer pattern**: run this in a NEW Claude Code session (not the one that wrote the code) for an unbiased, independent review.
+
+**When `--fresh` is set:**
+- Assume nothing about the author's intent — form your own understanding from the code alone
+- Do not give benefit of the doubt on unclear logic — flag it
+- Apply stricter standards: if you have to think hard about what code does, it needs better naming or comments
+- Explicitly check that the code does what the surrounding documentation/tests claim
+- Challenge architectural decisions — ask "why not X?" for non-obvious choices
+
+**How to use the writer/reviewer pattern:**
+1. Session A writes the code (normal development)
+2. Open a new terminal with a fresh Claude Code session
+3. In Session B, run `/review --fresh [target]`
+4. Session B reviews without the implementation context that biases Session A
 
 ## Integration
 
