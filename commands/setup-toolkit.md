@@ -88,7 +88,7 @@ Create `.claude/settings.json` with the hook configured:
     "local": {
       "source": {
         "source": "directory",
-        "path": "/home/stefan/agents/plugins"
+        "path": "/path/to/claude-code-toolkit/plugins"
       }
     }
   },
@@ -150,7 +150,7 @@ Create `.mcp.json` at project root with requested MCP servers:
 ```
 
 **For projects with nvm** (check if ~/.nvm exists):
-Use absolute npx path: `/home/stefan/.nvm/versions/node/v22.21.0/bin/npx`
+Use absolute npx path: `~/.nvm/versions/node/<VERSION>/bin/npx`
 
 ## Step 7: Create Optional Files
 
@@ -265,7 +265,7 @@ Result: core plugins + web-development + quant + all MCP servers
 # Important Notes
 
 1. **Always create .mcp.json at project root** (not in .claude/)
-2. **Plugin marketplace path** must be `/home/stefan/agents/plugins`
+2. **Plugin marketplace path** must point to your local clone of this toolkit's `plugins/` directory
 3. **Ask before overwriting** existing configuration
 4. **Be interactive** - let user customize before creating files
 5. **Show summary** of what was created

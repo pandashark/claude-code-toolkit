@@ -156,7 +156,7 @@ Implementing MCP memory system with two-flow approach
 3. Update CLAUDE.md to reference memory modules
 
 ## Session Context
-Working in: /home/stefan/agents/claude_code
+Working in: /home/user/projects/my-project
 Last focus: Memory system design
 Open PR: feature/sophisticated-hook-system
 ```

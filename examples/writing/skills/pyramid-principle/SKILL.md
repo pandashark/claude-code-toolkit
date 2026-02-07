@@ -86,7 +86,7 @@ Core Message: "CAF transforms Claude Code into domain-specific agents"
 Core Message: "CAF transforms Claude Code into domain-specific agents"
 ├─ Argument 1: Customization spectrum
 ├─ Argument 2: File-based persistence (this is a detail, not major argument)
-└─ Argument 3: Stefan uses it for ML4T book (this is an example, not argument)
+└─ Argument 3: A user applies it to a technical book (this is an example, not argument)
 ```
 
 ### Rule 3: Logical Order

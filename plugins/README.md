@@ -22,7 +22,7 @@ Add to any project's `.claude/settings.json`:
     "local": {
       "source": {
         "source": "directory",
-        "path": "/home/stefan/agents/plugins"
+        "path": "/path/to/claude-code-toolkit/plugins"
       }
     }
   },
@@ -41,7 +41,7 @@ Add to any project's `.claude/settings.json`:
 
 ```bash
 # For specific project without marketplace setup
-cp -r /home/stefan/agents/plugins/{system,workflow,memory,development} \
+cp -r /path/to/claude-code-toolkit/plugins/{system,workflow,memory,development} \
   ~/my-project/.claude/plugins/
 ```
 
@@ -292,7 +292,7 @@ continue from .claude/transitions/2025-11-15/223452.md
 # In VS Code: Cmd/Ctrl+Shift+P → "Claude Code: Restart"
 
 # Verify plugin path is correct
-ls /home/stefan/agents/plugins/workflow/commands/
+ls /path/to/claude-code-toolkit/plugins/workflow/commands/
 # Should show: explore.md, plan.md, next.md, ship.md, work.md
 ```
 
@@ -303,7 +303,7 @@ ls /home/stefan/agents/plugins/workflow/commands/
 **Solution**:
 ```bash
 # Validate each plugin manifest
-cd /home/stefan/agents/plugins
+cd /path/to/claude-code-toolkit/plugins
 for plugin in */; do
   echo "Validating $plugin..."
   jq empty "$plugin/.claude-plugin/plugin.json" && echo "✅ $plugin" || echo "❌ $plugin"
@@ -587,7 +587,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 Built by the Applied AI team over 6 months of production use.
 
-**Repository**: Internal company distribution at `/home/stefan/agents/plugins/`
+**Repository**: [github.com/pandashark/claude-code-toolkit](https://github.com/pandashark/claude-code-toolkit)
 
 ---
 

@@ -82,7 +82,7 @@ def init_db(conn):
 
 def extract_project_name(claude_dir_name: str) -> tuple:
     """Extract readable project name from Claude's directory format."""
-    # -home-stefan-ml4t-software-backtest -> ml4t-software-backtest
+    # -home-user-my-project-subdir -> my-project-subdir
     parts = claude_dir_name.lstrip("-").split("-")
     # Skip home and username
     if len(parts) > 2 and parts[0] == "home":

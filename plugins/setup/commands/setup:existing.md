@@ -63,7 +63,7 @@ cat > $CLAUDE_DIR/settings.json << SETTINGS_EOF
     "local": {
       "source": {
         "source": "directory",
-        "path": "/home/stefan/agents/plugins"
+        "path": "/path/to/claude-code-toolkit/plugins"
       }
     }
   },

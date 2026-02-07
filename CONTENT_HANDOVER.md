@@ -360,7 +360,7 @@ Stateless, terminal-only, context limits (~85% actual when Claude reports 70%), 
 
 ## Contact
 
-**Technical Owner**: Stefan (Applied AI lead)
+**Technical Owner**: Project maintainer
 **Questions About**: Plugin architecture, workflow patterns, MCP integration, skill design
 **Do NOT ask about**: Content strategy, publication format, marketing angles
 
