@@ -1,7 +1,7 @@
 ---
 allowed-tools: [Read, Write, MultiEdit, Bash, Grep]
-argument-hint: "[continue|checkpoint|switch] [args] OR [active|paused|completed|all]"
-description: "Work unit management: list, continue, checkpoint, switch"
+argument-hint: "[continue|checkpoint|switch|--worktree] [args] OR [active|paused|completed|all]"
+description: "Work unit management: list, continue, checkpoint, switch, worktrees"
 ---
 
 # Work Management
@@ -21,6 +21,9 @@ Manage work units: list status, continue work, save checkpoints, switch contexts
 | `/work checkpoint` | Save current progress |
 | `/work checkpoint "msg"` | Save with message |
 | `/work switch ID` | Switch to different unit |
+| `/work --worktree create ID` | Create git worktree for work unit |
+| `/work --worktree list` | Show all active worktrees |
+| `/work --worktree remove ID` | Clean up a worktree |
 
 ## List Display
 
@@ -65,9 +68,34 @@ Manage work units: list status, continue work, save checkpoints, switch contexts
 └── 2025-01-01_02_other/
 ```
 
+## Worktree Operations
+
+Git worktrees provide filesystem isolation for parallel work streams. Each worktree is a separate checkout sharing the same `.git` repository.
+
+### Create
+1. Read work unit's `metadata.json` for branch name
+2. Create worktree outside main repo:
+   ```bash
+   git worktree add ../{project}-wt-{id} {branch}
+   ```
+3. Record worktree path in work unit metadata
+
+### List
+1. Run `git worktree list` and cross-reference with work unit metadata
+2. Display worktree paths, branches, and associated work units
+
+### Remove
+1. Verify work is committed on the worktree branch
+2. Remove the worktree:
+   ```bash
+   git worktree remove ../{project}-wt-{id}
+   ```
+3. Clean stale references: `git worktree prune`
+
 ## Integration
 
 - `/explore` creates new work units
 - `/plan` generates state.json
 - `/next` executes tasks
 - `/ship` completes and archives
+- `/team` coordinates parallel sessions across worktrees

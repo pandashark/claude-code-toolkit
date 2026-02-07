@@ -10,7 +10,8 @@
     "explore",
     "plan",
     "next",
-    "ship"
+    "ship",
+    "team"
   ],
   "commands": [
     "./commands/explore.md",
@@ -18,6 +19,7 @@
     "./commands/plan.md",
     "./commands/ship.md",
     "./commands/spike.md",
+    "./commands/team.md",
     "./commands/work.md"
   ],
   "agents": [
