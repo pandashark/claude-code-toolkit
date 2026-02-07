@@ -17,7 +17,8 @@
     "./commands/setup:rules.md"
   ],
   "skills": [
-    "./skills/shared-setup-patterns"
+    "./skills/shared-setup-patterns",
+    "./skills/sandboxing"
   ],
   "license": "MIT"
 }

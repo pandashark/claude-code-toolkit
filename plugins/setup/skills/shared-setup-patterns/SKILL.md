@@ -1,6 +1,6 @@
 ---
 name: shared-setup-patterns
-description: Shared configuration patterns for project setup commands. Provides security hooks, Claude framework structure templates, and framework detection patterns used across multiple setup commands.
+description: Shared configuration patterns for project setup commands. Provides security hooks, Claude framework structure templates, framework detection patterns, and sandboxing detection used across multiple setup commands.
 ---
 
 # Shared Setup Patterns
@@ -20,6 +20,7 @@ This skill contains ONLY patterns shared by multiple setup commands:
 1. **Security Hooks** - PreToolUse and PostToolUse hooks for all project types
 2. **Claude Framework Structure** - .claude/ directory templates and memory files
 3. **Framework Detection** - Patterns for auto-detecting project languages and frameworks
+4. **Sandboxing Detection** - Platform and sandbox availability detection for macOS/Linux
 
 Language-specific templates (Python, JavaScript, etc.) are kept inline in their respective commands.
 
@@ -60,6 +61,19 @@ Patterns for auto-detecting:
 - Tools: pytest, Jest, Mocha, go test, cargo test
 
 Used by: `/setup:existing`, `/setup` (if dispatcher exists)
+
+---
+
+## 4. Sandboxing Detection
+
+Located: (inline patterns)
+
+Patterns for detecting sandbox availability:
+- **Platform**: macOS (Seatbelt via `sandbox-exec`) vs Linux (bubblewrap via `bwrap`)
+- **Availability**: `command -v sandbox-exec` (macOS) or `command -v bwrap` (Linux)
+- **Status**: Check `uname` for platform, then probe for sandbox tooling
+
+Used by: `/setup:existing`, sandboxing skill
 
 ---
 
