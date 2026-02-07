@@ -12,7 +12,8 @@
     "./commands/setup:existing.md",
     "./commands/setup:user.md",
     "./commands/setup:statusline.md",
-    "./commands/setup:transitions.md"
+    "./commands/setup:transitions.md",
+    "./commands/setup:hooks.md"
   ],
   "skills": [
     "./skills/shared-setup-patterns"

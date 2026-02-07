@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); file=$(echo \"$input\" | jq -r '.tool_input.file_path // empty'); [ -z \"$file\" ] && exit 0; [ ! -f \"$file\" ] && exit 0; ext=\"${file##*.}\"; case \"$ext\" in py) if command -v ruff >/dev/null 2>&1; then output=$(ruff check \"$file\" 2>&1); [ -n \"$output\" ] && echo \"$output\" | head -10; fi; if command -v mypy >/dev/null 2>&1; then output=$(mypy --no-error-summary \"$file\" 2>&1); echo \"$output\" | grep -v '^Success' | head -5; fi; ;; ts|tsx) if command -v tsc >/dev/null 2>&1; then output=$(tsc --noEmit --pretty \"$file\" 2>&1); [ $? -ne 0 ] && echo \"$output\" | head -10; fi; ;; esac; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

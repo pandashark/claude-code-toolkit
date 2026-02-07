@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dir=\".claude/compaction-snapshots\"; mkdir -p \"$dir\"; ts=$(date -u +%Y%m%dT%H%M%SZ); git diff --stat HEAD 2>/dev/null > \"$dir/$ts-git-diff.txt\"; if [ -f .claude/work/ACTIVE_WORK ]; then unit=$(cat .claude/work/ACTIVE_WORK); [ -f \".claude/work/$unit/state.json\" ] && cp \".claude/work/$unit/state.json\" \"$dir/$ts-state.json\"; fi; echo \"Pre-compaction snapshot saved to $dir/$ts-*\"; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

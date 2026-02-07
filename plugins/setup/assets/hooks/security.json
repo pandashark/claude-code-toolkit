@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); cmd=$(echo \"$input\" | jq -r '.tool_input.command // empty'); if echo \"$cmd\" | grep -qE 'rm\\s+-rf\\s+(/|~|\\$HOME|\\.\\./)'; then echo 'BLOCKED: Destructive rm -rf targeting root, home, or parent directory' >&2; exit 2; fi; if echo \"$cmd\" | grep -qE '\\bsudo\\b'; then echo 'BLOCKED: sudo not allowed — run privileged commands manually' >&2; exit 2; fi; if echo \"$cmd\" | grep -qE 'chmod\\s+777'; then echo 'BLOCKED: chmod 777 is a security risk — use 755 or 644' >&2; exit 2; fi; if echo \"$cmd\" | grep -qE 'git\\s+push\\s+.*--force\\s.*(main|master)'; then echo 'BLOCKED: Force push to main/master not allowed' >&2; exit 2; fi; if echo \"$cmd\" | grep -qE '\\bcurl\\b.*\\|.*\\bsh\\b'; then echo 'BLOCKED: Piping curl to shell is unsafe — download and inspect first' >&2; exit 2; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
