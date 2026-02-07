@@ -1,0 +1,39 @@
+# Claude Code Issue Triage
+# Analyzes new issues and provides initial guidance using Claude Code.
+# Requires: ANTHROPIC_API_KEY secret in repository settings.
+
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Triage issue with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Claude will analyze the issue, suggest relevant files,
+          # and provide initial guidance as a comment.
+          direct_prompt: |
+            Analyze this GitHub issue. Provide:
+            1. A brief assessment of the issue
+            2. Which files in the codebase are likely relevant
+            3. Suggested approach for resolution
+            4. Estimated complexity (small/medium/large)
+
+            Be concise and actionable.
+
+          # Optional: set the model
+          # model: "claude-sonnet-4-5-20250929"

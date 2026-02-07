@@ -1,0 +1,42 @@
+# Claude Code Changes
+# Lets Claude make code changes in response to issue comments.
+# Comment "@claude <instruction>" on an issue to trigger.
+# Requires: ANTHROPIC_API_KEY secret in repository settings.
+
+name: Claude Code Changes
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  code-changes:
+    # Only run when a comment starts with @claude and is on an issue (not a PR)
+    if: |
+      contains(github.event.comment.body, '@claude') &&
+      !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Apply changes with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Claude will read the issue and comment, then make code changes
+          # and create a PR with the results.
+
+          # Optional: set the model
+          # model: "claude-sonnet-4-5-20250929"
+
+          # Optional: restrict which tools Claude can use
+          # allowed_tools: "Edit,Write,Bash(npm test),Bash(npm run lint)"
