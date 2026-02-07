@@ -12,10 +12,15 @@
     "./commands/setup:existing.md",
     "./commands/setup:user.md",
     "./commands/setup:statusline.md",
-    "./commands/setup:transitions.md"
+    "./commands/setup:transitions.md",
+    "./commands/setup:hooks.md",
+    "./commands/setup:rules.md",
+    "./commands/setup:ci.md",
+    "./commands/setup:enterprise.md"
   ],
   "skills": [
-    "./skills/shared-setup-patterns"
+    "./skills/shared-setup-patterns",
+    "./skills/sandboxing"
   ],
   "license": "MIT"
 }

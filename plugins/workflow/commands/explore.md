@@ -1,6 +1,6 @@
 ---
 allowed-tools: [Task, Bash, Read, Write, Grep, MultiEdit, mcp__firecrawl__firecrawl_search, mcp__firecrawl__firecrawl_scrape, mcp__sequential-thinking__sequentialthinking]
-argument-hint: "[@file | #issue | description | empty] [--work-unit ID]"
+argument-hint: "[@file | #issue | description | --interview | empty] [--work-unit ID]"
 description: "Explore requirements and codebase before planning"
 ---
 
@@ -15,6 +15,7 @@ Analyze requirements and codebase context. First step in "Explore → Plan → C
 - `@file.md` - Read and analyze document
 - `#123` - Fetch GitHub issue
 - `"description"` - Natural language requirement
+- `--interview` - Structured interview to elicit complete requirements
 - *(empty)* - General codebase exploration
 
 ## Process
@@ -52,6 +53,18 @@ Analyze requirements and codebase context. First step in "Explore → Plan → C
 ├── exploration.md     # Analysis findings
 └── state.json        # Tasks (if plan auto-generated)
 ```
+
+## Interview Mode (--interview)
+
+When `--interview` is specified, act as an interviewer to systematically elicit requirements before proceeding with exploration. Ask questions in phases, waiting for the user's response before moving to the next phase:
+
+1. **Vision**: What are you building? Who is it for? What problem does it solve?
+2. **Scope**: What's in scope for this work? What's explicitly out of scope? What's the MVP?
+3. **Technical**: Any technology constraints? Existing systems to integrate with? Performance/scale requirements?
+4. **Acceptance**: How will you know it's done? What does success look like? Key acceptance criteria?
+5. **Risks**: What could go wrong? What are the unknowns? Any deadlines or dependencies?
+
+After the interview, proceed with the normal process (steps 1-5 above) using the gathered answers as the requirements source. The interview produces a more thorough `requirements.md` since it systematically covers areas the user might not think to mention.
 
 ## Next Steps
 
