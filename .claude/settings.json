@@ -1,0 +1,6 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "cat | node .claude/statusline.js"
+  }
+}
