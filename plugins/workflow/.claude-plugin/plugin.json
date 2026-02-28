@@ -25,6 +25,5 @@
   "agents": [
     "./agents/context-gathering.md"
   ],
-  "repository": "https://github.com/yourusername/claude-code-plugins",
   "license": "MIT"
 }

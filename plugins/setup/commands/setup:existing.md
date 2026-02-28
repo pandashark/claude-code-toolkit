@@ -56,23 +56,36 @@ echo "✅ Created .claude/hooks/init-transition.sh (hourly progress tracking)"
 # Get absolute path for hook
 HOOK_PATH="$(pwd)/$CLAUDE_DIR/hooks/init-transition.sh"
 
+# Detect marketplace name from user's known_marketplaces.json
+MARKETPLACE_NAME="local"
+if [ -f "$HOME/.claude/plugins/known_marketplaces.json" ]; then
+    # Find the marketplace entry whose path points to the toolkit's plugins/ directory
+    DETECTED=$(cat "$HOME/.claude/plugins/known_marketplaces.json" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for key, val in data.items():
+    src = val.get('source', {})
+    path = src.get('path', '')
+    if 'claude-code-toolkit/plugins' in path and 'claude-plugins-official' not in path:
+        print(key)
+        break
+" 2>/dev/null)
+    if [ -n "$DETECTED" ]; then
+        MARKETPLACE_NAME="$DETECTED"
+    fi
+fi
+echo "Using marketplace name: $MARKETPLACE_NAME"
+
 # Create settings.json with plugins and hooks
 cat > $CLAUDE_DIR/settings.json << SETTINGS_EOF
 {
-  "extraKnownMarketplaces": {
-    "local": {
-      "source": {
-        "source": "directory",
-        "path": "/path/to/claude-code-toolkit/plugins"
-      }
-    }
-  },
   "enabledPlugins": {
-    "system@local": true,
-    "workflow@local": true,
-    "memory@local": true,
-    "development@local": true,
-    "transition@local": true
+    "system@$MARKETPLACE_NAME": true,
+    "workflow@$MARKETPLACE_NAME": true,
+    "memory@$MARKETPLACE_NAME": true,
+    "development@$MARKETPLACE_NAME": true,
+    "transition@$MARKETPLACE_NAME": true,
+    "setup@$MARKETPLACE_NAME": true
   },
   "hooks": {
     "UserPromptSubmit": [
@@ -159,7 +172,7 @@ Skip planning ONLY for trivial changes (typos, single-line fixes).
 CLAUDE_EOF
 
 # Replace placeholder with actual project name
-sed -i "s/PROJECT_NAME_PLACEHOLDER/$PROJECT_NAME/" CLAUDE.md
+sed -i '' "s/PROJECT_NAME_PLACEHOLDER/$PROJECT_NAME/" CLAUDE.md
 
 # Create work README
 cat > $CLAUDE_DIR/work/README.md << 'EOF'

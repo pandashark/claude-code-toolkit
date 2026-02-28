@@ -1,6 +1,7 @@
 ---
-title: prepare-review
-aliases: [review-prep, external-review]
+allowed-tools: [Bash, Read, Write, Grep, Glob, Task]
+argument-hint: "[focus area]"
+description: "Package codebase for external review using RepoMix"
 ---
 
 # Prepare External Code Review Package

@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "input=$(cat); msg=$(echo \"$input\" | jq -r '.message // \"Claude Code notification\"'); if command -v osascript >/dev/null 2>&1; then osascript -e \"display notification \\\"$msg\\\" with title \\\"Claude Code\\\"\" 2>/dev/null; elif command -v notify-send >/dev/null 2>&1; then notify-send 'Claude Code' \"$msg\" 2>/dev/null; fi; exit 0"
+            "command": "input=$(cat); msg=$(echo \"$input\" | jq -r '.message // \"Claude Code notification\"' | sed 's/[\\\\\"/]/ /g' | head -c 200); if command -v osascript >/dev/null 2>&1; then osascript -e \"display notification \\\"$msg\\\" with title \\\"Claude Code\\\"\" 2>/dev/null; elif command -v notify-send >/dev/null 2>&1; then notify-send 'Claude Code' \"$msg\" 2>/dev/null; fi; exit 0"
           }
         ]
       }

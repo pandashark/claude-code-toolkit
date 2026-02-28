@@ -1,5 +1,5 @@
 ---
-allowed-tools: [Task, Bash, Read, Write, Grep, MultiEdit, mcp__firecrawl__firecrawl_search, mcp__firecrawl__firecrawl_scrape, mcp__sequential-thinking__sequentialthinking]
+allowed-tools: [Task, Bash, Read, Write, Grep, Glob, MultiEdit, mcp__firecrawl__firecrawl_search, mcp__firecrawl__firecrawl_scrape, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__search_for_pattern, mcp__serena__get_symbols_overview, mcp__serena__find_referencing_symbols]
 argument-hint: "[@file | #issue | description | --interview | empty] [--work-unit ID]"
 description: "Explore requirements and codebase before planning"
 ---
@@ -41,8 +41,9 @@ Analyze requirements and codebase context. First step in "Explore → Plan → C
    - `exploration.md`: Architecture analysis, implementation approach, key files
 
 5. **Smart Planning**
-   - Simple requirements → Generate complete plan + state.json → Ready for /next
+   - Simple requirements → Generate complete plan + state.json + create feature branch (`git checkout -b feature/{topic}`) → Ready for /next
    - Complex requirements → Generate outline → Recommend /plan
+   - **Note**: When auto-generating state.json, always create a feature branch and populate `base_branch` and `work_branch` fields so `/next` and `/ship` can operate correctly.
 
 ## Work Unit Structure
 

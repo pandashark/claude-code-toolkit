@@ -1,5 +1,5 @@
 ---
-allowed-tools: [Read, Write, Task, Bash, Grep, Glob, mcp__sequential-thinking__sequentialthinking]
+allowed-tools: [Read, Write, Task, Bash, Grep, Glob, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__search_for_pattern, mcp__serena__get_symbols_overview, mcp__serena__find_referencing_symbols]
 argument-hint: "[file/directory] [--spec requirements.md] [--systematic] [--semantic] [--fresh]"
 description: "Code review: bugs, design flaws, dead code, with prioritized action plan"
 ---

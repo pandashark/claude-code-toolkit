@@ -51,8 +51,12 @@ function main() {
   const progressPct = progressPctRaw.toFixed(1);
   const progressPctInt = Math.min(Math.floor(progressPctRaw), 100);
 
-  const totalTokens = data.context_window?.total_input_tokens || 0;
   const contextSize = data.context_window?.context_window_size || 200000;
+
+  // Calculate tokens from percentage to guarantee they match
+  // This is more reliable than reading total_input_tokens (which includes cache)
+  const totalTokens = Math.round(contextSize * (progressPctRaw / 100));
+
   const formattedTokens = totalTokens ? `${Math.floor(totalTokens / 1000)}k` : '~';
   const formattedLimit = `${Math.floor(contextSize / 1000)}k`;
 

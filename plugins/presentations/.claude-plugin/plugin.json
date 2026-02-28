@@ -17,6 +17,5 @@
   "agents": [
     "./agents/deck-builder.md"
   ],
-  "repository": "https://github.com/yourusername/claude-code-plugins",
   "license": "MIT"
 }

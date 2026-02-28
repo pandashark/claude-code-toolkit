@@ -86,7 +86,7 @@ TRANSITION_FILE=".claude/transitions/$UTC_DATE/$UTC_TIME.md"
 **IMPORTANT**: After I complete the handoff document, you must manually continue:
 
 1. Run `/clear` (the CLI command, not a slash command)
-2. Use `/memory:continue` OR say: "continue from .claude/transitions/YYYY-MM-DD/HHMMSS.md"
+2. Use `/transition:continue` OR say: "continue from .claude/transitions/YYYY-MM-DD/HHMMSS.md"
 
 **Note**: Claude Code may ignore the continue command and check running processes first (internal command structure behavior). If this happens, run the command again or provide the explicit transition file path.
 
@@ -102,13 +102,13 @@ After I create the handoff document:
 **Step 2**: Resume work using ONE of these methods:
 ```
 # Option 1: Use the continue command (searches for latest transition)
-/memory:continue
+/transition:continue
 
 # Option 2: Provide explicit file path (more reliable)
 continue from .claude/transitions/YYYY-MM-DD/HHMMSS.md
 ```
 
-⚠️ **Note**: `/memory:continue` may sometimes prioritize other activities before loading the transition. If this happens, either run it again or use Option 2 with the explicit file path.
+⚠️ **Note**: `/transition:continue` may sometimes prioritize other activities before loading the transition. If this happens, either run it again or use Option 2 with the explicit file path.
 
 **Recommendation**: Always copy the transition file location when it's created, so you can provide it explicitly if needed for a smooth transition.
 
@@ -237,9 +237,9 @@ Location: .claude/transitions/YYYY-MM-DD/HHMMSS.md
 
 To continue this work:
 1. Run /clear (the CLI command)
-2. Use /memory:continue command OR say: "continue from .claude/transitions/YYYY-MM-DD/HHMMSS.md"
+2. Use /transition:continue command OR say: "continue from .claude/transitions/YYYY-MM-DD/HHMMSS.md"
 
-⚠️ **Note**: /memory:continue may sometimes prioritize other activities first. If this happens, run it again or provide the explicit file path above.
+⚠️ **Note**: /transition:continue may sometimes prioritize other activities first. If this happens, run it again or provide the explicit file path above.
 ```
 
 **Important**: You must explicitly tell me to continue after `/clear`.
@@ -274,7 +274,7 @@ ls -lh .claude/transitions/2025-10-19/
 
 ```bash
 # Transitions from last 5 hours (approximately)
-FIVE_HOURS_AGO=$(date -u -d '5 hours ago' +%Y-%m-%d)
+FIVE_HOURS_AGO=$(date -u -v-5H +%Y-%m-%d 2>/dev/null || date -u -d '5 hours ago' +%Y-%m-%d)
 find .claude/transitions/$FIVE_HOURS_AGO/ -type f -name "*.md"
 
 # Transitions created after specific time today
@@ -302,7 +302,7 @@ find .claude/transitions/ -type d -name "2025-*" -mtime +90 -exec rm -rf {} \;
 diff .claude/transitions/2025-10-19/143022.md .claude/transitions/2025-10-19/165530.md
 
 # See what changed in last transition
-LATEST=$(readlink -f .claude/transitions/latest)
+LATEST=$(find .claude/transitions/ -type f -name "*.md" | sort -r | head -1)
 PREVIOUS=$(find .claude/transitions/ -type f -name "*.md" | sort -r | sed -n '2p')
 diff "$PREVIOUS" "$LATEST"
 ```

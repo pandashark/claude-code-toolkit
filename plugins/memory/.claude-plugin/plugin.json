@@ -16,8 +16,8 @@
     "./commands/memory-gc.md",
     "./commands/memory-review.md",
     "./commands/memory-update.md",
-    "./commands/performance.md"
+    "./commands/performance.md",
+    "./commands/search.md"
   ],
-  "repository": "https://github.com/yourusername/claude-code-plugins",
   "license": "MIT"
 }

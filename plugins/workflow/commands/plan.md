@@ -1,5 +1,5 @@
 ---
-allowed-tools: [Task, Bash, Read, Write, Grep, MultiEdit, mcp__sequential-thinking__sequentialthinking]
+allowed-tools: [Task, Bash, Read, Write, Edit, Grep, Glob, MultiEdit, mcp__sequential-thinking__sequentialthinking]
 argument-hint: "[--from-requirements | --from-issue #123 | description]"
 description: "Create implementation plan with ordered tasks and dependencies"
 ---

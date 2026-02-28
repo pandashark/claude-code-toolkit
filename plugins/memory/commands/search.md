@@ -59,7 +59,7 @@ echo "## Key Discussions"
 
 # Search user messages and assistant responses
 for f in $(ls -t "$SESSION_DIR"/*.jsonl | head -10); do
-    DATE=$(stat -c %y "$f" | cut -d' ' -f1)
+    DATE=$(stat -c %y "$f" 2>/dev/null | cut -d' ' -f1 || stat -f "%Sm" -t "%Y-%m-%d" "$f" 2>/dev/null || echo "Unknown")
 
     # Check if file matches
     if grep -qi "$QUERY" "$f"; then
@@ -92,7 +92,7 @@ Returns:
 
 ## Token Efficiency
 
-This searches raw session data (~4.5MB for 97 sessions in this project) but only returns:
+This searches raw session data (which can grow to several MB) but only returns:
 - Summary headlines (1 line each)
 - Key decision sentences (truncated to 150 chars)
 

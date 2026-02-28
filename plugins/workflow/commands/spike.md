@@ -1,6 +1,7 @@
 ---
-title: "spike"
-aliases: ["explore-spike", "prototype"]
+allowed-tools: [Bash, Read, Write, Grep, Glob]
+argument-hint: "[start|complete|abandon|status] [topic] [--duration N]"
+description: "Time-boxed technical exploration in isolated branch"
 ---
 
 # Spike - Time-boxed Technical Exploration

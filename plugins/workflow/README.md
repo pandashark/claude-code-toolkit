@@ -444,7 +444,7 @@ The workflow plugin includes a **context-gathering agent** that runs automatical
 The workflow creates and maintains this structure:
 
 ```
-.claude/work/current/[work-unit]/
+.claude/work/[work-unit]/
 ├── metadata.json              # Work unit metadata
 ├── exploration.md             # /explore findings
 ├── implementation-plan.md     # /plan task breakdown
