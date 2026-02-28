@@ -77,27 +77,31 @@ HOOK_EOF
 chmod +x .claude/hooks/init-transition.sh
 ```
 
+## Step 4b: Detect Plugin Marketplace Name
+
+Before generating settings.json, read the user's marketplace config to find the correct plugin suffix:
+
+```bash
+cat ~/.claude/plugins/known_marketplaces.json
+```
+
+Look for the marketplace entry whose `source.path` points to the toolkit's `plugins/` directory (not `claude-plugins-official`). The **key name** of that entry is the marketplace suffix to use in `enabledPlugins`. For example, if the key is `"aai-plugins"`, then plugins are referenced as `system@aai-plugins`, `workflow@aai-plugins`, etc.
+
+Store this as `MARKETPLACE_NAME` for the next step.
+
 ## Step 5: Generate settings.json
 
 Create `.claude/settings.json` with the hook configured:
 
-**Base structure** (all projects) - use absolute path for hook:
+**Base structure** (all projects) - use absolute path for hook, and the detected MARKETPLACE_NAME as the plugin suffix:
 ```json
 {
-  "extraKnownMarketplaces": {
-    "local": {
-      "source": {
-        "source": "directory",
-        "path": "/path/to/claude-code-toolkit/plugins"
-      }
-    }
-  },
   "enabledPlugins": {
-    "system@local": true,
-    "workflow@local": true,
-    "memory@local": true,
-    "development@local": true,
-    "transition@local": true
+    "system@MARKETPLACE_NAME": true,
+    "workflow@MARKETPLACE_NAME": true,
+    "memory@MARKETPLACE_NAME": true,
+    "development@MARKETPLACE_NAME": true,
+    "transition@MARKETPLACE_NAME": true
   },
   "hooks": {
     "UserPromptSubmit": [
@@ -117,9 +121,9 @@ Create `.claude/settings.json` with the hook configured:
 
 **Important**: Replace `ABSOLUTE_PATH_TO_PROJECT` with the actual project path (use `pwd` to get it).
 
-**Add plugins based on project type**:
-- Web: `"web-development@local": true`
-- Quant: `"quant@local": true`
+**Add plugins based on project type** (using the detected MARKETPLACE_NAME):
+- Web: `"web-development@MARKETPLACE_NAME": true`
+- Quant: `"quant@MARKETPLACE_NAME": true`
 
 **Add permissions** (if requested):
 - Standard Python permissions for Python projects
@@ -138,19 +142,21 @@ Create `.mcp.json` at project root with requested MCP servers:
       "args": ["-y", "chrome-devtools-mcp@latest"]
     },
     "serena": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-serena"]
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-context7"]
+      "args": ["-y", "@upstash/context7-mcp@latest"]
     }
   }
 }
 ```
 
+**Note**: Serena is a Python-based MCP server and requires `uvx` (not `npx`). Verify `uvx` is installed (`which uvx`) before including it.
+
 **For projects with nvm** (check if ~/.nvm exists):
-Use absolute npx path: `~/.nvm/versions/node/<VERSION>/bin/npx`
+Use absolute npx path for the npx-based servers: `~/.nvm/versions/node/<VERSION>/bin/npx`
 
 ## Step 7: Create Optional Files
 
@@ -191,20 +197,20 @@ Print summary:
 ## Available Plugins
 
 **Core** (recommended for all projects):
-- `system@local` - Audit, cleanup, setup, status
-- `workflow@local` - Explore, plan, next, ship
-- `memory@local` - Handoff, memory management
-- `development@local` - Analyze, review, test, fix, run, git
+- `system@MARKETPLACE_NAME` - Audit, cleanup, setup, status
+- `workflow@MARKETPLACE_NAME` - Explore, plan, next, ship
+- `memory@MARKETPLACE_NAME` - Handoff, memory management
+- `development@MARKETPLACE_NAME` - Analyze, review, test, fix, run, git
 
 **Domain-specific**:
-- `web-development@local` - Django + Tailwind CSS workflows
-- `quant@local` - Quantitative finance workflows
-- `reports@local` - Professional report generation
-- `marketing@local` - Content marketing
+- `web-development@MARKETPLACE_NAME` - Django + Tailwind CSS workflows
+- `quant@MARKETPLACE_NAME` - Quantitative finance workflows
+- `reports@MARKETPLACE_NAME` - Professional report generation
+- `marketing@MARKETPLACE_NAME` - Content marketing
 
 **ML3T** (for ML4T book work):
-- `ml3t-researcher@local` - Academic research with paper search
-- `ml3t-coauthor@local` - Book co-authoring
+- `ml3t-researcher@MARKETPLACE_NAME` - Academic research with paper search
+- `ml3t-coauthor@MARKETPLACE_NAME` - Book co-authoring
 
 ## Standard MCP Servers
 
