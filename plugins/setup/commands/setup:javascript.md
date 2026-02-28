@@ -41,7 +41,7 @@ cat > package.json << EOF
   },
   "devDependencies": {
     "jest": "^29.0.0",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "prettier": "^3.0.0",
     "@types/node": "^20.0.0"
   },
@@ -86,8 +86,9 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-yarn.lock
+# Uncomment for library packages (applications should commit lockfiles):
+# package-lock.json
+# yarn.lock
 
 # Testing
 coverage/
@@ -145,25 +146,24 @@ JavaScript/Node.js project with modern tooling.
 @.claude/memory/decisions.md
 
 ## Current Work
-@.claude/work/current/README.md
+@.claude/work/README.md
 EOF
 
 # Generate memory files from shared skill templates
 echo "I'll create memory files (.claude/memory/*) using templates from the shared-setup-patterns skill."
 
 # Create work README
-cat > $CLAUDE_DIR/work/current/README.md << 'EOF'
-# Current Work
+cat > $CLAUDE_DIR/work/README.md << 'EOF'
+# Work Units
 
-Track active development tasks here. Use work units for larger features:
+Active development work units are organized here with date-prefixed directories:
+- YYYY-MM-DD_NN_topic/ - Work unit format with date and running counter
 
-```
-.claude/work/current/
-├── 001_feature_name/
-│   ├── requirements.md
-│   ├── implementation.md
-│   └── notes.md
-```
+Each work unit contains:
+- metadata.json - Work unit metadata and status
+- state.json - Task tracking and implementation plan
+
+See workflow plugin commands (/explore, /plan, /next, /ship) for managing work units.
 EOF
 
 echo ""

@@ -245,7 +245,7 @@ Add the toolkit as a plugin marketplace in your project's `.claude/settings.json
     "aai-plugins": {
       "source": {
         "source": "directory",
-        "path": "/Users/rich.amaya/tools/claude-code-toolkit/plugins"
+        "path": "/path/to/claude-code-toolkit/plugins"
       }
     }
   }
@@ -278,7 +278,7 @@ A project using the presentations plugin alongside other toolkit plugins:
     "aai-plugins": {
       "source": {
         "source": "directory",
-        "path": "/Users/rich.amaya/tools/claude-code-toolkit/plugins"
+        "path": "/path/to/claude-code-toolkit/plugins"
       }
     }
   },

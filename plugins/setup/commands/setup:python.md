@@ -53,7 +53,7 @@ dependencies = []
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 EOF
-        sed -i "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
+        sed -i '' "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
 
         # Minimal .gitignore
         cat > .gitignore << 'EOF'
@@ -78,20 +78,133 @@ EOF
 
     --full|full)
         echo "Creating comprehensive Python project..."
-        echo ""
-        echo "For a full setup, I'll create:"
-        echo "  1. pyproject.toml with documentation and security tools"
-        echo "  2. .pre-commit-config.yaml with all quality checks"
-        echo "  3. Makefile with comprehensive targets"
-        echo "  4. CI/CD workflow templates"
-        echo "  5. mkdocs.yml for documentation"
-        echo ""
-        echo "Please install these tools for full functionality:"
-        echo "  - mkdocs, mkdocs-material (documentation)"
-        echo "  - bandit (security scanning)"
-        echo "  - GitHub Actions (CI/CD automation)"
-        echo ""
-        echo "✅ Full setup guidance provided"
+
+        # Full includes everything from standard, plus extras
+        # Start with standard pyproject.toml but add extra deps
+        cat > pyproject.toml << 'EOF'
+[project]
+name = "$PROJECT_NAME"
+version = "0.1.0"
+description = "A Python package"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5.0",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+]
+security = [
+    "bandit>=1.7",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "S"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+EOF
+        sed -i '' "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
+
+        # Makefile with full targets
+        cat > Makefile << 'EOF'
+.PHONY: help install dev test lint format type-check clean docs security
+
+help:
+	@echo "Available commands:"
+	@echo "  make install       Install package"
+	@echo "  make dev           Install with dev + docs + security deps"
+	@echo "  make test          Run tests"
+	@echo "  make lint          Run linting"
+	@echo "  make format        Format code"
+	@echo "  make type-check    Run type checking"
+	@echo "  make docs          Build documentation"
+	@echo "  make security      Run security scan"
+	@echo "  make clean         Clean build artifacts"
+
+install:
+	pip install -e .
+
+dev:
+	pip install -e ".[dev,docs,security]"
+	pre-commit install
+
+test:
+	pytest
+
+lint:
+	ruff check src/ tests/
+
+format:
+	ruff format src/ tests/
+
+type-check:
+	mypy src/
+
+docs:
+	mkdocs build
+
+security:
+	bandit -r src/
+
+clean:
+	rm -rf build/ dist/ *.egg-info site/
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+	find . -type f -name "*.pyc" -delete
+EOF
+
+        # Standard .gitignore
+        cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+*.log
+.DS_Store
+.env
+site/
+EOF
+
+        echo "✅ Full Python setup complete"
         ;;
 
     --standard|standard|*)
@@ -139,7 +252,7 @@ addopts = "--cov=src --cov-report=term-missing"
 [tool.coverage.run]
 source = ["src"]
 EOF
-        sed -i "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
+        sed -i '' "s/\$PROJECT_NAME/$PROJECT_NAME/g" pyproject.toml
 
         # Pre-commit configuration
         cat > .pre-commit-config.yaml << 'EOF'
@@ -313,25 +426,24 @@ Python project using modern development tools.
 @.claude/memory/decisions.md
 
 ## Current Work
-@.claude/work/current/README.md
+@.claude/work/README.md
 EOF
 
 # Generate memory files from shared skill templates
 echo "I'll create memory files (.claude/memory/*) using templates from the shared-setup-patterns skill."
 
 # Create work README
-cat > $CLAUDE_DIR/work/current/README.md << 'EOF'
-# Current Work
+cat > $CLAUDE_DIR/work/README.md << 'EOF'
+# Work Units
 
-Track active development tasks here. Use work units for larger features:
+Active development work units are organized here with date-prefixed directories:
+- YYYY-MM-DD_NN_topic/ - Work unit format with date and running counter
 
-```
-.claude/work/current/
-├── 001_feature_name/
-│   ├── requirements.md
-│   ├── implementation.md
-│   └── notes.md
-```
+Each work unit contains:
+- metadata.json - Work unit metadata and status
+- state.json - Task tracking and implementation plan
+
+See workflow plugin commands (/explore, /plan, /next, /ship) for managing work units.
 EOF
 
 echo ""

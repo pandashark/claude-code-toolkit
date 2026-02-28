@@ -34,7 +34,7 @@ Clean up clutter from Claude development sessions.
 ## Consolidation Logic
 
 Reports classified by content and filename:
-- **Work-related** (`analysis`, `findings`) → `.claude/work/current/`
+- **Work-related** (`analysis`, `findings`) → `.claude/work/`
 - **Architecture docs** (`design`, `pattern`) → `.claude/reference/`
 - **General insights** → Append to `README.md`
 
