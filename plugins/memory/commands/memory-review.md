@@ -61,7 +61,7 @@ for file in "$MEMORY_DIR"/*.md; do
         size_human=$(numfmt --to=iec-i --suffix=B $size 2>/dev/null || echo "${size} bytes")
 
         # Extract last validated date
-        last_validated=$(grep -oP "Last (validated|updated).*?(\d{4}-\d{2}-\d{2})" "$file" | tail -1 | grep -oP "\d{4}-\d{2}-\d{2}" || echo "N/A")
+        last_validated=$(grep -oE "Last (validated|updated).*[0-9]{4}-[0-9]{2}-[0-9]{2}" "$file" | tail -1 | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}" || echo "N/A")
 
         status="✅"
         note=""
