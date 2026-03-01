@@ -1,7 +1,7 @@
 ---
-allowed-tools: [Read, Write, Edit, Bash, Task]
+allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__serena__find_symbol, mcp__serena__search_for_pattern, mcp__serena__get_symbols_overview, mcp__serena__find_referencing_symbols]
 argument-hint: "[tdd] or [pattern]"
-description: Test-driven development workflow using test-engineer agent
+description: Test-driven development workflow with TDD support
 ---
 
 # Test Workflow
@@ -30,7 +30,7 @@ description: Test-driven development workflow using test-engineer agent
 - Go: built-in testing
 - Check config files for settings
 
-### 3. TDD Mode (via test-engineer agent)
+### 3. TDD Mode
 
 **RED**: Write failing tests defining expected behavior
 - Include edge cases, error conditions, boundary values
