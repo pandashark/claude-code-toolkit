@@ -1,6 +1,8 @@
 ---
 title: handoff
 aliases: [transition]
+description: Create structured handoff document for session transition
+allowed-tools: [Read, Write, Edit, Bash, Glob]
 ---
 
 # Conversation Handoff

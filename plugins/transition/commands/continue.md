@@ -1,6 +1,8 @@
 ---
 title: continue
 aliases: [resume]
+description: Load and continue from the most recent handoff document
+allowed-tools: [Read, Bash]
 ---
 
 # Continue from Latest Handoff

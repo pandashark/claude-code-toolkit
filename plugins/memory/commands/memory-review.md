@@ -2,6 +2,7 @@
 title: memory-review
 aliases: [/memory-review]
 description: Display current memory state with timestamps, sizes, and staleness indicators
+allowed-tools: [Read, Bash, Glob]
 ---
 
 # Memory Review

@@ -1,6 +1,8 @@
 ---
 title: memory-update
 aliases: [remember, learn]
+description: Incrementally maintain project knowledge in permanent memory files
+allowed-tools: [Read, Write, Edit, Bash, Glob]
 ---
 
 # Memory Update
