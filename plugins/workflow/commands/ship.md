@@ -34,11 +34,10 @@ Validate, document, and deliver completed work.
    - Security scan
    - Build verification
 
-3. **Generate Documentation**
-   - DELIVERY.md: What was built, architecture, metrics
-   - CHANGELOG.md: Added/changed/fixed
-   - DEPLOYMENT.md: Prerequisites, steps, rollback
-   - Commit documentation to work branch
+3. **Generate Summary**
+   - Write `COMPLETION_SUMMARY.md` in work unit directory
+   - Content: tasks completed, key decisions, what was delivered
+   - Commit to work branch
 
 4. **Execute Delivery**
 
