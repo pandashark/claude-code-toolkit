@@ -1,20 +1,19 @@
 ---
 allowed-tools: [Read, Write, Edit, Bash]
-argument-hint: "[--all | --security | --formatting | --quality | --notifications | --compaction]"
-description: Configure Claude Code hooks for security, formatting, quality gates, notifications, and compaction
+argument-hint: "[--all | --security | --formatting | --notifications | --compaction]"
+description: Configure Claude Code hooks for security, formatting and quality checks, notifications, and compaction
 ---
 
 # Hooks Setup
 
-Install hook configurations into a project's `.claude/settings.json` to enforce security rules, auto-format code, run quality checks, send notifications, and preserve state before compaction.
+Install hook configurations into a project's `.claude/settings.json` to enforce security rules, auto-format and lint code, send notifications, and preserve state before compaction.
 
 ## Available Categories
 
 | Category | Event | What It Does |
 |----------|-------|------------|
 | **security** | PreToolUse | Blocks dangerous commands (rm -rf /, sudo, chmod 777, force push to main, curl\|sh) |
-| **formatting** | PostToolUse | Auto-formats files after write/edit (ruff, prettier, gofmt, rustfmt) |
-| **quality** | PostToolUse | Runs linters and type checkers on changed files (ruff check, mypy, tsc) |
+| **formatting** | PostToolUse | Auto-formats files then runs linters/type checkers (ruff, prettier, gofmt, rustfmt, mypy, tsc) |
 | **notifications** | Stop/Notification | Desktop notifications when sessions finish (macOS + Linux) |
 | **compaction** | PreCompact | Saves git diff and work unit state before context compaction |
 
@@ -23,8 +22,8 @@ Install hook configurations into a project's `.claude/settings.json` to enforce 
 ### Step 1: Determine which categories to install
 
 Check the argument provided by the user:
-- `--all`: Install all 5 categories
-- `--security`, `--formatting`, `--quality`, `--notifications`, `--compaction`: Install only that category
+- `--all`: Install all 4 categories
+- `--security`, `--formatting`, `--notifications`, `--compaction`: Install only that category
 - No argument: Ask the user which categories they want (list the table above), allow multiple selections
 
 ### Step 2: Read the hook template assets
@@ -35,7 +34,6 @@ Find the plugin directory by reading `.claude/settings.json` and looking at the 
 
 - `security.json`
 - `formatting.json`
-- `quality-gates.json`
 - `notifications.json`
 - `compaction.json`
 
