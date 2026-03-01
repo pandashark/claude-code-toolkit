@@ -1,5 +1,5 @@
 ---
-allowed-tools: [Read, Bash, Task, Write, MultiEdit]
+allowed-tools: [Read, Bash, Task, Write, MultiEdit, Grep, Glob]
 argument-hint: "commit|pr|issue [arguments]"
 description: Unified git operations - commits, pull requests, and issue management
 ---
