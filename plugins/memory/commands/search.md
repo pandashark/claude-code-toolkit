@@ -1,14 +1,18 @@
 ---
 description: Search session history for past decisions, discussions, and context
+allowed-tools: [Bash, Read, Grep, Glob]
+argument-hint: "[query] [--summaries-only] [--recent N]"
 ---
 
 # /memory:search [query]
 
-Search Claude Code's session history to find past decisions, discussions, and context.
+Search session history to find past decisions, discussions, and context.
+
+**Input**: $ARGUMENTS
 
 ## How It Works
 
-Claude Code automatically stores complete session history in `~/.claude/projects/`. This command searches that history to recover:
+Session history is stored in `~/.claude/projects/` as JSONL files. This command searches that history to recover:
 - Past decisions and their rationale
 - Discussions about specific topics
 - Auto-compact summaries
@@ -28,45 +32,56 @@ Claude Code automatically stores complete session history in `~/.claude/projects
 - `--summaries-only` - Only search auto-compact summaries (faster, less detail)
 - `--recent N` - Only search N most recent sessions (default: 20)
 
-## Implementation
+## Process
 
-When invoked, execute:
+### 1. Parse Arguments
+
+From `$ARGUMENTS`, extract:
+- **query**: The search keywords (everything that isn't a flag)
+- **summaries_only**: Whether `--summaries-only` is present
+- **recent_n**: The number after `--recent` (default 20)
+
+If no query is provided, ask the user what to search for.
+
+### 2. Locate Session Directory
+
+Determine the project session directory:
 
 ```bash
-#!/bin/bash
-QUERY="$1"
 PROJECT_DIR=$(pwd)
 CLAUDE_PROJECT="-$(echo "$PROJECT_DIR" | sed 's|^/||; s|/|-|g')"
 SESSION_DIR="$HOME/.claude/projects/$CLAUDE_PROJECT"
+```
 
-if [ ! -d "$SESSION_DIR" ]; then
-    echo "No session history found for this project."
-    exit 1
-fi
+If the directory doesn't exist, tell the user:
+> No session history found for this project.
 
-echo "Searching session history for: $QUERY"
-echo ""
+### 3. Search Summaries
 
-# Search summaries first (fast overview)
-echo "## Relevant Summaries"
-for f in $(ls -t "$SESSION_DIR"/*.jsonl | head -20); do
+Search the N most recent session files for summary entries matching the query:
+
+```bash
+QUERY="the search query"
+N=20  # or value from --recent
+for f in $(ls -t "$SESSION_DIR"/*.jsonl 2>/dev/null | head -$N); do
     grep -i "$QUERY" "$f" 2>/dev/null | \
         jq -r 'select(.type=="summary") | .summary' 2>/dev/null
 done | sort -u | head -15
+```
 
-echo ""
-echo "## Key Discussions"
+Present results under `## Relevant Summaries`.
 
-# Search user messages and assistant responses
-for f in $(ls -t "$SESSION_DIR"/*.jsonl | head -10); do
-    DATE=$(stat -c %y "$f" 2>/dev/null | cut -d' ' -f1 || stat -f "%Sm" -t "%Y-%m-%d" "$f" 2>/dev/null || echo "Unknown")
+If `--summaries-only` was specified, stop here.
 
-    # Check if file matches
+### 4. Search Discussions
+
+Search the same session files for assistant messages containing the query, focusing on decisions and recommendations:
+
+```bash
+for f in $(ls -t "$SESSION_DIR"/*.jsonl 2>/dev/null | head -$N); do
+    DATE=$(stat -f "%Sm" -t "%Y-%m-%d" "$f" 2>/dev/null || stat -c %y "$f" 2>/dev/null | cut -d' ' -f1 || echo "Unknown")
     if grep -qi "$QUERY" "$f"; then
-        echo ""
         echo "### Session: $DATE"
-
-        # Extract relevant assistant text (decisions, recommendations)
         grep -i "$QUERY" "$f" | \
             jq -r 'select(.type=="assistant") | .message.content[]? |
                    select(.type=="text") | .text' 2>/dev/null | \
@@ -77,43 +92,19 @@ for f in $(ls -t "$SESSION_DIR"/*.jsonl | head -10); do
 done
 ```
 
-## When to Use
+Present results under `## Key Discussions`.
 
-- **Recovering lost context**: "What did we decide about X?"
-- **Before starting new work**: "Have we discussed Y before?"
-- **Debugging**: "When did we change Z?"
-- **Continuity**: "What was the rationale for W?"
+### 5. Report Results
+
+If no matches found in either section, tell the user:
+> No results found for "[query]". Try different keywords or increase --recent.
 
 ## Output Format
 
-Returns:
-1. **Relevant Summaries** - Auto-compact headlines mentioning the query
-2. **Key Discussions** - Extracted decisions and recommendations from past sessions
-
-## Token Efficiency
-
-This searches raw session data (which can grow to several MB) but only returns:
-- Summary headlines (1 line each)
-- Key decision sentences (truncated to 150 chars)
-
-Typical output: 500-2000 tokens regardless of total session history size.
-
-## Limitations
-
-- Only searches current project's sessions
-- Requires `jq` for JSON parsing
-- Best for keyword-based searches (not semantic)
-- Recent sessions searched first (older may be missed)
-
-## Examples
-
-### Find authentication decisions
 ```
-/memory:search "JWT authentication"
-
 ## Relevant Summaries
-- API authentication patterns implementation
-- Auth flow refactoring complete
+- Summary headline 1
+- Summary headline 2
 
 ## Key Discussions
 ### Session: 2025-12-10
@@ -121,15 +112,19 @@ Typical output: 500-2000 tokens regardless of total session history size.
 - Should implement refresh token rotation for security
 ```
 
-### Find bug fixes
-```
-/memory:search "bug fix" --summaries-only
+## When to Use
 
-## Relevant Summaries
-- Fix pagination bug in search results
-- Bug fix: handle null user edge case
-- Fixed race condition in async handler
-```
+- **Recovering lost context**: "What did we decide about X?"
+- **Before starting new work**: "Have we discussed Y before?"
+- **Debugging**: "When did we change Z?"
+- **Continuity**: "What was the rationale for W?"
+
+## Limitations
+
+- Only searches current project's sessions
+- Requires `jq` for JSON parsing
+- Best for keyword-based searches (not semantic)
+- Recent sessions searched first (older may be missed)
 
 ## See Also
 
