@@ -59,7 +59,7 @@ for file in "$MEMORY_DIR"/*.md; do
     if [[ -f "$file" ]]; then
         filename=$(basename "$file")
         size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file" 2>/dev/null)
-        size_human=$(numfmt --to=iec-i --suffix=B $size 2>/dev/null || echo "${size} bytes")
+        size_human=$(awk -v s="$size" 'BEGIN{u="BKMGTP";for(i=1;s>=1024&&i<length(u);i++)s/=1024;printf "%.0f%ciB",s,substr(u,i,1)}' 2>/dev/null || echo "${size} bytes")
 
         # Extract last validated date
         last_validated=$(grep -oE "Last (validated|updated).*[0-9]{4}-[0-9]{2}-[0-9]{2}" "$file" | tail -1 | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}" || echo "N/A")
@@ -111,7 +111,7 @@ if [[ -d "$DOCUMENTATION_DIR" ]]; then
         if [[ -f "$file" ]]; then
             filename=$(basename "$file")
             size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file" 2>/dev/null)
-            size_human=$(numfmt --to=iec-i --suffix=B $size 2>/dev/null || echo "${size} bytes")
+            size_human=$(awk -v s="$size" 'BEGIN{u="BKMGTP";for(i=1;s>=1024&&i<length(u);i++)s/=1024;printf "%.0f%ciB",s,substr(u,i,1)}' 2>/dev/null || echo "${size} bytes")
             created=$(date -r "$file" +%Y-%m-%d 2>/dev/null || stat -f "%Sm" -t "%Y-%m-%d" "$file" 2>/dev/null || echo "Unknown")
             printf "  ✅ %-25s %-12s Created: %s\n" "$filename" "$size_human" "$created"
         fi
@@ -120,7 +120,7 @@ if [[ -d "$DOCUMENTATION_DIR" ]]; then
 fi
 
 # Summary
-total_size_human=$(numfmt --to=iec-i --suffix=B $total_size 2>/dev/null || echo "${total_size} bytes")
+total_size_human=$(awk -v s="$total_size" 'BEGIN{u="BKMGTP";for(i=1;s>=1024&&i<length(u);i++)s/=1024;printf "%.0f%ciB",s,substr(u,i,1)}' 2>/dev/null || echo "${total_size} bytes")
 
 echo "📊 Summary:"
 echo "  Total memory: $total_size_human ($file_count files)"

@@ -59,7 +59,7 @@ Manage work units: list status, continue work, save checkpoints, switch contexts
 
 ```
 .claude/work/
-├── ACTIVE_WORK              # Current unit ID
+├── ACTIVE_WORK              # Plain text file containing current unit ID (e.g., 2025-01-15_01_topic)
 ├── 2025-01-01_01_topic/
 │   ├── metadata.json        # Status, timestamps
 │   ├── requirements.md

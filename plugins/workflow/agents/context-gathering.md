@@ -1,7 +1,7 @@
 ---
 name: context-gathering
 description: Gathers task-specific context before implementation. Creates concise Context Manifests with relevant code paths, dependencies, and warnings.
-tools: Read, Glob, Grep, LS, Bash, Edit, mcp__serena__find_symbol, mcp__serena__search_for_pattern, mcp__serena__get_symbols_overview, mcp__serena__find_referencing_symbols
+tools: Read, Glob, Grep, Bash, Edit, mcp__serena__find_symbol, mcp__serena__search_for_pattern, mcp__serena__get_symbols_overview, mcp__serena__find_referencing_symbols
 ---
 
 # Context-Gathering Agent
