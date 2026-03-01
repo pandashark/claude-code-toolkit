@@ -128,7 +128,7 @@ Don't update memory for:
 - Historical narratives
 - Information already in README or docs
 
-Use `/handoff` instead for session-specific context.
+Use `/transition:handoff` instead for session-specific context.
 
 ---
 

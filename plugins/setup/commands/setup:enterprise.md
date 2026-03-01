@@ -58,10 +58,11 @@ Write `.claude/policies/managed-settings.json`:
   "permissions": {
     "deny": [
       "Bash(sudo *)",
-      "Bash(rm -rf /)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
       "Bash(chmod 777 *)",
-      "Bash(git push --force * main)",
-      "Bash(git push --force * master)"
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)"
     ]
   },
   "hooks": {

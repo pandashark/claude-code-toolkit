@@ -52,6 +52,7 @@ echo "📁 Memory Files ($MEMORY_DIR/):"
 total_size=0
 fresh_count=0
 stale_count=0
+aging_count=0
 oversized_count=0
 file_count=0
 
@@ -77,7 +78,7 @@ for file in "$MEMORY_DIR"/*.md; do
             elif [[ $days -gt 7 ]]; then
                 status="⚠️"
                 note="(Aging: $days days)"
-                stale_count=$((stale_count + 1))
+                aging_count=$((aging_count + 1))
             else
                 note="(Fresh)"
                 fresh_count=$((fresh_count + 1))
@@ -125,15 +126,18 @@ total_size_human=$(awk -v s="$total_size" 'BEGIN{u="BKMGTP";for(i=1;s>=1024&&i<l
 echo "📊 Summary:"
 echo "  Total memory: $total_size_human ($file_count files)"
 echo "  Fresh: $fresh_count files (validated <7 days)"
-echo "  Stale: $stale_count files (validated >7 days or no timestamp)"
+echo "  Aging: $aging_count files (validated 7-30 days)"
+echo "  Stale: $stale_count files (validated >30 days or no timestamp)"
 echo "  Oversized: $oversized_count files (>5KB)"
 echo ""
 
 # Recommendations
-if [[ $stale_count -gt 0 ]] || [[ $oversized_count -gt 0 ]]; then
+if [[ $stale_count -gt 0 ]] || [[ $aging_count -gt 0 ]] || [[ $oversized_count -gt 0 ]]; then
     echo "⚠️  Actions Recommended:"
+    if [[ $aging_count -gt 0 ]]; then
+        echo "  - Review aging files with /memory-update"
+    fi
     if [[ $stale_count -gt 0 ]]; then
-        echo "  - Review stale files with /memory-update"
         echo "  - Run /memory-gc to clean up stale content"
     fi
     if [[ $oversized_count -gt 0 ]]; then
@@ -148,12 +152,12 @@ echo ""
 echo "💡 Next steps:"
 echo "   - /memory-update  : Update or add memory entries"
 echo "   - /memory-gc      : Clean up stale content"
-echo "   - /status         : Check overall project health"
+echo "   - /system:status  : Check overall project health"
 ```
 
 ## Integration
 
-**Called by**: `/status`, `/ship`
+**Called by**: `/system:status`, `/workflow:ship`
 **Related**: `/memory-update`, `/memory-gc`
 
 ---

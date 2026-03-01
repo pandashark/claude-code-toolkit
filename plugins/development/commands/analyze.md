@@ -52,7 +52,9 @@ Deep codebase analysis for architecture, patterns, and improvement opportunities
 
 ## Output
 
-Write findings to `exploration.md` or return structured summary:
+Write findings to `exploration.md` in the active work unit directory (`.claude/work/{id}/exploration.md`). If no active work unit exists, return findings as an inline structured summary instead.
+
+Contents:
 - Architecture type and patterns
 - Key components and relationships
 - Quality metrics

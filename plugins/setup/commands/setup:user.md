@@ -14,7 +14,7 @@ USER_CLAUDE_FILE="$USER_CLAUDE_DIR/CLAUDE.md"
 FORCE_FLAG=false
 
 # Check for --force flag
-if [ "$1" = "--force" ]; then
+if echo "$ARGUMENTS" | grep -q "\-\-force"; then
     FORCE_FLAG=true
 fi
 

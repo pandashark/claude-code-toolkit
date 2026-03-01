@@ -44,7 +44,14 @@ description: Universal debugging and fix application with semantic code analysis
 4. Validate each change
 5. Document results
 
-### 4. Verification
+### 4. Output
+
+Report results inline with:
+- **Applied fixes**: What was changed, with file:line references
+- **Failed attempts**: What couldn't be fixed and why
+- **Verification results**: Test/lint outcomes after fixes
+
+### 5. Verification
 - Run relevant tests
 - Check linting
 - Verify functionality preserved

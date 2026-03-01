@@ -60,7 +60,11 @@ This prepares the directory for any standalone hook scripts the user may add lat
 
 Validate the resulting settings.json is valid JSON:
 ```bash
-jq empty .claude/settings.json
+if command -v jq >/dev/null 2>&1; then
+    jq empty .claude/settings.json
+else
+    python3 -m json.tool < .claude/settings.json > /dev/null
+fi
 ```
 
 ### Step 6: Report

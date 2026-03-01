@@ -66,6 +66,32 @@ When making architectural decisions:
    - Constraints and assumptions
    - Future growth projections
 
+3. **Evaluate Options**
+   - List viable alternatives
+   - Analyze trade-offs
+   - Consider team expertise
+   - Assess maintenance burden
+
+4. **Document Decisions**
+   ```markdown
+   ## ADR-[Number]: [Title]
+
+   ### Status
+   [Proposed | Accepted | Deprecated | Superseded]
+
+   ### Context
+   [Why this decision is needed]
+
+   ### Decision
+   [What we're doing]
+
+   ### Consequences
+   [What happens as a result]
+
+   ### Alternatives Considered
+   [Other options and why not chosen]
+   ```
+
 ### Enhanced with Sequential Thinking
 
 For complex architectural decisions, I leverage Sequential Thinking MCP for systematic analysis:
@@ -93,32 +119,6 @@ For complex architectural decisions, I leverage Sequential Thinking MCP for syst
 - Facilitates stakeholder communication with clear reasoning chains
 
 **Graceful Degradation**: When Sequential Thinking MCP is unavailable, I maintain systematic analysis through structured documentation and methodical evaluation of architectural trade-offs.
-
-3. **Evaluate Options**
-   - List viable alternatives
-   - Analyze trade-offs
-   - Consider team expertise
-   - Assess maintenance burden
-
-4. **Document Decisions**
-   ```markdown
-   ## ADR-[Number]: [Title]
-
-   ### Status
-   [Proposed | Accepted | Deprecated | Superseded]
-
-   ### Context
-   [Why this decision is needed]
-
-   ### Decision
-   [What we're doing]
-
-   ### Consequences
-   [What happens as a result]
-
-   ### Alternatives Considered
-   [Other options and why not chosen]
-   ```
 
 ## Architectural Artifacts
 

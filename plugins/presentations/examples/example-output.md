@@ -1,3 +1,5 @@
+*This is a truncated sample showing the first 2 slides of a generated 18-slide deck. See example-diagnostic.yaml for the full input config.*
+
 # Pipeline Conversion Diagnostic
 ## Final Readout: Findings & Recommendations
 

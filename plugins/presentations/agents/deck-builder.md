@@ -334,7 +334,7 @@ For each slide in order:
 
 ### Phase 5: Quality Validation
 
-Run all 6 checks (see Quality Validation section below). Generate the quality report. If score <7.0, stop and explain what input is needed to reach quality standard.
+Run all 6 checks (see Quality Validation section below). Generate the quality report. If score <7.0, refuse to generate and explain what input is needed to reach quality standard.
 
 ## Quality Validation System
 
@@ -407,14 +407,14 @@ Include this at the end of every generated deck:
 
 **Overall Score: X.X/10** [PASS|WARN|FAIL]
 
-| Check | Status | Score | Details |
-|-------|--------|-------|---------|
-| Horizontal Flow | PASS/WARN/FAIL | X.X/2.0 | [description] |
-| Quantification | PASS/WARN/FAIL | X.X/1.5 | [N/M titles quantified (X%)] |
-| Traceability | PASS/WARN/FAIL | X.X/1.5 | [N claims, N sourced] |
-| Vertical Flow | PASS/WARN/FAIL | X.X/2.0 | [N/M slides complete] |
-| Presenter Notes | PASS/WARN/FAIL | X.X/1.5 | [N/M slides with notes + cues] |
-| Leave-Behind Notes | PASS/WARN/FAIL | X.X/1.5 | [N/M slides with 150+ words] |
+| Check | Status | Details |
+|-------|--------|---------|
+| Horizontal Flow | PASS/WARN/FAIL | [description] |
+| Quantification | PASS/WARN/FAIL | [N/M titles quantified (X%)] |
+| Traceability | PASS/WARN/FAIL | [N claims, N sourced] |
+| Vertical Flow | PASS/WARN/FAIL | [N/M slides complete] |
+| Presenter Notes | PASS/WARN/FAIL | [N/M slides with notes + cues] |
+| Leave-Behind Notes | PASS/WARN/FAIL | [N/M slides with 150+ words] |
 
 ### Action Items
 

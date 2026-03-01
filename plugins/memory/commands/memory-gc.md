@@ -128,7 +128,7 @@ Suggest next steps:
 
 ## Integration
 
-**Called by**: `/status` (warn if >30 days), Manual execution
+**Called by**: `/system:status` (warn if >30 days), Manual execution
 **Related**: `/memory:memory-review`, `/memory:memory-update`
 
 ---

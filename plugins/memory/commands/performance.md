@@ -108,8 +108,8 @@ Prompt caching and extended thinking have separate pricing tiers not shown here.
 After presenting ccusage output, analyze the user's patterns and offer relevant suggestions from this list:
 
 **High token usage per session** — Context filling quickly
-- Use `/handoff` proactively at ~70% perceived context usage
-- Run `/index` to build project knowledge that reduces repeated exploration
+- Use `/transition:handoff` proactively at ~70% perceived context usage
+- Run `/memory:index` to build project knowledge that reduces repeated exploration
 - Prefer Serena MCP for code navigation (70-90% token reduction vs grep/read cycles)
 
 **High cost relative to work output** — Model selection opportunity
@@ -118,12 +118,12 @@ After presenting ccusage output, analyze the user's patterns and offer relevant 
 - Prompt caching reduces input costs on repeated context
 
 **Frequent sessions on same topic** — Poor continuity between sessions
-- Run `/memory-update` to persist key learnings
-- Use `/handoff` + `/continue` for explicit session continuity
-- Run `/index` to reduce re-exploration overhead
+- Run `/memory:memory-update` to persist key learnings
+- Use `/transition:handoff` + `/transition:continue` for explicit session continuity
+- Run `/memory:index` to reduce re-exploration overhead
 
 **Many short sessions** — Possible compaction or setup issues
-- Check if project has `/index` — missing project maps cause excess exploration
+- Check if project has `/memory:index` — missing project maps cause excess exploration
 - Ensure CLAUDE.md has clear project context to reduce startup cost
 - Consider hooks for auto-compaction (see `/setup:hooks`)
 
@@ -152,12 +152,12 @@ Without ccusage/Node.js, still present the Model Cost Reference table and Usage 
 ## Integration
 
 Performance metrics integrate with:
-- `/status` — session management
-- `/work` — work unit tracking
-- `/analyze` — project analysis
-- `/handoff` — context management optimization
-- `/memory-update` — session continuity
-- `/index` — project knowledge for token efficiency
+- `/system:status` — session management
+- `/workflow:work` — work unit tracking
+- `/development:analyze` — project analysis
+- `/transition:handoff` — context management optimization
+- `/memory:memory-update` — session continuity
+- `/memory:index` — project knowledge for token efficiency
 
 ---
 

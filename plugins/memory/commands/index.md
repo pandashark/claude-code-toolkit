@@ -58,6 +58,6 @@ Create persistent project understanding that survives sessions.
 
 ## Benefits
 
-- `/analyze` has persistent context
-- `/explore` starts with project knowledge
+- `/development:analyze` has persistent context
+- `/workflow:explore` starts with project knowledge
 - New sessions understand codebase immediately

@@ -3,7 +3,7 @@
 ## Input Examples
 
 ### example-diagnostic.yaml
-Complete YAML config for a **decision-meeting** deck (the Pipeline Conversion Diagnostic). Demonstrates all schema features: SCR framing, claims validation, MECE sections with evidence references, options matrix with scoring, multi-part recommendation with segmentation, phased roadmap, decision ask, appendix, and data gaps. ~240 lines expressing an 18-slide + appendix deck.
+Complete YAML config for a **decision-meeting** deck (the Pipeline Conversion Diagnostic). Demonstrates all schema features: SCR framing, claims validation, MECE sections with evidence references, options matrix with scoring, multi-part recommendation with segmentation, phased roadmap, decision ask, appendix, and data gaps. ~146 lines expressing an 18-slide + appendix deck.
 
 ### example-board-readout.yaml
 Shorter YAML config for a **board-readout** deck. Demonstrates how the same schema scales down for executive summaries: fewer sections, simpler evidence, focus on progress tracking and investment decisions. ~70 lines expressing a ~10-slide deck.
@@ -27,7 +27,7 @@ See `../schema.md` for the complete field reference with types, required/optiona
 /deck examples/example-board-readout.yaml
 
 # Generate from markdown analysis outputs (auto-synthesis)
-/deck @outputs/workstreams/
+/deck --from-markdown outputs/workstreams/
 
 # Specify deck type explicitly
 /deck config.yaml --type deep-dive
