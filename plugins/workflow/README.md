@@ -62,11 +62,6 @@ Explore requirements and codebase with systematic analysis before planning. This
 /explore --work-unit 001                    # Use existing work unit
 ```
 
-**Thoroughness Levels**:
-- `quick`: Basic search and analysis (5-10 minutes)
-- `medium`: Moderate exploration with multiple angles (15-25 minutes)
-- `very thorough`: Comprehensive analysis across codebase (30-45 minutes)
-
 **Output**:
 - `exploration.md`: Detailed findings and analysis
 - `metadata.json`: Work unit tracking information
@@ -395,8 +390,7 @@ Acceptance criteria:
 - Documents lessons in `lessons_learned.md`
 
 ### Git Plugin
-- `/ship --commit` uses `/git commit`
-- `/ship --pr` uses `/git pr`
+- `/ship --merge` and `/ship --pr` handle git operations
 - Automatic commit message generation
 
 ## Agents
@@ -469,48 +463,6 @@ The workflow creates and maintains this structure:
 }
 ```
 
-## Configuration
-
-### Exploration Defaults (`.claude/config.json`)
-```json
-{
-  "workflow": {
-    "explore": {
-      "defaultThoroughness": "medium",
-      "autoCreateWorkUnit": true,
-      "explorationAgent": "Explore"
-    }
-  }
-}
-```
-
-### Planning Defaults
-```json
-{
-  "workflow": {
-    "plan": {
-      "useSequentialThinking": true,
-      "includeTestTasks": true,
-      "includeDocTasks": true
-    }
-  }
-}
-```
-
-### Delivery Defaults
-```json
-{
-  "workflow": {
-    "ship": {
-      "requireTests": true,
-      "requireDocs": true,
-      "autoCommit": false,
-      "autoPR": false
-    }
-  }
-}
-```
-
 ## Dependencies
 
 ### Required Plugins
@@ -550,7 +502,7 @@ The workflow creates and maintains this structure:
 ```bash
 /plan "Simple, clear task"
 /next
-/ship --commit
+/ship --merge --squash
 ```
 
 **Investigation Mode** (explore only):
@@ -566,7 +518,7 @@ The workflow creates and maintains this structure:
 /plan
 /next
 # Discover new requirements
-/plan --update  # Adjust plan
+/plan                   # Re-plan with updated understanding
 /next
 /ship
 ```
@@ -575,7 +527,6 @@ The workflow creates and maintains this structure:
 
 ### /explore finds nothing
 - Broaden search terms
-- Use `very thorough` mode
 - Manually specify file patterns to search
 - Check if you're in correct directory
 
@@ -594,27 +545,6 @@ The workflow creates and maintains this structure:
 - Run tests manually: `/test`
 - Check code quality: `/review`
 - Fix issues: `/fix`
-
-## Metrics and Success
-
-The workflow tracks:
-- **Exploration time**: How long /explore takes
-- **Task completion rate**: Completed vs. total tasks
-- **Plan accuracy**: How often plan matches reality
-- **Quality metrics**: Test coverage, review feedback
-
-View with:
-```bash
-/status verbose
-/performance
-```
-
-## Examples
-
-See `examples/` directory for complete workflow examples:
-- `examples/feature-development/` - Full feature workflow
-- `examples/bug-fix/` - Systematic bug resolution
-- `examples/refactoring/` - Code improvement workflow
 
 ## Support
 
